@@ -1,1 +1,1 @@
-web: gunicorn StockSage.wsgi
+web: gunicorn stockSage.wsgi
