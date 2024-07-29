@@ -11,7 +11,7 @@ google-pasta==0.2.0
 grpcio==1.64.1
 html5lib==1.1
 jsonpointer==2.1
-torch==2.4.0  # PyTorch 최신 안정 버전
+# torch==2.4.0  # PyTorch 제거
 # Keras는 TensorFlow에 내장되어 있으므로 별도로 설치할 필요 없음
 libclang==18.1.1
 ml-dtypes==0.4.0
