@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Stock Sage - 홈{% endblock %}
+
+{% block content %}
+    <aside class="sidebar">
+        <section class="stock-ranking">
+            <h1>거래량 순위</h1>
+            <ul class="ranking-list">
+                <li class="ranking-item"><span class="ranking-number">1</span> 삼성전자 <span class="stock-price">80,900</span> <span class="stock-change">+0.62%</span></li>
+                <li class="ranking-item"><span class="ranking-number">2</span> 카카오 <span class="stock-price">39,800</span> <span class="stock-change">-1.85%</span></li>
+                <li class="ranking-item"><span class="ranking-number">3</span> 네이버 <span class="stock-price">289,000</span> <span class="stock-change">+2.32%</span></li>
+                <li class="ranking-item"><span class="ranking-number">4</span> 현대차 <span class="stock-price">227,500</span> <span class="stock-change">-0.75%</span></li>
+                <li class="ranking-item"><span class="ranking-number">5</span> LG화학 <span class="stock-price">702,000</span> <span class="stock-change">+1.56%</span></li>
+                <li class="ranking-item"><span class="ranking-number">6</span> SK하이닉스 <span class="stock-price">118,500</span> <span class="stock-change">+3.45%</span></li>
+                <li class="ranking-item"><span class="ranking-number">7</span> 포스코 <span class="stock-price">323,000</span> <span class="stock-change">-2.13%</span></li>
+                <li class="ranking-item"><span class="ranking-number">8</span> 셀트리온 <span class="stock-price">211,000</span> <span class="stock-change">+0.89%</span></li>
+                <li class="ranking-item"><span class="ranking-number">9</span> 삼성SDI <span class="stock-price">634,000</span> <span class="stock-change">-1.45%</span></li>
+                <li class="ranking-item"><span class="ranking-number">10</span> 기아 <span class="stock-price">87,900</span> <span class="stock-change">+1.25%</span></li>
+            </ul>
+        </section>
+        <section class="exchange-rate">
+            <h1>오늘의 환율</h1>
+            <p>(조회시간 : 2024-07-27 13:02:34)</p>
+            <div class="rate-item">
+                <img src="1시가.png" alt="국기" class="flag">
+                <p>중국 (CNY) 190.98</p>
+            </div>
+            <div class="rate-item">
+                <img src="1시가.png" alt="국기" class="flag">
+                <p>중국 (CNY) 190.98</p>
+            </div>
+            <div class="rate-item">
+                <img src="1시가.png" alt="국기" class="flag">
+                <p>중국 (CNY) 190.98</p>
+            </div>
+        </section>
+    </aside>
+    <section class="content">
+        <!-- 여기에 코스피 그래프가 들어갑니다. -->
+        <div class="kospi-chart">
+            <h2>코스피</h2>
+            <img src="zzzzzzzzzzzz.png" alt="코스피 차트" class="chart-image">
+
+        </div>
+        <div class="tabs">
+            <button class="tab active" data-tab="gainers">상승률 상위</button>
+            <button class="tab" data-tab="losers">하락률 상위</button>
+            <button class="tab" data-tab="market-cap">시가총액</button>
+        </div>
+        <div class="tab-content gainers active">
+            <h2>상승률 상위</h2>
+            <div class="stock-container">
+                <div class="stock-section">
+                    {% for s in top_10_stocks|slice:":5" %}
+                    <ul class="stock-list">
+                        <li class="stock"><span class="ranking-number">1</span> {{s.name}} <span>{{ s.close }}₩</span> <span>+{{ s.change }}₩    +{{ s.chagesRatio }}%</span></li>
+                    </ul>
+                    {% endfor %}
+                </div>
+                <div class="stock-section">
+                    {% for s in top_10_stocks|slice:"5:" %}
+                    <ul class="stock-list">
+                        <li class="stock"><span class="ranking-number">1</span> {{s.name}} <span>{{ s.close }}₩</span> <span>+{{ s.change }}₩    +{{ s.chagesRatio }}%</span></li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- 하락률 상위와 시가총액 탭 내용도 같은 방식으로 -->
+        <div class="tab-content losers">
+            <h2>하락률 상위</h2>
+            <div class="stock-container">
+                <div class="stock-section">
+                    {% for s in row_10_stocks|slice:":5" %}
+                        <ul class="stock-list">
+                            <li class="stock"><span class="ranking-number">1</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.change }}₩    {{ s.chagesRatio }}%</span></li>
+                        </ul>
+                    {% endfor %}
+                </div>
+                <div class="stock-section">
+                    {% for s in row_10_stocks|slice:"5:" %}
+                        <ul class="stock-list">
+                            <li class="stock"><span class="ranking-number">1</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.change }}₩    {{ s.chagesRatio }}%</span></li>
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="tab-content market-cap">
+            <h2>시가총액</h2>
+            <div class="stock-container">
+                <div class="stock-section">
+                    {% for s in top_10_tot|slice:":5" %}
+                    <ul class="stock-list">
+                        <li class="stock"><span class="ranking-number">1</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.chagesRatio }}%</span> <span>{{ s.marcap }}</span></li>
+                    </ul>
+                    {% endfor %}
+                </div>
+                <div class="stock-section">
+                    {% for s in top_10_tot|slice:"5:" %}
+                    <ul class="stock-list">
+                        <li class="stock"><span class="ranking-number">1</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.chagesRatio }}%</span> <span>{{ s.marcap }}</span></li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
