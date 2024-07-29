@@ -1,0 +1,25 @@
+# Python 
+*.pyc 
+__pycache__/ 
+*.pyo 
+*.pyd 
+*.db 
+ECHO가 설정되어 있습니다.
+# Logs 
+*.log 
+ECHO가 설정되어 있습니다.
+# Environment 
+.env 
+ECHO가 설정되어 있습니다.
+# VS Code 
+.vscode/ 
+ECHO가 설정되어 있습니다.
+# Jupyter Notebook 
+.ipynb_checkpoints/ 
+ECHO가 설정되어 있습니다.
+# MySQL 
+*.sql 
+*.sqlite 
+ECHO가 설정되어 있습니다.
+# Others 
+.DS_Store 
