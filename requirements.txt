@@ -11,26 +11,23 @@ google-pasta==0.2.0
 grpcio==1.64.1
 html5lib==1.1
 jsonpointer==2.1
-keras==3.4.1
+torch==2.0.1  # PyTorch 최신 안정 버전
+# Keras는 TensorFlow에 내장되어 있으므로 별도로 설치할 필요 없음
 libclang==18.1.1
 ml-dtypes==0.4.0
 multitasking==0.0.11
 mysql-connector-python==8.0.33
 namex==0.0.8
-opencv-python==4.10.0.84
+pillow==10.4.0  # Pillow 대신 OpenCV 대체
 opt-einsum==3.3.0
 pyasn1-modules==0.2.8
 requests>=2.31,<3
 pykrx==1.0.48
 pyls-spyder==0.4.0
-# Removed PyQt5 and PyQtWebEngine as they are not necessary for server-side
 setuptools==69.5.1
 ta==0.11.0
-tensorboard==2.17.0
-tensorboard-data-server==0.7.2
-tensorflow==2.17.0
 termcolor==2.4.0
 wheel==0.43.0
 xlrd==2.0.1
 yfinance==0.2.41
-gunicorn
+gunicorn==22.0.0
