@@ -2,14 +2,15 @@ from pathlib import Path
 import os
 import dj_database_url
 
+# 경로 설정
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Security settings
+# 보안 설정
 SECRET_KEY = os.environ.get('SECRET_KEY', 'your_default_secret_key')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
 
-# Application definition
+# 애플리케이션 정의
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -23,6 +24,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -52,12 +54,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "stockSage.wsgi.application"
 
-# Database
+# 데이터베이스 설정
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default': dj_database_url.config(default='sqlite:///db.sqlite3')
 }
 
-# Password validation
+# 비밀번호 검증
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -65,20 +67,21 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# Internationalization
+# 국제화 및 시간대 설정
 LANGUAGE_CODE = "ko-kr"
 TIME_ZONE = "Asia/Seoul"
 USE_I18N = True
-USE_TZ = False
+USE_TZ = True
 
-# Static files
+# 정적 파일 설정
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files
+# 미디어 파일 설정
 MEDIA_URL = '/file/'
 MEDIA_ROOT = BASE_DIR / 'file'
 
-# Default primary key field type
+# 기본 기본 키 필드 유형
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
