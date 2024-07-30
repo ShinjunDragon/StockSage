@@ -77,13 +77,22 @@ WSGI_APPLICATION = "stockSage.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+import os
+import dj_database_url
+
+# 기존 DATABASES 설정을 업데이트합니다.
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
 
+# SECRET_KEY를 환경 변수로부터 가져옵니다.
+SECRET_KEY = os.environ.get('SECRET_KEY', 'SECRET_KEY')
+
+# DEBUG 설정을 환경 변수로부터 가져옵니다.
+DEBUG = os.environ.get('DEBUG', 'False') == 'False'
+
+# ALLOWED_HOSTS 설정을 환경 변수로부터 가져옵니다.
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'stock-Sage.herokuapp.com').split(',')
 
 
 # Password validation
