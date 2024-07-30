@@ -1,1 +1,1 @@
-web: gunicorn stockSage.wsgi
+web: gunicorn StockSage.wsgi:application --log-file -
