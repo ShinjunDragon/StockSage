@@ -56,11 +56,8 @@ TEMPLATES = [
 WSGI_APPLICATION = "stockSage.wsgi.application"
 
 # 데이터베이스 설정
-import dj_database_url
-from pathlib import Path
-
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL', 'postgres://localhost:5000'))
+    'default': dj_database_url.config(default='sqlite:///db.sqlite3')
 }
 
 # 비밀번호 검증
