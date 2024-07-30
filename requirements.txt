@@ -30,4 +30,5 @@ termcolor==2.4.0
 wheel==0.43.0
 xlrd==2.0.1
 yfinance==0.2.41
-gunicorn==22.0.0
+Django==4.2.1
+gunicorn==20.1.0
