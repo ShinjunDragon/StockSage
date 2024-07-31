@@ -55,3 +55,26 @@ def logout(request) :
     auth.logout(request)
     context = {"msg" : "로그아웃 되었습니다.", "url" : "/member/login"}
     return render(request, "alert.html", context)
+
+def info(request):
+    id1 = request.session["id"]
+    member = Member.objects.get(id=id1)
+    return render(request, "member/info.html", {"member": member})
+
+def update(request):
+    id1 = request.session["id"]
+    member = Member.objects.get(id=id1)
+    if request.method != "POST":
+        member.delete()
+
+def chgpass(request):
+    id1 = request.session["id"]
+    member = Member.objects.get(id=id1)
+    if request.method != "POST":
+        member.delete()
+
+def delete(request):
+    id1 = request.session["id"]
+    member = Member.objects.get(id=id1)
+    if request.method != "POST":
+        member.delete()
