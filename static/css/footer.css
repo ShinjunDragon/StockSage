@@ -1,0 +1,194 @@
+/* 기본 스타일 설정 */
+/* 폰트 수정 해야함  아직 정하지 않음 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* 푸터 스타일 설정 */
+footer {
+    background-color: #f8f9fa;
+    color: #343a40;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1400px; /* 최대 너비 설정: 이 값은 footer-container의 최대 너비를 설정합니다. */
+    margin: 0 auto;
+}
+
+/* 기술 스택 섹션 스타일 */
+.tech-stack {
+    flex: 1;
+    min-width: 200px; /* 최소 너비 설정: 이 값 이하로 줄어들지 않도록 합니다. */
+    padding: 10px;
+}
+
+.tech-stack h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #007bff;
+}
+
+.tech-stack ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.tech-stack li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.tech-stack .tech-icon {
+    width: 30px; /* 이미지 크기 조절 */
+    height: auto;
+    margin-right: 10px;
+}
+
+/* IDE 섹션 스타일 */
+.ide {
+    flex: 1;
+    min-width: 200px; /* 최소 너비 설정 */
+    padding: 10px;
+}
+
+.ide h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.ide ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ide li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    /* 타이틀간의 자간 */
+    margin-left: 30px;
+}
+
+.ide .ide-icon {
+    width: 30px;
+    margin-right: 10px;
+    height: auto;
+}
+
+/* 협업 툴 섹션 스타일 */
+.rel-tool {
+    flex: 1;
+    min-width: 200px; /* 최소 너비 설정 */
+    padding: 10px;
+}
+
+.rel-tool h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.rel-tool ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.rel-tool li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 40px;
+}
+
+.rel-tool .rel-icon {
+    width: 30px;
+    margin-right: 10px;
+    height: auto;
+}
+
+/* 역할 섹션 스타일 */
+.roles {
+    flex: 1;
+    min-width: 200px; /* 최소 너비 설정 */
+    padding: 10px;
+}
+
+.roles h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #007bff;
+}
+
+.roles ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.roles li {
+    margin-bottom: 10px;
+}
+
+/* 연락처 정보 섹션 스타일 */
+.contact-info {
+    flex: 1;
+    min-width: 200px; /* 최소 너비 설정 */
+    padding: 10px;
+}
+
+.contact-info h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #007bff;
+}
+
+.contact-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.contact-info li {
+    margin-bottom: 10px;
+}
+
+/* 프로젝트 정보 섹션 스타일 */
+.project-info {
+    flex: 1 100%; /* 수정된 부분: project-info를 새로운 줄로 이동시킵니다. */
+    min-width: 200px; /* 최소 너비 설정 */
+    padding: 10px;
+}
+
+.project-info h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #007bff;
+}
+
+.project-info p {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+/* 수평 배치 조정 */
+.footer-container > div {
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 200px; /* 최소 너비 설정 */
+}
+
+/* 섹션 사이 간격을 조정하려면 여기에서 margin-bottom 값을 수정하면 됩니다. */
+.tech-stack, .ide, .rel-tool, .roles, .contact-info {
+    margin-bottom: 20px; /* 섹션 사이의 간격을 늘리려면 margin-bottom 값을 수정합니다. */
+    margin-left: 50px;
+   
+}
