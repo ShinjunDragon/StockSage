@@ -1,4 +1,6 @@
 # myapp/views.py
+import pandas as pd
+import requests
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -34,15 +36,23 @@ def index(request):
     # 상위 10개 종목 선택 (시가총액 기준)
     top_10_Marcap = all_stocks.sort_values(by='Marcap', ascending=False).head(10)
 
-    # 국가별 원 대비 환율 가져오기
-    # 달러
-    USD_exchange_rate = fdr.DataReader('USD/KRW', yesterday)
-    # 유로
-    EUR_exchange_rate = fdr.DataReader('EUR/KRW', yesterday)
-    # 위안
-    CHN_exchange_rate = fdr.DataReader('CHN/KRW', yesterday)
-    # 엔화
-    JPY_exchange_rate = fdr.DataReader('JPY/KRW', yesterday)
+    # 환율정보 가져오기 (open API)
+    # API 인증키 : DPModF9KEpqknLkTe9GxHGp8k1me31CC
+    url = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=DPModF9KEpqknLkTe9GxHGp8k1me31CC&searchdate=20240701&data=AP01'
+    req = requests.get(url, verify=False)
+
+    # 받은 정보(req)에서 json 데이터를 가져 옴
+    json_data = req.json()
+    # json 데이터를 DataFrame에 넣기
+    df = pd.DataFrame(json_data)
+    # 유로 정보
+    eur = df.iloc[8]
+    # 위안화 정보
+    cnh = df.iloc[6]
+    # 엔 정보
+    jpy = df.iloc[12]
+    # 달러 정보
+    usd = df.iloc[22]
 
     # 등락 상위 10개 종목 주식 데이터 리스트로 준비
     top_10_stocks = []
@@ -85,6 +95,10 @@ def index(request):
         'top_10_stocks': top_10_stocks,
         'row_10_stocks': row_10_stocks,
         'top_10_tot': top_10_tot,
+        'eur' : eur,
+        'cnh' : cnh,
+        'jpy' : jpy,
+        'usd' : usd,
     }
 
     return render(request, 'index.html', context)
