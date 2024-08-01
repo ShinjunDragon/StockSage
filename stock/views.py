@@ -5,10 +5,15 @@ from django.shortcuts import render
 import datetime
 import FinanceDataReader as fdr
 import matplotlib.pyplot as plt
+import matplotlib
 from datetime import datetime, timedelta
 import io
 import urllib, base64
 import yfinance as yf
+
+# 한글 폰트 설정
+matplotlib.rcParams['font.family'] = 'Malgun Gothic'
+matplotlib.rcParams['axes.unicode_minus'] = False
 
 def index(request):
     # 상위 10개
