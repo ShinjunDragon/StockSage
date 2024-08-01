@@ -3,12 +3,13 @@ import pandas as pd
 import requests
 from django.http import JsonResponse
 from django.shortcuts import render
-
-import datetime
 import FinanceDataReader as fdr
 import matplotlib.pyplot as plt
 import matplotlib
 from datetime import datetime, timedelta
+from django.http import HttpResponse
+from io import BytesIO
+from PIL import Image
 import io
 import urllib, base64
 import yfinance as yf
@@ -53,6 +54,13 @@ def index(request):
     jpy = df.iloc[12]
     # 달러 정보
     usd = df.iloc[22]
+    # 파운드 정보
+    gbp = df.iloc[9]
+    # 덴마크 크로네
+    dkk = df.iloc[7]
+    print("DKK Data:")
+
+
 
     # 등락 상위 10개 종목 주식 데이터 리스트로 준비
     top_10_stocks = []
@@ -221,3 +229,19 @@ def search_stocks(request):
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
     return JsonResponse({'stocks': []})
+
+
+def get_flag_image(request, country_code):
+    # 국가 코드에 따라 플래그 이미지 URL 생성
+    url = f"https://flagcdn.com/w320/{country_code.lower()}.png"
+    
+    try:
+        # 이미지 다운로드
+        response = requests.get(url)
+        response.raise_for_status()
+        
+        # 이미지 파일을 HttpResponse로 반환
+        return HttpResponse(response.content, content_type="image/png")
+    except requests.RequestException as e:
+        # 이미지 요청에 실패하면 에러 메시지를 반환
+        return HttpResponse(f"Error fetching image: {e}", status=500)

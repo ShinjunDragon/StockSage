@@ -4,6 +4,7 @@
 
 {% block content %}
     <aside class="sidebar">
+    <!--
         <section class="stock-ranking">
             <h1>거래량 순위</h1>
             <ul class="ranking-list">
@@ -19,28 +20,38 @@
                 <li class="ranking-item"><span class="ranking-number">10</span> 기아 <span class="stock-price">87,900</span> <span class="stock-change">+1.25%</span></li>
             </ul>
         </section>
+        -->
         <section class="exchange-rate">
             <h1>오늘의 환율</h1>
             <p>(조회시간 : 2000-01-01 12:00:00)</p>
             <div class="rate-item">
-                <img src="1시가.png" alt="국기" class="flag">
+                <img src="{% url 'flag_image' 'KR' %}" alt="국기" class="flag" style="width:30px; height:20px;">
+
                 <p><strong>KRW/USD:</strong> {{ usd.bkpr }}</p>
             </div>
             <div class="rate-item">
-                <img src="1시가.png" alt="국기" class="flag">
+                 <img src="{% url 'flag_image' 'US' %}" alt="국기" class="flag" style="width:30px; height:20px;">
                 <p><strong>KRW/EUR:</strong> {{ eur.bkpr }}</p>
             </div>
             <div class="rate-item">
-                <img src="1시가.png" alt="국기" class="flag">
+                 <img src="{% url 'flag_image' 'KR' %}" alt="국기" class="flag" style="width:30px; height:20px;">
                 <p><strong>KRW/CNY:</strong> {{ cnh.bkpr }}</p>
             </div>
             <div class="rate-item">
-                <img src="1시가.png" alt="국기" class="flag">
+                 <img src="{% url 'flag_image' 'KR' %}" alt="국기" class="flag" style="width:30px; height:20px;">
                 <p><strong>KRW/JPY(100):</strong> {{ jpy.bkpr }}</p>
+            </div>
+            <div class="rate-item">
+                 <img src="{% url 'flag_image' 'KR' %}" alt="국기" class="flag" style="width:30px; height:20px;">
+                <p><strong>KRW/GBP(100):</strong> {{ gbp.bkpr }}</p>
+            </div>
+            <div class="rate-item">
+                <img src="1시가.png" alt="국기" class="flag">
+                <p><strong>KRW/DKK(100):</strong> {{ dkk.bkpr }}</p>
             </div>
         </section>
     </aside>
-    <section class="content">
+       <section class="content">
         <!-- 여기에 코스피 그래프가 들어갑니다. -->
         <div class="kospi-chart">
             <h2>코스피</h2>
@@ -58,14 +69,14 @@
                 <div class="stock-section">
                     {% for s in top_10_stocks|slice:":5" %}
                     <ul class="stock-list">
-                        <li class="stock"><span class="ranking-number">1</span> {{s.name}} <span>{{ s.close }}₩</span> <span>+{{ s.change }}₩    +{{ s.chagesRatio }}%</span></li>
+                        <li class="stock"><span class="ranking-number">{{ forloop.counter }}</span> {{s.name}} <span>{{ s.close }}₩</span> <span>+{{ s.change }}₩    +{{ s.chagesRatio }}%</span></li>
                     </ul>
                     {% endfor %}
                 </div>
                 <div class="stock-section">
                     {% for s in top_10_stocks|slice:"5:" %}
                     <ul class="stock-list">
-                        <li class="stock"><span class="ranking-number">1</span> {{s.name}} <span>{{ s.close }}₩</span> <span>+{{ s.change }}₩    +{{ s.chagesRatio }}%</span></li>
+                        <li class="stock"><span class="ranking-number">{{ forloop.counter|add:5 }}</span> {{s.name}} <span>{{ s.close }}₩</span> <span>+{{ s.change }}₩    +{{ s.chagesRatio }}%</span></li>
                     </ul>
                     {% endfor %}
                 </div>
@@ -78,14 +89,14 @@
                 <div class="stock-section">
                     {% for s in row_10_stocks|slice:":5" %}
                         <ul class="stock-list">
-                            <li class="stock"><span class="ranking-number">1</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.change }}₩    {{ s.chagesRatio }}%</span></li>
+                            <li class="stock"><span class="ranking-number">{{ forloop.counter }}</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.change }}₩    {{ s.chagesRatio }}%</span></li>
                         </ul>
                     {% endfor %}
                 </div>
                 <div class="stock-section">
                     {% for s in row_10_stocks|slice:"5:" %}
                         <ul class="stock-list">
-                            <li class="stock"><span class="ranking-number">1</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.change }}₩    {{ s.chagesRatio }}%</span></li>
+                            <li class="stock"><span class="ranking-number">{{ forloop.counter|add:5 }}</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.change }}₩    {{ s.chagesRatio }}%</span></li>
                         </ul>
                     {% endfor %}
                 </div>
@@ -97,14 +108,14 @@
                 <div class="stock-section">
                     {% for s in top_10_tot|slice:":5" %}
                     <ul class="stock-list">
-                        <li class="stock"><span class="ranking-number">1</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.chagesRatio }}%</span> <span>{{ s.marcap }}</span></li>
+                        <li class="stock"><span class="ranking-number">{{ forloop.counter }}</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.chagesRatio }}%</span> <span>{{ s.marcap }}</span></li>
                     </ul>
                     {% endfor %}
                 </div>
                 <div class="stock-section">
                     {% for s in top_10_tot|slice:"5:" %}
                     <ul class="stock-list">
-                        <li class="stock"><span class="ranking-number">1</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.chagesRatio }}%</span> <span>{{ s.marcap }}</span></li>
+                        <li class="stock"><span class="ranking-number">{{ forloop.counter|add:5 }}</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.chagesRatio }}%</span> <span>{{ s.marcap }}</span></li>
                     </ul>
                     {% endfor %}
                 </div>
