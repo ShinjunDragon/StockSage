@@ -8,7 +8,7 @@ class Member(models.Model) :
     gender = models.IntegerField(default=0)
     tel = models.CharField(max_length=20)
     email = models.CharField(max_length=100)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True) # 계정 활성화/비활성화
 
 
 class PageAccessLog(models.Model):
