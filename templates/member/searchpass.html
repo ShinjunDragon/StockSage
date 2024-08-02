@@ -3,7 +3,38 @@
 {% block title %}비밀번호 재설정{% endblock %}
 
 {% block content %}
-
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form-container {
+            width: 420px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .valid-feedback, .invalid-feedback {
+            display: none;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+        .is-valid + .valid-feedback {
+            display: block;
+            color: green;
+        }
+        .is-invalid + .invalid-feedback {
+            display: block;
+            color: red;
+        }
     </style>
     <div class="form-container">
         {% if step == "reset" %}
