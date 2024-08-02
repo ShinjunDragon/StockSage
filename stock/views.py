@@ -1,15 +1,21 @@
 import pandas as pd
+import numpy as np
 import requests
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 import FinanceDataReader as fdr
-import matplotlib.pyplot as plt
 import matplotlib
+import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
-from io import BytesIO
-from PIL import Image
+import io
 import urllib, base64
 import yfinance as yf
+from keras import Sequential
+from keras.layers import LSTM, Dropout, Dense
+from tensorflow.keras.optimizers import RMSprop
+from tensorflow.keras.models import load_model
+from io import BytesIO
+
 
 # 한글 폰트 설정
 matplotlib.rcParams['font.family'] = 'Malgun Gothic'
@@ -225,17 +231,21 @@ def search_stocks(request):
             # KOSPI 주식 목록을 가져옵니다
             all_stocks = fdr.StockListing('KOSPI')
 
-            # 주식 코드가 query로 시작하는 항목을 필터링합니다
-            results = all_stocks[all_stocks['Code'].str.startswith(query)]
+            # 주식 코드가 query로 시작하거나 주식 이름에 query가 포함된 항목을 필터링합니다
+            results = all_stocks[
+                (all_stocks['Code'].str.startswith(query)) |
+                (all_stocks['Name'].str.contains(query, case=False, na=False))
+                ]
 
             # 결과를 리스트로 변환합니다 (최대 5개)
             stocks = [{'code': row['Code'], 'name': row['Name']}
                       for _, row in results.head(5).iterrows()]
+            print(stocks)
 
             return JsonResponse({'stocks': stocks})
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
-    return JsonResponse({'stocks': []})
+
 
 
 def get_flag_image(request, country_code):

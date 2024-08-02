@@ -7,6 +7,7 @@ urlpatterns = [
     path("list/", views.list, name='list'),
     path("predict/", views.predict, name='predict'),
     path("info/", views.info, name="info"),
+    path("predict/", views.predict, name='predict'),
     path("search_stocks/", views.search_stocks, name='search_stocks'),
     path('flag/<str:country_code>/', views.get_flag_image, name='flag_image'),
    
