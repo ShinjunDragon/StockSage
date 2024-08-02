@@ -10,10 +10,6 @@ from datetime import datetime, timedelta
 import io
 import urllib, base64
 import yfinance as yf
-from keras import Sequential
-from keras.layers import LSTM, Dropout, Dense
-from tensorflow.keras.optimizers import RMSprop
-from tensorflow.keras.models import load_model
 from io import BytesIO
 
 

@@ -35,6 +35,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'member.middleware.PageAccessLogMiddleware',
 ]
 
 ROOT_URLCONF = "stockSage.urls"

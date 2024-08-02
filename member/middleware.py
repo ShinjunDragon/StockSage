@@ -25,7 +25,6 @@ class PageAccessLogMiddleware:
             user_id=user_id  # 사용자 ID 기록
         )
         log.save()
-
         return response
 
     def should_log(self, path):
@@ -38,7 +37,7 @@ class PageAccessLogMiddleware:
             return False
 
         # 예: /static/ 또는 /media/와 같은 경로 제외
-        if path.startswith('/static/') or path.startswith('/media/'):
+        if path.startswith('/static/') or path.startswith('/media/') or path.startswith('/stock/'):
             return False
 
         # 기타 필요한 필터링 조건을 추가할 수 있습니다.
