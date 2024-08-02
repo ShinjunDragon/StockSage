@@ -29,3 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     element.style.fontSize = '8px'; // 폰트 크기 설정
   });
 });
+
+
+

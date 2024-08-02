@@ -1,19 +1,15 @@
-# myapp/views.py
 import pandas as pd
 import requests
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 import FinanceDataReader as fdr
 import matplotlib.pyplot as plt
 import matplotlib
 from datetime import datetime, timedelta
-from django.http import HttpResponse
 from io import BytesIO
 from PIL import Image
-import io
 import urllib, base64
 import yfinance as yf
-
 
 # 한글 폰트 설정
 matplotlib.rcParams['font.family'] = 'Malgun Gothic'
@@ -21,48 +17,32 @@ matplotlib.rcParams['axes.unicode_minus'] = False
 
 def index(request):
     # 상위 10개
-
-    # 날짜 설정
     today = datetime.today().strftime('%Y-%m-%d')
-    yesterday = (datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d')
 
     # KOSPI 주식 목록 가져오기
     all_stocks = fdr.StockListing('KOSPI')
 
     # 상위 10개 종목 선택 (등락률 기준)
-    top_10_ChagesRatio = all_stocks.sort_values(by='ChagesRatio', ascending=False).head(10)
+    top_10_ChagesRatio = all_stocks.sort_values(by='ChagesRatio', ascending=False).head(15)
 
     # 하위 10개 종목 선택 (등락률 기준)
-    row_10_ChagesRatio = all_stocks.sort_values(by='ChagesRatio', ascending=True).head(10)
+    row_10_ChagesRatio = all_stocks.sort_values(by='ChagesRatio', ascending=True).head(15)
 
     # 상위 10개 종목 선택 (시가총액 기준)
-    top_10_Marcap = all_stocks.sort_values(by='Marcap', ascending=False).head(10)
+    top_10_Marcap = all_stocks.sort_values(by='Marcap', ascending=False).head(15)
 
     # 환율정보 가져오기 (open API)
-    # API 인증키 : DPModF9KEpqknLkTe9GxHGp8k1me31CC
     url = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=DPModF9KEpqknLkTe9GxHGp8k1me31CC&searchdate=20240701&data=AP01'
     req = requests.get(url, verify=False)
-
-    # 받은 정보(req)에서 json 데이터를 가져 옴
     json_data = req.json()
-    # json 데이터를 DataFrame에 넣기
     df = pd.DataFrame(json_data)
-    # 유로 정보
     eur = df.iloc[8]
-    # 위안화 정보
     cnh = df.iloc[6]
-    # 엔 정보
     jpy = df.iloc[12]
-    # 달러 정보
     usd = df.iloc[22]
-    # 파운드 정보
     gbp = df.iloc[9]
-    # 덴마크 크로네
     dkk = df.iloc[7]
-    print("DKK Data:")
-    # 환율 시간 값
     request_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
 
     # 등락 상위 10개 종목 주식 데이터 리스트로 준비
     top_10_stocks = []
@@ -101,26 +81,40 @@ def index(request):
         }
         top_10_tot.append(stock_data)
 
+    # 코스피 차트 생성
+    kospi_data = yf.download('^KS11', start='2023-01-01', end=today)  # KOSPI 지수 데이터
+    plt.figure(figsize=(10, 6))
+    plt.plot(kospi_data.index, kospi_data['Close'], label='KOSPI Close Price')
+    plt.title('KOSPI Index')
+    plt.xlabel('Date')
+    plt.ylabel('Close Price')
+    plt.legend()
+
+    # 차트를 메모리에 저장
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+    buffer.seek(0)
+    image_data = buffer.getvalue()
+    buffer.close()
+
+    # 차트 이미지를 base64로 인코딩
+    image_base64 = base64.b64encode(image_data).decode('utf-8')
+
+    # 컨텍스트에 추가
     context = {
         'top_10_stocks': top_10_stocks,
         'row_10_stocks': row_10_stocks,
         'top_10_tot': top_10_tot,
-        'eur' : eur,
-        'cnh' : cnh,
-        'jpy' : jpy,
-        'usd' : usd,
-        'gbp' : gbp,
-        'dkk' : dkk,
-        'request_time': request_time
+        'eur': eur,
+        'cnh': cnh,
+        'jpy': jpy,
+        'usd': usd,
+        'gbp': gbp,
+        'dkk': dkk,
+        'request_time': request_time,
+        'kospi_chart': image_base64
     }
-    
-    
- 
-  
- 
-   
-    
-    
 
     return render(request, 'index.html', context)
 
