@@ -3,76 +3,13 @@
 {% block title %}관리자 페이지{% endblock %}
 
 {% block content %}
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .admin-container {
-            display: flex;
-            min-height: 80vh;
-        }
-        .sidebar {
-            min-width: 200px;
-            max-width: 200px;
-            background-color: #f8f9fa;
-            padding-top: 20px;
-            border-right: 1px solid #ddd;
-        }
-        .sidebar a {
-            display: block;
-            padding: 10px 15px;
-            color: #333;
-            text-decoration: none;
-        }
-        .sidebar a:hover, .sidebar a.active {
-            background-color: #007bff;
-            color: white;
-        }
-        .content {
-            flex-grow: 1;
-            padding: 20px;
-        }
-        .table-container {
-            margin-top: 20px;
-        }
-        .table th, .table td {
-            text-align: center;
-            vertical-align: middle;
-        }
-        .table thead th {
-            background-color: #007bff;
-            color: white;
-        }
-        .table tbody tr:nth-child(odd) {
-            background-color: #f9f9f9;
-        }
-        .table tbody tr:hover {
-            background-color: #e9ecef;
-        }
-        .pagination {
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-        }
-        .pagination a, .pagination span {
-            margin: 0 2px;
-            padding: 5px 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            color: #007bff;
-            text-decoration: none;
-        }
-        .pagination a:hover {
-            background-color: #e9ecef;
-        }
-        .pagination .active {
-            background-color: #007bff;
-            color: white;
-            border-color: #007bff;
-        }
+  
     </style>
     <div class="admin-container">
         <div class="sidebar">
             <a href="?tab=user-list" class="{% if current_tab == 'user-list' %}active{% endif %}" id="user-list-link">전체 회원 목록</a>
             <a href="?tab=post-list" class="{% if current_tab == 'post-list' %}active{% endif %}" id="post-list-link">로그 기록</a>
+            <a href="#">기타 기능</a>
         </div>
         <div class="content">
             <div id="user-list" class="admin-section" style="{% if current_tab == 'user-list' %}display: block;{% else %}display: none;{% endif %}">
@@ -87,8 +24,6 @@
                             <th>성별</th>
                             <th>전화번호</th>
                             <th>이메일</th>
-                            <th>상태</th>
-                            <th>작업</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -100,14 +35,6 @@
                                 <td>{% if m.gender == 0 %}남{% else %}여{% endif %}</td>
                                 <td>{{ m.tel }}</td>
                                 <td>{{ m.email }}</td>
-                                <td>{% if m.is_active %}활성{% else %}비활성{% endif %}</td>
-                                <td>
-                                    {% if m.id != 'admin' %}
-                                    <button class="btn btn-sm {% if m.is_active %}btn-danger{% else %}btn-success{% endif %}" onclick="toggleStatus('{{ m.id }}')">
-                                        {% if m.is_active %}비활성화{% else %}활성화{% endif %}
-                                    </button>
-                                    {% endif %}
-                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -177,29 +104,14 @@
                     {% endif %}
                 </div>
             </div>
+            <div id="other-functions" class="admin-section" style="display: none;">
+                <h2>기타 기능</h2>
+                <!-- 기타 기능 내용이 여기에 표시됩니다. -->
+            </div>
         </div>
     </div>
 
     <script>
-        function toggleStatus(memberid) {
-            fetch(`toggle_member_status/${memberid}/`, {
-                method: 'GET',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        location.reload();
-                    } else {
-                        alert(data.message);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             const userListLink = document.getElementById('user-list-link');
             const postListLink = document.getElementById('post-list-link');
