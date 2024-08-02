@@ -36,4 +36,4 @@ gunicorn==20.1.0
 dj_database_url==0.5.0
 psycopg2-binary==2.9.6
 whitenoise==6.6.0
-tensorflow==2.13.0  # TensorFlow의 최신 안정 버전을 사용
+
