@@ -11,6 +11,7 @@ import io
 import urllib, base64
 import yfinance as yf
 from io import BytesIO
+from keras.src.saving import load_model
 
 
 # 한글 폰트 설정
@@ -164,9 +165,70 @@ def list(request):
     # 템플릿에 데이터 전달
     return render(request, 'stock/list.html', {'stocks': stocks})
 
-def predict(request) :
-    if request.method != 'POST':
-        return render(request, 'stock/predict.html')
+def MinMaxScaler(data):
+    """최솟값과 최댓값을 이용하여 0 ~ 1 값으로 변환"""
+    numerator = data - np.min(data, axis=0)
+    denominator = np.max(data, axis=0) - np.min(data, axis=0)
+    return numerator / (denominator + 1e-7)
+
+def predict(request, window_size=10) :
+    ticker = request.GET.get('ticker')
+    if ticker :
+        # 데이터 로드
+        today = pd.to_datetime('today').strftime('%Y-%m-%d')
+        df = fdr.DataReader(ticker, '2015-01-01', today)
+        dfx = df[['Open', 'High', 'Low', 'Volume', 'Close']]
+        dfx = MinMaxScaler(dfx)
+        dfy = dfx[['Close']]
+        dfx = dfx[['Open', 'High', 'Low', 'Volume']]
+        X = dfx.values
+        y = dfy.values
+
+        # 시계열 데이터 생성
+        data_X = []
+        data_y = []
+        for i in range(len(y) - window_size):
+            _X = X[i:i + window_size]
+            _y = y[i + window_size]
+            data_X.append(_X)
+            data_y.append(_y)
+
+        data_X = np.array(data_X)
+        data_y = np.array(data_y)
+
+        # 데이터 분할
+        train_size = int(len(data_y) * 0.7)
+        test_X = data_X[train_size:]
+        test_y = data_y[train_size:]
+
+        # 기초 모델 로드
+        basic_model = load_model(f'{ticker}_basic_model.keras')
+
+        # 초기 예측
+        initial_pred_y = basic_model.predict(test_X)
+        initial_pred_y = initial_pred_y.flatten()
+        test_y = test_y.flatten()
+
+        # 오차 보정 모델 로드
+        error_model = load_model(f'{ticker}_error_correction_model.keras')
+
+        # 오차 예측
+        error_pred_y = error_model.predict(test_X)
+        error_pred_y = error_pred_y.flatten()
+
+        # 최종 예측 (기초 모델 + 오차 보정)
+        final_pred_y = initial_pred_y + error_pred_y
+
+        # 예측 가격 계산
+        predictPrice = df.Close[-1] * final_pred_y[-1] / dfy.Close[-1]
+
+        context = {
+            'predict' : predictPrice,
+        }
+
+        return render(request, "stock/predict.html", context)
+    else :
+        return render(request, "stock/predict.html")
 
 def info(request):
     ticker = request.GET.get('ticker')
