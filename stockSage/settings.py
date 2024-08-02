@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     "member",
     "article",
     "stock"
+
 ]
 
 MIDDLEWARE = [
