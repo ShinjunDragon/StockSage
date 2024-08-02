@@ -28,7 +28,7 @@ body {
   margin-top: 20px;
 }
 
-form {
+.header-form {
     display : flex;
     align-items: center;
     width: 100%;
@@ -73,7 +73,7 @@ form {
 }
 
 /* 레이블 스타일 */
-label {
+.header-label {
   position: absolute; /* 절대 위치 지정 */
   color: #ffffff; /* 레이블 색상 */
   left: 10px; /* 왼쪽 위치 */
@@ -83,8 +83,8 @@ label {
 }
 
 /* 입력 필드 포커스 시 레이블 및 하단 바 스타일 */
-.search-bar:focus + label,
-.search-bar:not(:placeholder-shown) + label {
+.search-bar:focus + .header-label,
+.search-bar:not(:placeholder-shown) + .header-label {
   font-size: 16px; /* 포커스 시 폰트 크기 */
   bottom: 40px; /* 포커스 시 하단 위치 */
   color: #f9f9f9; /* 포커스 시 색상 */
@@ -92,8 +92,8 @@ label {
 }
 
 /* 입력 필드 포커스 시 하단 바 스타일 */
-.search-bar:focus + label + .underline,
-.search-bar:not(:placeholder-shown) + label + .underline {
+.search-bar:focus + .header-label + .underline,
+.search-bar:not(:placeholder-shown) + .header-label + .underline {
   width: 100%; /* 포커스 시 너비 100%로 확장 */
 }
 

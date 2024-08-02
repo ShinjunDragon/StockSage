@@ -3,7 +3,38 @@
 {% block title %}회원가입{% endblock %}
 
 {% block content %}
-
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form-container {
+            width: 420px; /* 창 너비 확장 */
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .valid-feedback, .invalid-feedback {
+            display: none;
+            font-size: 0.9em;
+            white-space: nowrap; /* 줄바꿈 방지 */
+        }
+        .is-valid + .valid-feedback {
+            display: block;
+            color: green; /* 유효한 입력 메시지 색상 */
+        }
+        .is-invalid + .invalid-feedback {
+            display: block;
+            color: red; /* 유효하지 않은 입력 메시지 색상 */
+        }
     </style>
     <div class="form-container">
         <h2 class="text-center">회원가입</h2>
