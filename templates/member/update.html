@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}회원 정보 수정{% endblock %}
+
+{% block content %}
+ 
+    </style>
+    <div class="edit-container">
+        <h2 class="text-center">회원 정보 수정</h2>
+        <form method="post" id="update-form" novalidate>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id">아이디</label>
+                <input type="text" class="form-control" id="id" name="id" value="{{ member.id }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ member.name }}" required>
+                <div class="valid-feedback">유효한 이름입니다.</div>
+                <div class="invalid-feedback">이름을 입력하세요.</div>
+            </div>
+            <div class="form-group">
+                <label for="gender">성별</label>
+                <select class="form-control" id="gender" name="gender">
+                    <option value="0" {% if member.gender == 0 %}selected{% endif %}>남성</option>
+                    <option value="1" {% if member.gender == 1 %}selected{% endif %}>여성</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tel">전화번호</label>
+                <input type="text" class="form-control" id="tel" name="tel" value="{{ member.tel }}" required>
+                <div class="valid-feedback">유효한 전화번호입니다.</div>
+                <div class="invalid-feedback">전화번호는 '-' 없이 숫자 11자리여야 합니다.</div>
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ member.email }}" required>
+                <div class="valid-feedback">유효한 이메일입니다.</div>
+                <div class="invalid-feedback">올바른 이메일 형식을 입력하세요.</div>
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호 확인</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <small class="form-text text-muted">변경 사항을 저장하려면 비밀번호를 입력하세요.</small>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">수정</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('update-form');
+
+            function validateField(field, pattern) {
+                const invalidFeedback = field.nextElementSibling.nextElementSibling;
+                const validFeedback = field.nextElementSibling;
+                if (pattern.test(field.value)) {
+                    field.classList.remove('is-invalid');
+                    field.classList.add('is-valid');
+                    invalidFeedback.style.display = 'none';
+                    validFeedback.style.display = 'block';
+                } else {
+                    field.classList.remove('is-valid');
+                    field.classList.add('is-invalid');
+                    validFeedback.style.display = 'none';
+                    invalidFeedback.style.display = 'block';
+                }
+            }
+
+            function initialValidation() {
+                const nameField = document.getElementById('name');
+                const telField = document.getElementById('tel');
+                const emailField = document.getElementById('email');
+                const passwordField = document.getElementById('password');
+
+                validateField(nameField, /.+/);
+                validateField(telField, /^\d{11}$/);
+                validateField(emailField, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
+                validateField(passwordField, /.+/);
+            }
+
+            form.addEventListener('input', function (event) {
+                const target = event.target;
+                if (target.name === 'name') {
+                    validateField(target, /.+/);
+                } else if (target.name === 'tel') {
+                    validateField(target, /^\d{11}$/);
+                } else if (target.name === 'email') {
+                    validateField(target, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
+                } else if (target.name === 'password') {
+                    validateField(target, /.+/);
+                }
+            });
+
+            form.addEventListener('submit', function (event) {
+                const fields = [
+                    form.querySelector('input[name="name"]'),
+                    form.querySelector('input[name="tel"]'),
+                    form.querySelector('input[name="email"]'),
+                    form.querySelector('input[name="password"]')
+                ];
+
+                let allValid = true;
+                fields.forEach(field => {
+                    if (!field.classList.contains('is-valid')) {
+                        field.classList.add('is-invalid');
+                        allValid = false;
+                    }
+                });
+
+                if (!allValid) {
+                    event.preventDefault();
+                }
+            });
+
+            initialValidation();
+        });
+    </script>
+{% endblock %}

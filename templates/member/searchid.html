@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}로그인{% endblock %}
+
+{% block content %}
+
+    <div class="form-container">
+        <h2 class="text-center">아이디 찾기</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="password" name="email" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">아이디 찾기</button>
+        </form>
+        {% if error %}
+            <div class="alert alert-danger mt-2">{{ error }}</div>
+        {% endif %}
+    </div>
+{% endblock %}

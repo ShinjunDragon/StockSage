@@ -23,7 +23,8 @@
         -->
         <section class="exchange-rate">
             <h1>오늘의 환율</h1>
-            <p>(조회시간 : 2000-01-01 12:00:00)</p>
+           <p> (조회시간 : {{ request_time }})</p>
+
             <div class="rate-item">
                 <img src="{% url 'flag_image' 'KR' %}" alt="국기" class="flag" style="width:30px; height:20px;">
 
@@ -34,19 +35,19 @@
                 <p><strong>KRW/EUR:</strong> {{ eur.bkpr }}</p>
             </div>
             <div class="rate-item">
-                 <img src="{% url 'flag_image' 'KR' %}" alt="국기" class="flag" style="width:30px; height:20px;">
+                 <img src="{% url 'flag_image' 'CN' %}" alt="국기" class="flag" style="width:30px; height:20px;">
                 <p><strong>KRW/CNY:</strong> {{ cnh.bkpr }}</p>
             </div>
             <div class="rate-item">
-                 <img src="{% url 'flag_image' 'KR' %}" alt="국기" class="flag" style="width:30px; height:20px;">
+                 <img src="{% url 'flag_image' 'JP' %}" alt="국기" class="flag" style="width:30px; height:20px;">
                 <p><strong>KRW/JPY(100):</strong> {{ jpy.bkpr }}</p>
             </div>
             <div class="rate-item">
-                 <img src="{% url 'flag_image' 'KR' %}" alt="국기" class="flag" style="width:30px; height:20px;">
+                 <img src="{% url 'flag_image' 'GB' %}" alt="국기" class="flag" style="width:30px; height:20px;">
                 <p><strong>KRW/GBP(100):</strong> {{ gbp.bkpr }}</p>
             </div>
             <div class="rate-item">
-                <img src="1시가.png" alt="국기" class="flag">
+                <img src="{% url 'flag_image' 'DK' %}" alt="국기" class="flag" style="width:30px; height:20px;">
                 <p><strong>KRW/DKK(100):</strong> {{ dkk.bkpr }}</p>
             </div>
         </section>
@@ -89,14 +90,14 @@
                 <div class="stock-section">
                     {% for s in row_10_stocks|slice:":5" %}
                         <ul class="stock-list">
-                            <li class="stock"><span class="ranking-number">{{ forloop.counter }}</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.change }}₩    {{ s.chagesRatio }}%</span></li>
+                            <li class="stock"><p class="ranking-number">{{ forloop.counter }}</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.change }}₩    {{ s.chagesRatio }}%</span></li>
                         </ul>
                     {% endfor %}
                 </div>
                 <div class="stock-section">
                     {% for s in row_10_stocks|slice:"5:" %}
                         <ul class="stock-list">
-                            <li class="stock"><span class="ranking-number">{{ forloop.counter|add:5 }}</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.change }}₩    {{ s.chagesRatio }}%</span></li>
+                            <li class="stock"><p class="ranking-number">{{ forloop.counter|add:5 }}</span> {{s.name}} <span>{{ s.close }}₩</span> <span>{{ s.change }}₩    {{ s.chagesRatio }}%</span></li>
                         </ul>
                     {% endfor %}
                 </div>

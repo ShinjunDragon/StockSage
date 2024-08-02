@@ -14,6 +14,7 @@ import io
 import urllib, base64
 import yfinance as yf
 
+
 # 한글 폰트 설정
 matplotlib.rcParams['font.family'] = 'Malgun Gothic'
 matplotlib.rcParams['axes.unicode_minus'] = False
@@ -59,7 +60,8 @@ def index(request):
     # 덴마크 크로네
     dkk = df.iloc[7]
     print("DKK Data:")
-
+    # 환율 시간 값
+    request_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 
     # 등락 상위 10개 종목 주식 데이터 리스트로 준비
@@ -107,7 +109,18 @@ def index(request):
         'cnh' : cnh,
         'jpy' : jpy,
         'usd' : usd,
+        'gbp' : gbp,
+        'dkk' : dkk,
+        'request_time': request_time
     }
+    
+    
+ 
+  
+ 
+   
+    
+    
 
     return render(request, 'index.html', context)
 
@@ -245,3 +258,5 @@ def get_flag_image(request, country_code):
     except requests.RequestException as e:
         # 이미지 요청에 실패하면 에러 메시지를 반환
         return HttpResponse(f"Error fetching image: {e}", status=500)
+    
+    
