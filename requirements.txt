@@ -37,6 +37,4 @@ psycopg2-binary==2.9.6
 plotly>=5.0.0
 whitenoise==6.6.0
 tflite-runtime
-
-
 #수정 0.1ver
