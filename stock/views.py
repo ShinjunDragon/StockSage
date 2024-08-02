@@ -11,7 +11,7 @@ import io
 import urllib, base64
 import yfinance as yf
 from io import BytesIO
-from keras.src.saving import load_model
+
 
 
 # 한글 폰트 설정
