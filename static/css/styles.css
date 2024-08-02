@@ -30,7 +30,7 @@ body {
     margin-top: 20px;
 }
 
-form {
+.header-form {
     display: flex;
     align-items: center;
     width: 100%;
@@ -71,7 +71,7 @@ form {
     transition: width 0.5s;
 }
 
-label {
+.header-label {
     position: absolute;
     color: #ffffff;
     left: 10px;
@@ -80,16 +80,16 @@ label {
     transition: all 0.2s;
 }
 
-.search-bar:focus + label,
-.search-bar:not(:placeholder-shown) + label {
+.search-bar:focus + .header-label,
+.search-bar:not(:placeholder-shown) + .header-label {
     font-size: 16px;
     bottom: 40px;
     color: #f9f9f9;
     font-weight: bold;
 }
 
-.search-bar:focus + label + .underline,
-.search-bar:not(:placeholder-shown) + label + .underline {
+.search-bar:focus + .header-label + .underline,
+.search-bar:not(:placeholder-shown) + .header-label + .underline {
     width: 100%;
 }
 

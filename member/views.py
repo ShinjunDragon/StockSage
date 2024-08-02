@@ -1,6 +1,8 @@
 from django.contrib import auth
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
 
 
 from decorator.decorator import loginchk, loginadmin
@@ -205,3 +207,16 @@ def admin(request):
         "current_tab": current_tab
     }
     return render(request, "member/admin.html", context)
+
+
+
+@require_GET
+@loginadmin
+def toggle_member_status(request, member_id):
+    try:
+        member = Member.objects.get(id=member_id)
+        member.is_active = not member.is_active
+        member.save()
+        return JsonResponse({'status': 'success'})
+    except Member.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': '회원이 존재하지 않습니다.'})

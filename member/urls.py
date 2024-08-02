@@ -13,4 +13,5 @@ urlpatterns = [
     path("chgpass/", views.chgpass, name="chgpass"),
     path("delete/", views.delete, name="delete"),
     path("admin/", views.admin, name="admin"),
+    path('admin/toggle_member_status/<str:member_id>/', views.toggle_member_status, name='toggle_member_status'),
 ]

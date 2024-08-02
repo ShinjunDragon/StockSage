@@ -3,7 +3,26 @@
 {% block title %}로그인{% endblock %}
 
 {% block content %}
-
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
     <div class="form-container">
         <h2 class="text-center">아이디 찾기</h2>
         <form method="post">
@@ -14,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label for="email">이메일</label>
-                <input type="password" name="email" class="form-control" required>
+                <input type="email" name="email" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">아이디 찾기</button>
         </form>
