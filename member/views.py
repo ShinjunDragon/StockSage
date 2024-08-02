@@ -36,15 +36,18 @@ def login(request):
         pass1 = request.POST["pass1"]
         try:
             member = Member.objects.get(id=id1)
-        except:
+        except Member.DoesNotExist:
             context = {"msg": "아이디를 확인하세요", "url": "/member/login/"}
             return render(request, "alert.html", context)
         else:
-            if pass1 == member.pass1:
-                request.session['id'] = id1
-                context = {"msg": id1 + "님 환영합니다.", "url": "/stock/index/"}
-                return render(request, "alert.html", context)
-
+            if member.pass1 == pass1:
+                if member.is_active:  # 비활성화 상태 확인
+                    request.session['id'] = id1
+                    context = {"msg": id1 + "님 환영합니다.", "url": "/stock/index/"}
+                    return render(request, "alert.html", context)
+                else:
+                    context = {"msg": "계정이 비활성화되었습니다.", "url": "/member/login/"}
+                    return render(request, "alert.html", context)
             else:
                 context = {"msg": "비밀번호를 확인하세요.", "url": "/member/login/"}
                 return render(request, "alert.html", context)
