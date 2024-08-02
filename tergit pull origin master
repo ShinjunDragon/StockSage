@@ -1,0 +1,87 @@
+* [33m4edf8db[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m Save changes before pulling
+* [33ma45c6b8[m 업데이트
+[31m|[m * [33m0e2a0e3[m[33m ([m[1;31morigin/master[m[33m)[m Merge pull request #5 from SUNJ5305/develop
+[31m|[m[31m/[m[33m|[m 
+[31m|[m * [33mf31ce63[m css 수정
+[31m|[m[31m/[m  
+* [33m0e3bc0b[m[33m ([m[1;31mheroku/master[m[33m)[m 업데이트
+* [33mfba6591[m 전체 수정
+* [33mb2094cc[m html/css 수정
+*   [33m1e8f388[m Merge pull request #4 from Yhoon0729/master
+[34m|[m[35m\[m  
+[34m|[m * [33m418fb4c[m stock 세번째 커밋
+* [35m|[m [33md81c277[m Merge pull request #3 from Yhoon0729/master
+[36m|[m[35m\[m[35m|[m 
+[36m|[m * [33m105538d[m 두번째 커밋
+* [1;31m|[m   [33m25058e0[m Merge branch 'master' of https://github.com/ShinjunDragon/StockSage
+[1;32m|[m[1;33m\[m [1;31m\[m  
+[1;32m|[m * [1;31m|[m [33meebd93a[m Merge pull request #2 from Yhoon0729/master
+[1;32m|[m [1;34m|[m[1;31m\[m[1;31m|[m 
+[1;32m|[m [1;34m|[m * [33m8275b82[m 첫번째 커밋
+[1;32m|[m * [1;35m|[m [33m489df48[m Merge pull request #1 from Yhoon0729/master
+[1;32m|[m [1;36m|[m[1;35m\[m[1;35m|[m 
+[1;32m|[m [1;36m|[m * [33mbbf2566[m 테스트 커밋
+[1;32m|[m [1;36m|[m[1;36m/[m  
+* [1;36m/[m [33mdf58de2[m footer Text Update
+[1;36m|[m[1;36m/[m  
+* [33maa3275c[m Add CSS and images; update HTML templates
+* [33me14c962[m update
+* [33med16f31[m update
+* [33m9fe32ee[m update
+* [33md61995f[m update
+* [33m1e06e34[m[33m ([m[1;31morigin/feature-front[m[33m)[m updata
+* [33mafde6d4[m psycong2_binary 모듈 to requirements.txt에 추가
+* [33m8ebba30[m update
+* [33m49a38d9[m update
+* [33m36f21e7[m update
+* [33m6b5c9f3[m Add plotly to requirements.txt
+* [33m00058f1[m Update Procfile for Heroku and add necessary packages
+* [33m665ea83[m 업데이트
+* [33m5e4feba[m update
+* [33m353ef97[m Add dj_database_url to requirements
+* [33mb5a5421[m 업데이트
+* [33mffebaed[m Removed remove_file_references.py and added check_module.py
+* [33me8fff71[m 업데이트
+* [33m7215627[m 업데이트
+* [33m937f519[m requirements 업데이트
+* [33mecb52d2[m 업데이트 requirements
+* [33m5845b3c[m 업데이트 requirements.txt
+* [33me651cac[m fix
+* [33mb29032b[m requirement.txt 업데이트
+* [33mb20cee3[m Update numpy version to resolve dependency conflicts
+* [33m055a8d2[m 모듈 의존성 업데이트
+* [33mbc08fb4[m Update dependscies and Python verson
+* [33m395ff8c[m fix
+* [33m7023ef6[m fix
+* [33m928ba34[m Remove large packages to reduce slug size
+* [33m05db21c[m add .gitingnore file
+* [33m04dc141[m fix
+* [33m95c2561[m fix
+* [33m1e2f21d[m fix
+* [33mb61a8ad[m fix
+* [33m2459a55[m fix
+* [33m939420e[m fix
+* [33m990afad[m Fix bug in data export
+* [33m49b7562[m requirments gunicorn 추가
+* [33m983a521[m KIC24 DB를 기본 디폴트로 변경
+* [33m5288867[m Add changes before deploying to Heroku
+* [33mf557e6c[m procfile을 procfile.txt로 변경
+* [33m6baa380[m 3차 fix
+*   [33m6782d34[m Merge branch 'master' of https://github.com/ShinjunDragon/StockSage
+[32m|[m[33m\[m  
+[32m|[m * [33m87da1ab[m Update requirements.txt
+* [33m|[m [33md931f79[m Merge branch 'master' of https://github.com/ShinjunDragon/StockSage
+[34m|[m[33m\[m[33m|[m 
+[34m|[m * [33mc9cab41[m Update requirements.txt
+* [35m|[m [33m72e6218[m Merge branch 'master' of https://github.com/ShinjunDragon/StockSage
+[36m|[m[35m\[m[35m|[m 
+[36m|[m * [33m822515d[m Update requirements.txt
+* [1;31m|[m [33m7fd79b1[m second Fix requirements.txt
+[1;31m|[m[1;31m/[m  
+* [33m84c8497[m Fix requirment.txt
+* [33m1b2ca9a[m heroku 서버 배포 파일
+*   [33m8e54c11[m Merge branch 'master' of https://github.com/ShinjunDragon/StockSage
+[1;32m|[m[1;33m\[m  
+[1;32m|[m * [33md47a197[m Remove README.md
+[1;32m|[m * [33mb2a0016[m Add README.md
+* [33mfa1b07d[m StockSage 프로젝트
