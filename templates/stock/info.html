@@ -21,5 +21,25 @@
         <div id="search-results" style="position: absolute; background: white; border: 1px solid #ccc; z-index: 1000; width: 200px;"></div>
     </form>
 
+    <h2>댓글</h2>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">댓글 남기기</button>
+    </form>
+
+    <h3>댓글 목록</h3>
+    <ul>
+        {% for comment in comments %}
+            <li>
+                <strong>{{ comment.author }}:</strong>
+                <p>{{ comment.comment }}</p>
+                <small>{{ comment.created_at|date:"Y-m-d H:i" }}</small>
+            </li>
+        {% empty %}
+            <li>댓글이 없습니다.</li>
+        {% endfor %}
+    </ul>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock %}

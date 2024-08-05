@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load humanize %}
 
-</body>
-</html>
+{% block title %}Stock Sage - 홈{% endblock %}
+
+{% block content %}
+
+    <h1>{{ sector_name }} 섹터의 상위 15개 주식 종목</h1>
+    <table class="stock-table">
+        <thead>
+        <tr>
+            <th>순위</th>
+            <th>종목명</th>
+            <th>현재가</th>
+            <th>변화량</th>
+            <th>변화율</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for stock in top_stocks %}
+            <tr>
+                <td class="rank-box">{{ forloop.counter }}</td>
+                <td>{{ stock.Name }}</td>
+                <td>{{ stock.Close }}₩</td>
+                <td class="{% if stock.Change > 0 %}change-positive{% else %}change-negative{% endif %}">
+                    {{ stock.Change }}
+                </td>
+                <td class="{% if stock.ChagesRatio > 0 %}change-positive{% else %}change-negative{% endif %}">
+                    {% if stock.ChagesRatio > 0 %}
+                        +{{ stock.ChagesRatio|floatformat:2 }}%
+                    {% else %}
+                        {{ stock.ChagesRatio|floatformat:2 }}%
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'index' %}">돌아가기</a>
+{% endblock %}
