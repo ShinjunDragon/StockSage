@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import requests
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 import FinanceDataReader as fdr
 import matplotlib
 import matplotlib.pyplot as plt
@@ -12,15 +12,13 @@ import urllib, base64
 import yfinance as yf
 from io import BytesIO
 
-
+from stock.form import CommentForm
+from stock.models import StockComment
 
 # 한글 폰트 설정
 matplotlib.rcParams['font.family'] = 'Malgun Gothic'
 matplotlib.rcParams['axes.unicode_minus'] = False
 
-def test(request) :
-
-    return render(request, "test.html")
 
 def index(request):
     # 상위 10개
@@ -356,10 +354,16 @@ def index(request):
 
     return render(request, 'index.html', context)
 
+# 종목(sector)별 리스트
 def sector_detail(request, sector) :
     # 데이터를 불러오는 로직을 여기에 작성합니다.
-    kospi_stocks = pd.read_csv('kospi_sectors_industries.csv')
+    kospi_stocks = fdr.StockListing('KOSPI')
+    # 저장된 CSV 파일을 불러옵니다
+    sector_industry_df = pd.read_csv('kospi_sectors_industries.csv')
+    # kospi_stocks와 sector_industry_df를 'Code'를 기준으로 병합합니다
+    kospi_stocks = pd.merge(kospi_stocks, sector_industry_df, on='Code', how='left')
 
+    
     # 지정된 섹터에 대한 주식 종목 필터링
     sector_stocks = kospi_stocks[kospi_stocks['Sector'] == sector]
 
@@ -521,12 +525,26 @@ def info(request):
             current_price = info.get('currentPrice', 'N/A')
             previous_close = info.get('previousClose', 'N/A')
 
+            # 댓글 관련
+            # 댓글 처리
+            comments = StockComment.objects.filter(ticker=ticker).order_by('-created_at')
+
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.ticker = ticker
+                comment.save()
+            else:
+                form = CommentForm()
+
             return render(request, 'stock/info.html', {
                 'graphic': graphic,
                 'ticker': ticker,
                 'company_name': company_name,
                 'current_price': current_price,
-                'previous_close': previous_close
+                'previous_close': previous_close,
+                'comments': comments,
+                'form': form,
             })
 
         except Exception as e:
@@ -534,6 +552,11 @@ def info(request):
     else:
         return render(request, 'stock/info.html')
 
+def delete_comment(request, comment_id):
+    if request.method == 'POST':
+        comment = get_object_or_404(StockComment, id=comment_id)
+        comment.delete()
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 def search_stocks(request):
     query = request.GET.get('query', '').strip()
