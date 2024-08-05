@@ -30,5 +30,83 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// 주식 코드나 종목명 입력시 리스트 나오게 하는 함수
+$(document).ready(function() {
+    var searchTimeout;
+    $('#stock-search').on('input', function() {
+        clearTimeout(searchTimeout);
+        var query = $(this).val();
+        searchTimeout = setTimeout(function() {
+            if (query.length > 0) {
+                $.ajax({
+                    url: '/stock/search_stocks/',
+                    data: {
+                        'query': query
+                    },
+                    success: function(data) {
+                        var results = $('#search-results');
+                        results.empty();
+                        if (data.stocks && data.stocks.length > 0) {
+                            var list = $('<ul style="list-style-type: none; padding: 0;">');
+                            data.stocks.slice(0, 5).forEach(function(stock) {
+                                list.append($('<li style="padding: 5px; cursor: pointer;">').text(stock.code + ' - ' + stock.name)
+                                    .click(function() {
+                                        $('#stock-search').val(stock.code);
+                                        results.empty();
+                                    }));
+                            });
+                            results.append(list);
+                        } else {
+                            results.text('일치하는 주식이 없습니다.');
+                        }
+                    },
+                    error: function() {
+                        $('#search-results').text('검색 중 오류가 발생했습니다.');
+                    }
+                });
+            } else {
+                $('#search-results').empty();
+            }
+        }, 300);
+    });
+});
 
-
+$(document).ready(function() {
+    var searchTimeout;
+    $('#stock-search1').on('input', function() {
+        clearTimeout(searchTimeout);
+        var query = $(this).val();
+        searchTimeout = setTimeout(function() {
+            if (query.length > 0) {
+                $.ajax({
+                    url: '/stock/search_stocks/',
+                    data: {
+                        'query': query
+                    },
+                    success: function(data) {
+                        var results = $('#search-results1');
+                        results.empty();
+                        if (data.stocks && data.stocks.length > 0) {
+                            var list = $('<ul style="list-style-type: none; padding: 0;">');
+                            data.stocks.slice(0, 5).forEach(function(stock) {
+                                list.append($('<li style="padding: 5px; cursor: pointer;">').text(stock.code + ' - ' + stock.name)
+                                    .click(function() {
+                                        $('#stock-search1').val(stock.code);
+                                        results.empty();
+                                    }));
+                            });
+                            results.append(list);
+                        } else {
+                            results.text('일치하는 주식이 없습니다.');
+                        }
+                    },
+                    error: function() {
+                        $('#search-results1').text('검색 중 오류가 발생했습니다.');
+                    }
+                });
+            } else {
+                $('#search-results1').empty();
+            }
+        }, 300);
+    });
+});

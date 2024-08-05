@@ -1,0 +1,243 @@
+/* 전체 레이아웃과 기본 설정 */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.content-wrap {
+    display: flex;
+    width: 100%;
+    flex: 1;
+}
+
+.main-content {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+}
+
+.tab-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ccc;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    color: #000;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ccc;
+}
+
+.tab:hover {
+    background-color: #f9f9f9;
+}
+
+.tab:last-child {
+    border-right: none;
+}
+
+.highlight-bar {
+    width: 100%;
+    height: 4px;
+    background-color: #007bff;
+    border-bottom: 1px solid #ccc;
+}
+
+.chart-container {
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    background-color: #f0f0f0;
+    flex: 1;
+}
+
+.chart {
+    width: 80%;
+    height: 100%;
+    background-color: #ccc;
+}
+
+.tab-footer-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: #f8f8f8;
+    padding: 10px 0;
+    border-top: 1px solid #ccc;
+}
+
+.tab-footer {
+    flex: 1;
+    height: 50px;
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* tab-footer의 왼쪽 버튼에 추가 스타일 */
+#tab-left {
+    margin-right: 5px;
+}
+
+/* tab-footer의 오른쪽 버튼에 추가 스타일 */
+#tab-right {
+    margin-left: 5px;
+}
+
+/* tab-footer에 마우스 호버 효과 추가 */
+.tab-footer:hover {
+    background-color: #d0d0d0;
+}
+
+.sidebar {
+    width: 30%;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    flex: 1;
+}
+
+.sidebar-section {
+    padding: 20px;
+    box-sizing: border-box;
+    flex: 1;
+}
+
+.top-content {
+    margin-bottom: 20px;
+}
+
+.top-stocks, .global-indexes {
+    margin-top: 10px;
+}
+
+.stock-item, .index-item {
+    margin-bottom: 10px;
+}
+
+.stock-price, .index-value {
+    float: right;
+}
+
+.additional-content {
+    width: 960px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin: 0 auto;
+}
+
+.recent-actions {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.recent-list {
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 10px;
+    margin: 10px auto;
+    height: 44px;
+    flex: 1;
+    box-sizing: border-box;
+}
+
+.recent-title {
+    font-size: 14px;
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.recent-search-box {
+    background: #ffffff;
+    padding: 5px;
+    box-sizing: border-box;
+    flex: 1;
+    border: 1px solid #ccc;
+}
+
+.bookmark-form {
+    margin-left: 10px;
+}
+
+.bookmark-button {
+    height: 45px;
+    width: 80px;
+    font-size: 12px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.stock-tabs, .market-trend {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.stock-tab, .market-section {
+    flex: 1;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+.stock-tab:last-child, .market-section:last-child {
+    margin-right: 0;
+}
+
+.stock-tab-title, .market-section-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.stock-details, .market-details, .exchange-details {
+    font-size: 14px;
+    color: #333;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
+}
+
+.exchange-rate {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+}
+
+.exchange-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}

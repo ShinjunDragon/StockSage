@@ -45,6 +45,8 @@
             <button class="tab active" data-tab="gainers">상승률 상위</button>
             <button class="tab" data-tab="losers">하락률 상위</button>
             <button class="tab" data-tab="market-cap">시가총액</button>
+            <button class="tab" data-tab="sector">종목별</button>
+            <button class="tab" data-tab="industry">테마별</button>
         </div>
        <!-- 상승률 상위 탭 -->
        <div class="tab-content gainers active">
@@ -151,5 +153,62 @@
             </table>
         </div>
 
+        <!-- 종목(sector)별 평균 등락률 탭 -->
+        <div class="tab-content sector">
+            <h2>종목별</h2>
+            <table class="stock-table">
+                <thead>
+                <tr>
+                    <th>순위</th>
+                    <th>섹터명</th>
+                    <th>변화율</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for s in sectors_data %}
+                    <tr>
+                        <td class="rank-box">{{ forloop.counter }}</td>
+                        <td><a href="/stock/sector_detail?sector={{ s.Sector }}">{{ s.Sector }}</a></td>
+                        <td class="{% if s.ChagesRatio > 0 %}change-positive{% else %}change-negative{% endif %}">
+                            {% if s.ChagesRatio > 0 %}
+                                +{{ s.ChagesRatio|floatformat:2  }}%
+                            {% else %}
+                                {{ s.ChagesRatio|floatformat:2  }}%
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 테마(industry)별 평균 등락률 탭 -->
+        <div class="tab-content industry">
+            <h2>종목별</h2>
+            <table class="stock-table">
+                <thead>
+                <tr>
+                    <th>순위</th>
+                    <th>테마명</th>
+                    <th>변화율</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for s in industries_data %}
+                    <tr>
+                        <td class="rank-box">{{ forloop.counter }}</td>
+                        <td>{{ s.Industry }}</td>
+                        <td class="{% if s.ChagesRatio > 0 %}change-positive{% else %}change-negative{% endif %}">
+                            {% if s.ChagesRatio > 0 %}
+                                +{{ s.ChagesRatio|floatformat:2  }}%
+                            {% else %}
+                                {{ s.ChagesRatio|floatformat:2  }}%
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </section>
 {% endblock %}
