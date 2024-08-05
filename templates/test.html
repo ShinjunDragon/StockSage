@@ -1,0 +1,189 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Content Tabs with Sidebar</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="content-wrap">
+            <div class="main-content">
+                <div class="tab-header">
+                    <div class="tab" id="tab1" onclick="switchTab('content1')">코스피</div>
+                    <div class="tab" id="tab2" onclick="switchTab('content2')">코스닥</div>
+                    <div class="tab" id="tab3" onclick="switchTab('content3')">코스피200</div>
+                </div>
+                <div class="highlight-bar"></div>
+                <div class="chart-container">
+                    <div class="chart"></div>
+                </div>
+                <div class="tab-footer-container">
+                    <div class="tab-footer" id="tab-left" onclick="moveLeft()">왼쪽</div>
+                    <div class="tab-footer" id="tab-right" onclick="moveRight()">오른쪽</div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-section sidebar-top">
+                    <div class="top-content">
+                        <h2>인기검색종목</h2>
+                        <div class="top-stocks">
+                            <div class="stock-item">삼성전자 <span class="stock-price">76,700</span></div>
+                            <div class="stock-item">SK하이닉스 <span class="stock-price">110,000</span></div>
+                            <div class="stock-item">LG전자 <span class="stock-price">70,500</span></div>
+                            <div class="stock-item">현대차 <span class="stock-price">200,000</span></div>
+                            <div class="stock-item">카카오 <span class="stock-price">85,000</span></div>
+                        </div>
+                        <h2>주요 해외지수</h2>
+                        <div class="global-indexes">
+                            <div class="index-item">다우산업 <span class="index-value">39,737.66</span></div>
+                            <div class="index-item">나스닥 <span class="index-value">13,600.12</span></div>
+                            <div class="index-item">S&P 500 <span class="index-value">4,435.92</span></div>
+                            <div class="index-item">FTSE 100 <span class="index-value">7,500.89</span></div>
+                            <div class="index-item">니케이 <span class="index-value">27,500.40</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-underline"></div>
+            </div>
+        </div>
+        <div class="additional-content">
+            <div class="recent-actions">
+                <div class="recent-list">
+                    <div class="recent-title">최근조회목록</div>
+                    <div class="recent-search-box">검색된 주식들</div>
+                </div>
+                <form class="bookmark-form">
+                    <button class="bookmark-button">보관함 바로가기</button>
+                </form>
+            </div>
+            <div class="stock-tabs">
+                <div class="stock-tab">
+                    <div class="stock-tab-title">주가상승률</div>
+                    <div class="stock-details">
+                        <div class="row">
+                            <span>업종 A</span>
+                            <span>+5%</span>
+                            <span>그래프1</span>
+                        </div>
+                        <div class="row">
+                            <span>업종 B</span>
+                            <span>+3.2%</span>
+                            <span>그래프2</span>
+                        </div>
+                        <div class="row">
+                            <span>업종 C</span>
+                            <span>+1.5%</span>
+                            <span>그래프3</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stock-tab">
+                    <div class="stock-tab-title">주가하강률</div>
+                    <div class="stock-details">
+                        <div class="row">
+                            <span>업종 D</span>
+                            <span>-4.7%</span>
+                            <span>그래프4</span>
+                        </div>
+                        <div class="row">
+                            <span>업종 E</span>
+                            <span>-2.9%</span>
+                            <span>그래프5</span>
+                        </div>
+                        <div class="row">
+                            <span>업종 F</span>
+                            <span>-1.1%</span>
+                            <span>그래프6</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stock-tab">
+                    <div class="stock-tab-title">시가총액</div>
+                    <div class="stock-details">
+                        <div class="row">
+                            <span>업종 G</span>
+                            <span>100억</span>
+                            <span>그래프7</span>
+                        </div>
+                        <div class="row">
+                            <span>업종 H</span>
+                            <span>80억</span>
+                            <span>그래프8</span>
+                        </div>
+                        <div class="row">
+                            <span>업종 I</span>
+                            <span>60억</span>
+                            <span>그래프9</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="market-trend">
+                <div class="market-section">
+                    <div class="market-section-title">업종별시세</div>
+                    <div class="market-details">
+                        <div class="row">
+                            <span>업종 J</span>
+                            <span>+2.4%</span>
+                            <span>그래프10</span>
+                        </div>
+                        <div class="row">
+                            <span>업종 K</span>
+                            <span>-0.6%</span>
+                            <span>그래프11</span>
+                        </div>
+                        <div class="row">
+                            <span>업종 L</span>
+                            <span>+1.8%</span>
+                            <span>그래프12</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="market-section">
+                    <div class="market-section-title">테마별시세</div>
+                    <div class="market-details">
+                        <div class="row">
+                            <span>테마 M</span>
+                            <span>+3.1%</span>
+                            <span>그래프13</span>
+                        </div>
+                        <div class="row">
+                            <span>테마 N</span>
+                            <span>-1.2%</span>
+                            <span>그래프14</span>
+                        </div>
+                        <div class="row">
+                            <span>테마 O</span>
+                            <span>+0.8%</span>
+                            <span>그래프15</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="exchange-rate">
+                <div class="exchange-title">환율정보</div>
+                <div class="exchange-details">
+                    <div class="row">
+                        <span>USD/KRW</span>
+                        <span>1,200원</span>
+                        <span>+0.2%</span>
+                    </div>
+                    <div class="row">
+                        <span>EUR/KRW</span>
+                        <span>1,350원</span>
+                        <span>-0.1%</span>
+                    </div>
+                    <div class="row">
+                        <span>JPY/KRW</span>
+                        <span>11원</span>
+                        <span>+0.5%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

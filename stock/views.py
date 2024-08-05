@@ -18,21 +18,254 @@ from io import BytesIO
 matplotlib.rcParams['font.family'] = 'Malgun Gothic'
 matplotlib.rcParams['axes.unicode_minus'] = False
 
+def test(request) :
+
+    return render(request, "test.html")
+
 def index(request):
     # 상위 10개
     today = datetime.today().strftime('%Y-%m-%d')
 
     # KOSPI 주식 목록 가져오기
-    all_stocks = fdr.StockListing('KOSPI')
+    kospi_stocks = fdr.StockListing('KOSPI')
+    
+    '''
+    특정 날짜의 종목을 보는 방법
+    code = '005930'
+    kospi_stocks = fdr.DataReader(code, start=today)
+    '''
+    
+    '''
+    # Sector(종목별)와 industry(테마별)를 yfinance 모듈에서 가져와서 df로 만들어 csv로 저장
+    # sector와 industry 정보를 추가하기 위한 빈 리스트를 준비합니다
+    sectors = []
+    industries = []
+    
+    # 각 주식의 sector와 industry 정보를 가져옵니다
+    for code in kospi_stocks['Code']:
+        try:
+            ticker = f"{code}.KS"  # KOSPI 티커 형식
+            stock = yf.Ticker(ticker)
+            info = stock.info
+            sector = info.get('sector', 'N/A')
+            industry = info.get('industry', 'N/A')
+        except Exception as e:
+            sector = 'N/A'
+            industry = 'N/A'
+        
+        sectors.append(sector)
+        industries.append(industry)
 
-    # 상위 10개 종목 선택 (등락률 기준)
-    top_10_ChagesRatio = all_stocks.sort_values(by='ChagesRatio', ascending=False).head(15)
+    # 원본 DataFrame에 sector와 industry 컬럼을 추가합니다
+    kospi_stocks['Sector'] = sectors
+    kospi_stocks['Industry'] = industries
+    
+    # sectors와 industries 리스트를 따로 저장합니다
+    sector_industry_df = pd.DataFrame({
+        'Code': kospi_stocks['Code'],
+        'Sector': sectors,
+        'Industry': industries
+    })
+    
+    # 저장할 파일 경로를 설정합니다
+    sector_industry_df.to_csv('kospi_sectors_industries.csv', index=False)
+    '''
+    
+    '''
+    # Sector와 Industry 변환 사전
+    sector_translation = {
+        'Technology': '기술', a
+        'Healthcare': '헬스케어', a
+        'Financial Services': '금융 서비스', a
+        'Consumer Discretionary': '소비재',
+        'Consumer Staples': '필수 소비재',
+        'Utilities': '공공 서비스', a
+        'Energy': '에너지', a
+        'Materials': '자재',
+        'Real Estate': '부동산', a
+        'Communication Services': '통신 서비스', a
+        'Industrials': '산업' a
+    }
+    
+    industry_translation = {
+        'Communication Equipment': '통신 장비',
+        'Medical Devices': '의료 기기',
+        'Beverages - Brewers': '음료 - 양조',
+        'Real Estate - Development': '부동산 - 개발',
+        'Grocery Stores': '식료품점',
+        'REIT - Residential': 'REIT - 주거',
+        'Telecom Services': '통신 서비스',
+        'Lodging': '숙박',
+        'Railroads': '철도',
+        'Beverages - Non-Alcoholic': '음료 - 비알콜',
+        'Business Equipment & Supplies': '업무 장비 및 소모품',
+        'Capital Markets': '자본 시장',
+        'Tobacco': '담배',
+        'REIT - Office': 'REIT - 사무실',
+        'Tools & Accessories': '도구 및 액세서리',
+        'REIT - Diversified': 'REIT - 다각화',
+        'Security & Protection Services': '보안 및 보호 서비스',
+        'Paper & Paper Products': '종이 및 종이 제품',
+        'Department Stores': '백화점',
+        'Aluminum': '알루미늄',
+        'Beverages - Wineries & Distilleries': '음료 - 와이너리 및 증류소',
+        'Insurance - Reinsurance': '보험 - 재보험',
+        'Advertising Agencies': '광고 대행사',
+        'Biotechnology': '생명공학',
+        'Medical Instruments & Supplies': '의료 기기 및 소모품',
+        'Auto & Truck Dealerships': '자동차 및 트럭 대리점',
+        'Drug Manufacturers - General': '의약품 제조업체 - 일반',
+        'Farm Products': '농산물',
+        'Furnishings, Fixtures & Appliances': '가구, 비품 및 가전',
+        'Entertainment': '오락',
+        'Drug Manufacturers - Specialty & Generic': '의약품 제조업체 - 특수 및 제네릭',
+        'Education & Training Services': '교육 및 훈련 서비스',
+        'Food Distribution': '식품 유통',
+        'Confectioners': '사탕 제조업체',
+        'Apparel Manufacturing': '의류 제조',
+        'Utilities - Regulated Gas': '공공 서비스 - 규제된 가스',
+        'Internet Retail': '인터넷 소매',
+        'Asset Management': '자산 관리',
+        'Textile Manufacturing': '직물 제조',
+        'Semiconductors': '반도체',
+        'Restaurants': '레스토랑',
+        'Oil & Gas Refining & Marketing': '석유 및 가스 정제 및 마케팅',
+        'Discount Stores': '할인 매장',
+        'REIT - Retail': 'REIT - 소매',
+        'Building Materials': '건축 자재',
+        'Packaged Foods': '포장 식품',
+        'Packaging & Containers': '포장 및 용기',
+        'Credit Services': '신용 서비스',
+        'Agricultural Inputs': '농업 자재',
+        'Software - Application': '소프트웨어 - 응용',
+        'Airlines': '항공사',
+        'Electronic Gaming & Multimedia': '전자 게임 및 멀티미디어',
+        'Other Industrial Metals & Mining': '기타 산업 금속 및 채굴',
+        'Financial Data & Stock Exchanges': '금융 데이터 및 증권 거래소',
+        'Electronic Components': '전자 부품',
+        'Engineering & Construction': '엔지니어링 및 건설',
+        'Lumber & Wood Production': '목재 및 목재 생산',
+        'Publishing': '출판',
+        'Steel': '철강',
+        'Rental & Leasing Services': '임대 및 리스 서비스',
+        'Building Products & Equipment': '건축 제품 및 장비',
+        'Leisure': '레저',
+        'Software - Infrastructure': '소프트웨어 - 인프라',
+        'Conglomerates': '대기업',
+        'Consumer Electronics': '소비자 전자기기',
+        'Medical Distribution': '의료 유통',
+        'Marine Shipping': '해양 운송',
+        'Travel Services': '여행 서비스',
+        'Auto Parts': '자동차 부품',
+        'Apparel Retail': '의류 소매',
+        'REIT - Industrial': 'REIT - 산업',
+        'Insurance - Property & Casualty': '보험 - 자산 및 상해',
+        'Specialty Retail': '전문 소매',
+        'Specialty Business Services': '전문 비즈니스 서비스',
+        'Information Technology Services': '정보 기술 서비스',
+        'Chemicals': '화학 물질',
+        'Copper': '구리',
+        'Utilities - Regulated Electric': '공공 서비스 - 규제된 전기',
+        'Recreational Vehicles': '레크리에이션 차량',
+        'Auto Manufacturers': '자동차 제조업체',
+        'Industrial Distribution': '산업 유통',
+        'Specialty Chemicals': '전문 화학 물질',
+        'Specialty Industrial Machinery': '전문 산업 기계',
+        'Computer Hardware': '컴퓨터 하드웨어',
+        'Internet Content & Information': '인터넷 콘텐츠 및 정보',
+        'Integrated Freight & Logistics': '통합 화물 및 물류',
+        'Electrical Equipment & Parts': '전기 장비 및 부품',
+        'Resorts & Casinos': '리조트 및 카지노',
+        'Real Estate Services': '부동산 서비스',
+        'Scientific & Technical Instruments': '과학 및 기술 기기',
+        'Footwear & Accessories': '신발 및 액세서리',
+        'Insurance - Diversified': '보험 - 다각화',
+        'Aerospace & Defense': '항공우주 및 방산',
+        'Household & Personal Products': '가정 및 개인 제품',
+        'Electronics & Computer Distribution': '전자 및 컴퓨터 유통',
+        'Broadcasting': '방송',
+        'Metal Fabrication': '금속 가공',
+        'Semiconductor Equipment & Materials': '반도체 장비 및 자재',
+        'Utilities - Renewable': '공공 서비스 - 재생 가능',
+        'Airports & Air Services': '공항 및 항공 서비스',
+        'Banks - Regional': '은행 - 지역',
+        'Insurance - Life': '보험 - 생명',
+        'REIT - Hotel & Motel': 'REIT - 호텔 및 모텔',
+        'Farm & Heavy Construction Machinery': '농업 및 중장비 기계',
+        'Real Estate - Diversified': '부동산 - 다각화',
+        'Solar': '태양광',
+        'Pollution & Treatment Controls': '오염 및 처리 제어'
+    }
+    
+    # 빈 리스트 준비
+    sectors = []
+    industries = []
+    
+    # 각 주식의 sector와 industry 정보를 가져옵니다
+    for code in kospi_stocks['Code']:
+        try:
+            ticker = f"{code}.KS"  # KOSPI 티커 형식
+            stock = yf.Ticker(ticker)
+            info = stock.info
+            sector = info.get('sector', 'N/A')
+            industry = info.get('industry', 'N/A')
+            
+            # Sector와 Industry를 한글로 변환
+            sector_korean = sector_translation.get(sector, sector)
+            industry_korean = industry_translation.get(industry, industry)
+            
+        except Exception as e:
+            sector_korean = 'N/A'
+            industry_korean = 'N/A'
+        
+        sectors.append(sector_korean)
+        industries.append(industry_korean)
+    
+    # 원본 DataFrame에 sector와 industry 컬럼을 추가합니다
+    kospi_stocks['Sector'] = sectors
+    kospi_stocks['Industry'] = industries
+    
+    # sectors와 industries 리스트를 따로 저장합니다
+    sector_industry_df = pd.DataFrame({
+        'Code': kospi_stocks['Code'],
+        'Sector': sectors,
+        'Industry': industries
+    })
+    
+    # 저장할 파일 경로를 설정합니다
+    sector_industry_df.to_csv('kospi_sectors_industries.csv', index=False)
+    '''
+    
+    # 저장된 CSV 파일을 불러옵니다
+    sector_industry_df = pd.read_csv('kospi_sectors_industries.csv')
+    
+    # kospi_stocks와 sector_industry_df를 'Code'를 기준으로 병합합니다
+    kospi_stocks = pd.merge(kospi_stocks, sector_industry_df, on='Code', how='left')
+    
+    # 상위 15개 종목 선택 (등락률 기준)
+    top_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=False).head(15)
 
-    # 하위 10개 종목 선택 (등락률 기준)
-    row_10_ChagesRatio = all_stocks.sort_values(by='ChagesRatio', ascending=True).head(15)
+    # 하위 15개 종목 선택 (등락률 기준)
+    row_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=True).head(15)
 
-    # 상위 10개 종목 선택 (시가총액 기준)
-    top_10_Marcap = all_stocks.sort_values(by='Marcap', ascending=False).head(15)
+    # 상위 15개 종목 선택 (시가총액 기준)
+    top_10_Marcap = kospi_stocks.sort_values(by='Marcap', ascending=False).head(15)
+
+    # 섹터별 평균 등락률 계산
+    sector_avg_change = kospi_stocks.groupby('Sector')['ChagesRatio'].mean().reset_index()
+    # 평균 등락률 기준으로 정렬
+    sector_avg_change = sector_avg_change.sort_values(by='ChagesRatio', ascending=False)
+    sector_avg_change = sector_avg_change.head(15)
+    # DataFrame을 딕셔너리로 변환
+    sectors_data = sector_avg_change.to_dict(orient='records')
+
+    # industry별 평균 등락률 계산
+    industry_avg_change = kospi_stocks.groupby('Industry')['ChagesRatio'].mean().reset_index()
+    # 평균 등락률 기준으로 정렬
+    industry_avg_change = industry_avg_change.sort_values(by='ChagesRatio', ascending=False)
+    industry_avg_change = industry_avg_change.head(15)
+    # DataFrame을 딕셔너리로 변환
+    industries_data = industry_avg_change.to_dict(orient='records')
 
     # 환율정보 가져오기 (open API)
     url = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=DPModF9KEpqknLkTe9GxHGp8k1me31CC&searchdate=20240701&data=AP01'
@@ -116,10 +349,30 @@ def index(request):
         'gbp': gbp,
         'dkk': dkk,
         'request_time': request_time,
-        'kospi_chart': image_base64
+        'kospi_chart': image_base64,
+        'sectors_data': sectors_data,
+        'industries_data' : industries_data
     }
 
     return render(request, 'index.html', context)
+
+def sector_detail(request, sector) :
+    # 데이터를 불러오는 로직을 여기에 작성합니다.
+    kospi_stocks = pd.read_csv('kospi_sectors_industries.csv')
+
+    # 지정된 섹터에 대한 주식 종목 필터링
+    sector_stocks = kospi_stocks[kospi_stocks['Sector'] == sector]
+
+    # 등락률 기준으로 내림차순 정렬 후 상위 15개 항목 선택
+    top_stocks = sector_stocks.sort_values(by='ChagesRatio', ascending=False).head(15)
+
+    # 컨텍스트를 설정하여 템플릿에 전달
+    context = {
+        'sector_name': sector,
+        'top_stocks': top_stocks.to_dict(orient='records'),
+    }
+
+    return render(request, "stock/sector_detail.html", context)
 
 def list(request):
     # 날짜 설정

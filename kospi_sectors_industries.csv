@@ -1,0 +1,958 @@
+Code,Sector,Industry
+005930,Technology,Consumer Electronics
+000660,Technology,Semiconductors
+373220,Industrials,Specialty Industrial Machinery
+207940,Healthcare,Biotechnology
+005380,Consumer Cyclical,Auto Manufacturers
+005935,Technology,Consumer Electronics
+068270,Healthcare,Biotechnology
+000270,Consumer Cyclical,Auto Manufacturers
+105560,Financial Services,Banks - Regional
+005490,Basic Materials,Steel
+055550,Financial Services,Banks - Regional
+035420,Communication Services,Internet Content & Information
+028260,Industrials,Engineering & Construction
+006400,Technology,Electronic Components
+051910,Basic Materials,Chemicals
+012330,Consumer Cyclical,Auto Parts
+003670,Basic Materials,Building Materials
+329180,Industrials,Aerospace & Defense
+035720,Communication Services,Internet Content & Information
+086790,Financial Services,Banks - Regional
+032830,Financial Services,Insurance - Life
+000810,Financial Services,Insurance - Property & Casualty
+066570,Technology,Consumer Electronics
+138040,Financial Services,Asset Management
+012450,Industrials,Aerospace & Defense
+259960,Communication Services,Electronic Gaming & Multimedia
+009540,Industrials,Aerospace & Defense
+011200,Industrials,Marine Shipping
+003550,Technology,Consumer Electronics
+015760,Utilities,Utilities - Regulated Electric
+033780,Consumer Defensive,Tobacco
+017670,Communication Services,Telecom Services
+034020,Industrials,Specialty Industrial Machinery
+009150,Technology,Electronic Components
+042700,Technology,Semiconductor Equipment & Materials
+018260,Technology,Information Technology Services
+316140,Financial Services,Banks - Regional
+024110,Financial Services,Banks - Regional
+402340,Technology,Semiconductors
+034730,Industrials,Conglomerates
+267260,Industrials,Electrical Equipment & Parts
+010130,Basic Materials,Other Industrial Metals & Mining
+090430,Consumer Defensive,Household & Personal Products
+096770,Energy,Oil & Gas Refining & Marketing
+323410,Financial Services,Banks - Regional
+030200,Communication Services,Telecom Services
+010140,Industrials,Aerospace & Defense
+047050,Industrials,Conglomerates
+042660,Industrials,Aerospace & Defense
+086280,Industrials,Integrated Freight & Logistics
+010950,Energy,Oil & Gas Refining & Marketing
+003490,Industrials,Airlines
+352820,Communication Services,Entertainment
+000100,Healthcare,Drug Manufacturers - Specialty & Generic
+005830,Financial Services,Insurance - Property & Casualty
+326030,Healthcare,Biotechnology
+267250,Energy,Oil & Gas Refining & Marketing
+450080,N/A,N/A
+005387,Consumer Cyclical,Auto Manufacturers
+011070,Technology,Electronic Components
+097950,Consumer Defensive,Packaged Foods
+034220,Technology,Consumer Electronics
+051900,Consumer Defensive,Household & Personal Products
+251270,Communication Services,Electronic Gaming & Multimedia
+088980,N/A,N/A
+443060,N/A,N/A
+047810,Industrials,Aerospace & Defense
+064350,Industrials,Railroads
+161390,Consumer Cyclical,Auto Parts
+028050,Industrials,Engineering & Construction
+010120,Industrials,Electrical Equipment & Parts
+011790,Basic Materials,Specialty Chemicals
+029780,Financial Services,Credit Services
+180640,Consumer Cyclical,Lodging
+032640,Communication Services,Telecom Services
+010620,Industrials,Marine Shipping
+021240,Consumer Cyclical,"Furnishings, Fixtures & Appliances"
+009830,Basic Materials,Chemicals
+079550,Industrials,Aerospace & Defense
+078930,Industrials,Conglomerates
+454910,Industrials,Specialty Industrial Machinery
+005940,Financial Services,Capital Markets
+022100,Technology,Information Technology Services
+006800,Financial Services,Capital Markets
+003230,Consumer Defensive,Packaged Foods
+307950,Technology,Information Technology Services
+302440,Healthcare,Biotechnology
+011170,Basic Materials,Chemicals
+005070,Technology,Computer Hardware
+066970,Industrials,Electrical Equipment & Parts
+005385,Consumer Cyclical,Auto Manufacturers
+036460,Utilities,Utilities - Regulated Gas
+241560,Industrials,Farm & Heavy Construction Machinery
+016360,Financial Services,Capital Markets
+071050,Financial Services,Capital Markets
+036570,Communication Services,Electronic Gaming & Multimedia
+001570,Basic Materials,Chemicals
+011780,Basic Materials,Specialty Chemicals
+462870,N/A,N/A
+272210,Industrials,Aerospace & Defense
+128940,Healthcare,Drug Manufacturers - Specialty & Generic
+004020,Basic Materials,Steel
+000720,Industrials,Engineering & Construction
+271560,Consumer Defensive,Confectioners
+006260,Industrials,Electrical Equipment & Parts
+001040,Industrials,Conglomerates
+377300,Technology,Software - Infrastructure
+039490,Financial Services,Capital Markets
+035250,Consumer Cyclical,Resorts & Casinos
+001450,Financial Services,Insurance - Property & Casualty
+138930,Financial Services,Banks - Regional
+004370,Consumer Defensive,Packaged Foods
+052690,Industrials,Engineering & Construction
+175330,Financial Services,Banks - Regional
+081660,Consumer Cyclical,Leisure
+002380,Basic Materials,Chemicals
+361610,Technology,Electronic Components
+298040,Industrials,Specialty Industrial Machinery
+004990,Consumer Defensive,Confectioners
+088350,Financial Services,Insurance - Life
+002790,Consumer Defensive,Household & Personal Products
+001440,Industrials,Electrical Equipment & Parts
+007070,Consumer Cyclical,Department Stores
+007660,Technology,Electronic Components
+000150,Industrials,Conglomerates
+000880,Industrials,Conglomerates
+018880,Consumer Cyclical,Auto Parts
+000120,Industrials,Integrated Freight & Logistics
+012750,Industrials,Security & Protection Services
+112610,Industrials,Specialty Industrial Machinery
+000990,Technology,Semiconductors
+008930,Healthcare,Medical Distribution
+030000,Communication Services,Advertising Agencies
+383220,Consumer Cyclical,Apparel Manufacturing
+282330,Consumer Defensive,Grocery Stores
+028670,Industrials,Marine Shipping
+008770,Consumer Cyclical,Specialty Retail
+026960,Consumer Defensive,Food Distribution
+023530,Consumer Cyclical,Department Stores
+051600,Industrials,Engineering & Construction
+012510,Technology,Software - Application
+009420,Healthcare,Drug Manufacturers - Specialty & Generic
+278470,Consumer Defensive,Household & Personal Products
+020150,Industrials,Electrical Equipment & Parts
+014680,Basic Materials,Chemicals
+007310,Consumer Defensive,Packaged Foods
+111770,Consumer Cyclical,Apparel Manufacturing
+204320,Consumer Cyclical,Auto Parts
+139480,Consumer Defensive,Discount Stores
+017800,Industrials,Specialty Industrial Machinery
+005850,Consumer Cyclical,Auto Parts
+006280,Healthcare,Drug Manufacturers - Specialty & Generic
+047040,Industrials,Engineering & Construction
+051915,Basic Materials,Chemicals
+018670,Energy,Oil & Gas Refining & Marketing
+006360,Industrials,Engineering & Construction
+062040,N/A,N/A
+192820,Consumer Defensive,Household & Personal Products
+000240,Consumer Cyclical,Auto Parts
+103140,Industrials,Metal Fabrication
+042670,Industrials,Farm & Heavy Construction Machinery
+004170,Consumer Cyclical,Department Stores
+185750,Healthcare,Drug Manufacturers - Specialty & Generic
+161890,Consumer Defensive,Household & Personal Products
+280360,Consumer Defensive,Confectioners
+000080,Consumer Defensive,Beverages - Wineries & Distilleries
+009240,Consumer Cyclical,"Furnishings, Fixtures & Appliances"
+294870,Industrials,Engineering & Construction
+073240,Consumer Cyclical,Auto Parts
+010060,Financial Services,Asset Management
+395400,Real Estate,REIT - Office
+069620,Healthcare,Drug Manufacturers - Specialty & Generic
+011210,Consumer Cyclical,Auto Parts
+003690,Financial Services,Insurance - Reinsurance
+009410,N/A,N/A
+139130,Financial Services,Banks - Regional
+082640,Financial Services,Insurance - Life
+298050,Consumer Cyclical,Textile Manufacturing
+005300,Consumer Defensive,Beverages - Non-Alcoholic
+298020,Consumer Cyclical,Textile Manufacturing
+014820,Consumer Cyclical,Packaging & Containers
+137310,Healthcare,Medical Instruments & Supplies
+336260,Industrials,Electrical Equipment & Parts
+375500,Industrials,Engineering & Construction
+001720,Financial Services,Capital Markets
+004490,Industrials,Electrical Equipment & Parts
+003090,Healthcare,Drug Manufacturers - Specialty & Generic
+004000,Basic Materials,Chemicals
+006040,Consumer Defensive,Food Distribution
+108320,Technology,Semiconductors
+003620,Consumer Cyclical,Auto Manufacturers
+082740,Industrials,Specialty Industrial Machinery
+001120,Industrials,Conglomerates
+069960,Consumer Cyclical,Department Stores
+009970,Consumer Cyclical,Apparel Manufacturing
+000210,Basic Materials,Specialty Chemicals
+089860,Industrials,Rental & Leasing Services
+365550,Real Estate,REIT - Industrial
+034230,Consumer Cyclical,Resorts & Casinos
+267270,Industrials,Farm & Heavy Construction Machinery
+353200,Technology,Electronic Components
+103590,Industrials,Electrical Equipment & Parts
+336370,Technology,Electronic Components
+145720,Healthcare,Medical Instruments & Supplies
+001740,Industrials,Conglomerates
+457190,N/A,N/A
+120110,Basic Materials,Chemicals
+002840,Basic Materials,Chemicals
+192080,Communication Services,Electronic Gaming & Multimedia
+079160,Communication Services,Entertainment
+300720,Basic Materials,Building Materials
+001800,Consumer Defensive,Confectioners
+330590,Real Estate,REIT - Retail
+085620,Financial Services,Insurance - Life
+002710,Basic Materials,Steel
+007340,Consumer Cyclical,Auto Parts
+248070,Technology,Electronic Components
+000400,Financial Services,Insurance - Property & Casualty
+000815,Financial Services,Insurance - Property & Casualty
+003540,Financial Services,Capital Markets
+285130,Basic Materials,Specialty Chemicals
+023590,Technology,Information Technology Services
+178920,Basic Materials,Specialty Chemicals
+009450,Industrials,Specialty Industrial Machinery
+005180,Consumer Defensive,Packaged Foods
+281820,Technology,Semiconductor Equipment & Materials
+001680,Consumer Defensive,Packaged Foods
+229640,Industrials,Electrical Equipment & Parts
+214320,Communication Services,Advertising Agencies
+105630,Consumer Cyclical,Apparel Manufacturing
+348950,N/A,N/A
+066575,Technology,Consumer Electronics
+069260,Basic Materials,Chemicals
+271940,Consumer Cyclical,Auto Parts
+039130,Consumer Cyclical,Travel Services
+005420,Basic Materials,Chemicals
+002350,Consumer Cyclical,Auto Parts
+089590,Industrials,Airlines
+192400,Consumer Cyclical,"Furnishings, Fixtures & Appliances"
+003570,Industrials,Aerospace & Defense
+950210,Healthcare,Biotechnology
+114090,Consumer Cyclical,Resorts & Casinos
+020560,Industrials,Airlines
+001530,Consumer Cyclical,Textile Manufacturing
+456040,Industrials,Conglomerates
+004800,Industrials,Conglomerates
+100090,Industrials,Aerospace & Defense
+005250,Healthcare,Biotechnology
+268280,Basic Materials,Chemicals
+003530,Financial Services,Capital Markets
+006650,Basic Materials,Chemicals
+032350,Consumer Cyclical,Resorts & Casinos
+090460,Technology,Electronic Components
+006110,Basic Materials,Aluminum
+003280,Industrials,Marine Shipping
+003850,Healthcare,Drug Manufacturers - Specialty & Generic
+000640,Healthcare,Drug Manufacturers - Specialty & Generic
+001430,Basic Materials,Steel
+010780,Industrials,Engineering & Construction
+006120,Industrials,Conglomerates
+003030,Basic Materials,Steel
+049770,Consumer Defensive,Packaged Foods
+001060,Healthcare,Drug Manufacturers - Specialty & Generic
+005880,Industrials,Marine Shipping
+093370,Basic Materials,Chemicals
+344820,Industrials,Building Products & Equipment
+003240,Basic Materials,Chemicals
+005440,Consumer Defensive,Food Distribution
+009900,Consumer Cyclical,Auto Parts
+006380,N/A,N/A
+181710,Communication Services,Electronic Gaming & Multimedia
+403550,Technology,Software - Application
+071970,Industrials,Specialty Industrial Machinery
+381970,Consumer Cyclical,Auto & Truck Dealerships
+064960,Consumer Cyclical,Auto Parts
+000370,Financial Services,Insurance - Property & Casualty
+025540,Industrials,Electrical Equipment & Parts
+019170,Healthcare,Drug Manufacturers - Specialty & Generic
+192650,Technology,Electronic Components
+016380,Basic Materials,Steel
+170900,Healthcare,Drug Manufacturers - Specialty & Generic
+030190,Financial Services,Credit Services
+017960,Basic Materials,Chemicals
+000070,Industrials,Conglomerates
+293940,N/A,N/A
+008730,Consumer Cyclical,Packaging & Containers
+057050,Consumer Cyclical,Internet Retail
+012630,Real Estate,Real Estate Services
+030610,Financial Services,Capital Markets
+003960,Consumer Defensive,Packaged Foods
+000670,Basic Materials,Other Industrial Metals & Mining
+003470,Financial Services,Capital Markets
+091810,Industrials,Airlines
+007700,Consumer Cyclical,Apparel Manufacturing
+014830,Basic Materials,Chemicals
+272450,Industrials,Airlines
+383800,Industrials,Conglomerates
+002030,Basic Materials,Building Materials
+195870,Technology,Semiconductor Equipment & Materials
+071320,Utilities,Utilities - Renewable
+00680K,Financial Services,Capital Markets
+090435,Consumer Defensive,Household & Personal Products
+018250,Consumer Defensive,Household & Personal Products
+002240,Basic Materials,Steel
+161000,Basic Materials,Specialty Chemicals
+016800,Consumer Cyclical,"Furnishings, Fixtures & Appliances"
+031430,Consumer Cyclical,Apparel Retail
+017940,Energy,Oil & Gas Refining & Marketing
+017860,Basic Materials,Specialty Chemicals
+145990,Industrials,Conglomerates
+284740,Technology,Electronics & Computer Distribution
+017810,Consumer Defensive,Packaged Foods
+005610,Consumer Defensive,Packaged Foods
+130660,Utilities,Utilities - Regulated Electric
+241590,Consumer Cyclical,Footwear & Accessories
+075580,Industrials,Marine Shipping
+377740,Healthcare,Medical Devices
+432320,N/A,N/A
+033240,Technology,Electronic Components
+475150,N/A,N/A
+460860,Basic Materials,Steel
+003520,Healthcare,Drug Manufacturers - Specialty & Generic
+003160,Technology,Semiconductor Equipment & Materials
+357120,Real Estate,REIT - Diversified
+002960,Energy,Oil & Gas Refining & Marketing
+001340,Basic Materials,Specialty Chemicals
+001200,Financial Services,Capital Markets
+453340,Consumer Defensive,Food Distribution
+058650,Basic Materials,Steel
+026890,Financial Services,Asset Management
+183190,Basic Materials,Building Materials
+001820,Technology,Electronic Components
+093050,Consumer Cyclical,Apparel Manufacturing
+126560,Communication Services,Entertainment
+007460,Industrials,Conglomerates
+900140,Consumer Cyclical,Auto Manufacturers
+094800,N/A,N/A
+003300,Basic Materials,Building Materials
+200880,Consumer Cyclical,Auto Parts
+020000,Consumer Cyclical,Apparel Manufacturing
+034310,Financial Services,Financial Data & Stock Exchanges
+003545,Financial Services,Capital Markets
+115390,Consumer Cyclical,Packaging & Containers
+448730,Real Estate,REIT - Office
+108670,Industrials,Building Products & Equipment
+005090,Industrials,Engineering & Construction
+123890,Real Estate,REIT - Diversified
+249420,Healthcare,Drug Manufacturers - Specialty & Generic
+005389,Consumer Cyclical,Auto Manufacturers
+029530,Industrials,Business Equipment & Supplies
+00104K,Industrials,Conglomerates
+005810,Basic Materials,Copper
+003920,Consumer Defensive,Packaged Foods
+002310,Basic Materials,Paper & Paper Products
+036530,Industrials,Conglomerates
+033270,Healthcare,Drug Manufacturers - Specialty & Generic
+004690,Utilities,Utilities - Regulated Gas
+286940,Technology,Information Technology Services
+011930,Industrials,Building Products & Equipment
+093230,N/A,N/A
+451800,Real Estate,REIT - Office
+000155,Industrials,Conglomerates
+003000,Healthcare,Drug Manufacturers - Specialty & Generic
+097520,Technology,Electronic Components
+306200,Basic Materials,Steel
+003220,Healthcare,Drug Manufacturers - Specialty & Generic
+00088K,Industrials,Conglomerates
+027410,Basic Materials,Specialty Chemicals
+104700,Basic Materials,Steel
+004700,Consumer Cyclical,Auto Parts
+025860,Basic Materials,Agricultural Inputs
+088260,Real Estate,REIT - Diversified
+010690,Consumer Cyclical,Auto Parts
+009290,Consumer Defensive,Packaged Foods
+060980,Consumer Cyclical,Auto Parts
+006405,Technology,Electronic Components
+005390,Consumer Cyclical,Apparel Manufacturing
+001940,Basic Materials,Steel
+077970,Industrials,Specialty Industrial Machinery
+051905,Consumer Defensive,Household & Personal Products
+084690,Consumer Defensive,Packaged Foods
+072710,Consumer Defensive,Packaged Foods
+007690,Basic Materials,Chemicals
+001390,Basic Materials,Steel
+006220,Financial Services,Banks - Regional
+004090,Basic Materials,Building Materials
+034120,Communication Services,Entertainment
+005690,Healthcare,Biotechnology
+000430,Consumer Cyclical,Auto Parts
+001470,Industrials,Engineering & Construction
+126720,Industrials,Specialty Industrial Machinery
+272550,Consumer Cyclical,Packaging & Containers
+000500,Technology,Communication Equipment
+117580,Utilities,Utilities - Regulated Gas
+013890,Consumer Cyclical,"Furnishings, Fixtures & Appliances"
+122900,Industrials,Specialty Business Services
+000680,Consumer Cyclical,Specialty Retail
+006390,Basic Materials,Building Materials
+084010,Basic Materials,Steel
+009680,Consumer Cyclical,Auto Parts
+007810,Technology,Electronic Components
+071055,Financial Services,Capital Markets
+002320,Industrials,Integrated Freight & Logistics
+017390,Utilities,Utilities - Regulated Gas
+298690,Industrials,Airlines
+000480,Basic Materials,Building Materials
+035150,Consumer Cyclical,Footwear & Accessories
+226320,Consumer Defensive,Household & Personal Products
+334890,Real Estate,REIT - Office
+001500,Financial Services,Capital Markets
+024720,Consumer Defensive,Household & Personal Products
+001270,Financial Services,Capital Markets
+001790,Consumer Defensive,Confectioners
+009470,Technology,Electronic Components
+003580,Industrials,Conglomerates
+001250,Industrials,Industrial Distribution
+005500,Healthcare,Drug Manufacturers - Specialty & Generic
+029460,Technology,Semiconductor Equipment & Materials
+007570,Healthcare,Drug Manufacturers - Specialty & Generic
+011760,Industrials,Industrial Distribution
+004430,Basic Materials,Specialty Chemicals
+084680,Consumer Cyclical,Leisure
+016580,Healthcare,Drug Manufacturers - Specialty & Generic
+034830,Real Estate,REIT - Diversified
+001630,Healthcare,Drug Manufacturers - Specialty & Generic
+001510,Financial Services,Asset Management
+097230,Industrials,Aerospace & Defense
+011000,Healthcare,Biotechnology
+322000,Technology,Solar
+003350,Consumer Defensive,Household & Personal Products
+015360,Utilities,Utilities - Regulated Gas
+001230,Basic Materials,Steel
+100840,Industrials,Specialty Industrial Machinery
+000540,Financial Services,Insurance - Property & Casualty
+102460,Healthcare,Drug Manufacturers - Specialty & Generic
+004360,Industrials,Integrated Freight & Logistics
+000490,Industrials,Farm & Heavy Construction Machinery
+058430,Industrials,Metal Fabrication
+002150,Industrials,Engineering & Construction
+001780,Basic Materials,Aluminum
+005720,Consumer Cyclical,Auto Parts
+138490,Basic Materials,Specialty Chemicals
+213500,Basic Materials,Paper & Paper Products
+092230,Industrials,Conglomerates
+009160,Industrials,Specialty Industrial Machinery
+002810,Industrials,Industrial Distribution
+053210,Communication Services,Broadcasting
+404990,N/A,N/A
+006340,Industrials,Electrical Equipment & Parts
+037710,Consumer Cyclical,Department Stores
+001130,Consumer Defensive,Packaged Foods
+377190,N/A,N/A
+012030,Technology,Information Technology Services
+096760,Healthcare,Drug Manufacturers - Specialty & Generic
+025000,Basic Materials,Chemicals
+005010,Basic Materials,Steel
+452260,Consumer Cyclical,Department Stores
+003120,Healthcare,Drug Manufacturers - Specialty & Generic
+001750,Financial Services,Capital Markets
+007160,Consumer Defensive,Packaged Foods
+005430,Industrials,Airports & Air Services
+339770,Consumer Cyclical,Restaurants
+271980,Healthcare,Drug Manufacturers - Specialty & Generic
+109070,N/A,N/A
+000020,Healthcare,Drug Manufacturers - Specialty & Generic
+008490,Healthcare,Drug Manufacturers - Specialty & Generic
+005945,Financial Services,Capital Markets
+018470,Basic Materials,Aluminum
+092790,Industrials,Metal Fabrication
+460850,Basic Materials,Steel
+004380,Technology,Semiconductor Equipment & Materials
+095720,Communication Services,Publishing
+037560,Communication Services,Broadcasting
+039570,Technology,Electronic Components
+008060,Technology,Electronic Components
+006060,Consumer Cyclical,Footwear & Accessories
+016590,Basic Materials,Paper & Paper Products
+293480,Healthcare,Drug Manufacturers - Specialty & Generic
+027970,Basic Materials,Paper & Paper Products
+004560,Basic Materials,Steel
+214420,Consumer Defensive,Household & Personal Products
+092220,Technology,Semiconductor Equipment & Materials
+000140,Consumer Defensive,Beverages - Brewers
+417310,N/A,N/A
+071840,Consumer Cyclical,Specialty Retail
+102260,Basic Materials,Chemicals
+462520,Basic Materials,Building Materials
+004980,Basic Materials,Building Materials
+078520,Consumer Defensive,Household & Personal Products
+194370,Consumer Cyclical,Footwear & Accessories
+002390,Healthcare,Drug Manufacturers - Specialty & Generic
+001080,N/A,N/A
+009155,Technology,Electronic Components
+097955,Consumer Defensive,Packaged Foods
+001460,Consumer Cyclical,Apparel Manufacturing
+000520,Healthcare,Drug Manufacturers - Specialty & Generic
+001520,Basic Materials,Building Materials
+011785,Basic Materials,Specialty Chemicals
+081000,Industrials,Tools & Accessories
+008350,Basic Materials,Aluminum
+107590,Basic Materials,Specialty Chemicals
+487570,N/A,N/A
+002020,Industrials,Conglomerates
+095570,Industrials,Rental & Leasing Services
+011500,Basic Materials,Chemicals
+009580,Basic Materials,Paper & Paper Products
+000390,Basic Materials,Specialty Chemicals
+363280,Communication Services,Broadcasting
+044450,Industrials,Marine Shipping
+030210,Financial Services,Capital Markets
+000050,Consumer Cyclical,Textile Manufacturing
+019680,Consumer Defensive,Education & Training Services
+005950,Basic Materials,Chemicals
+011810,Industrials,Specialty Industrial Machinery
+015860,Industrials,Electrical Equipment & Parts
+101530,Consumer Defensive,Packaged Foods
+037270,Communication Services,Advertising Agencies
+079430,Consumer Cyclical,"Furnishings, Fixtures & Appliances"
+003200,Consumer Cyclical,Textile Manufacturing
+002100,Basic Materials,Agricultural Inputs
+003555,Technology,Consumer Electronics
+004310,Healthcare,Drug Manufacturers - Specialty & Generic
+214390,N/A,N/A
+234080,Healthcare,Drug Manufacturers - Specialty & Generic
+090350,Basic Materials,Specialty Chemicals
+010955,Energy,Oil & Gas Refining & Marketing
+012320,Utilities,Utilities - Regulated Gas
+298000,Basic Materials,Chemicals
+028100,Industrials,Engineering & Construction
+282690,Consumer Cyclical,Auto Parts
+016610,Financial Services,Capital Markets
+005680,Technology,Electronic Components
+016450,Consumer Cyclical,Textile Manufacturing
+134380,Basic Materials,Chemicals
+100250,Basic Materials,Specialty Chemicals
+003070,Industrials,Engineering & Construction
+007860,Consumer Cyclical,Auto Parts
+009070,Industrials,Integrated Freight & Logistics
+006840,Basic Materials,Chemicals
+267850,Technology,Information Technology Services
+036420,Communication Services,Entertainment
+053690,Industrials,Engineering & Construction
+450140,Consumer Cyclical,Auto & Truck Dealerships
+000860,Basic Materials,Specialty Chemicals
+033920,Consumer Defensive,Beverages - Wineries & Distilleries
+317400,Real Estate,Real Estate - Diversified
+000320,Basic Materials,Specialty Chemicals
+128820,Energy,Oil & Gas Refining & Marketing
+210980,Real Estate,Real Estate - Diversified
+011280,Consumer Cyclical,Packaging & Containers
+035510,Technology,Information Technology Services
+105840,Technology,Scientific & Technical Instruments
+004970,Consumer Defensive,Packaged Foods
+008110,N/A,N/A
+010820,Industrials,Aerospace & Defense
+092200,Consumer Cyclical,Auto Parts
+139990,Basic Materials,Steel
+400760,N/A,N/A
+068290,Communication Services,Publishing
+02826K,Industrials,Engineering & Construction
+070960,Consumer Cyclical,Resorts & Casinos
+004710,Technology,Electronic Components
+136490,Consumer Defensive,Farm Products
+011330,Consumer Cyclical,Footwear & Accessories
+001360,Healthcare,Drug Manufacturers - Specialty & Generic
+083420,Basic Materials,Specialty Chemicals
+015890,Basic Materials,Chemicals
+000970,Basic Materials,Steel
+00279K,N/A,N/A
+004250,Consumer Cyclical,Packaging & Containers
+008040,Consumer Defensive,Packaged Foods
+010580,Consumer Cyclical,Auto Parts
+003650,Energy,Oil & Gas Refining & Marketing
+094280,Technology,Information Technology Services
+003547,Financial Services,Capital Markets
+002720,Healthcare,Drug Manufacturers - Specialty & Generic
+007540,Consumer Defensive,Packaged Foods
+025820,Industrials,Metal Fabrication
+015230,Consumer Cyclical,Auto Parts
+004140,Industrials,Integrated Freight & Logistics
+008970,Basic Materials,Steel
+002620,Healthcare,Drug Manufacturers - Specialty & Generic
+089470,Consumer Cyclical,Auto Parts
+210540,Industrials,Farm & Heavy Construction Machinery
+031440,Consumer Defensive,Packaged Foods
+000700,Industrials,Marine Shipping
+002170,Consumer Cyclical,Footwear & Accessories
+014530,Basic Materials,Specialty Chemicals
+014280,Basic Materials,Steel
+007210,Industrials,Building Products & Equipment
+003060,Healthcare,Drug Manufacturers - Specialty & Generic
+002900,Industrials,Farm & Heavy Construction Machinery
+004080,Healthcare,Medical Devices
+012610,Basic Materials,Chemicals
+024090,Basic Materials,Steel
+003830,Consumer Cyclical,Textile Manufacturing
+063160,Healthcare,Drug Manufacturers - Specialty & Generic
+001020,Basic Materials,Paper & Paper Products
+016710,Utilities,Utilities - Regulated Gas
+020120,Communication Services,Internet Content & Information
+015590,Industrials,Specialty Industrial Machinery
+006890,Utilities,Utilities - Regulated Gas
+248170,Consumer Defensive,Packaged Foods
+033530,Consumer Cyclical,Auto Parts
+074610,Industrials,Farm & Heavy Construction Machinery
+011150,Consumer Defensive,Packaged Foods
+013570,Consumer Cyclical,Auto Parts
+005870,Technology,Communication Equipment
+009270,Consumer Cyclical,Apparel Manufacturing
+002990,Industrials,Engineering & Construction
+001045,Industrials,Conglomerates
+014580,Basic Materials,Building Materials
+002780,Industrials,Engineering & Construction
+372910,Technology,Software - Application
+013580,Industrials,Engineering & Construction
+033180,N/A,N/A
+003460,Financial Services,Capital Markets
+214330,Consumer Cyclical,Auto Parts
+058850,Industrials,Specialty Business Services
+481850,N/A,N/A
+396690,Real Estate,REIT - Diversified
+123690,Consumer Defensive,Household & Personal Products
+017550,Industrials,Farm & Heavy Construction Machinery
+002210,Healthcare,Drug Manufacturers - Specialty & Generic
+011700,Industrials,Specialty Industrial Machinery
+019440,Basic Materials,Steel
+350520,Real Estate,REIT - Residential
+111380,Consumer Cyclical,Leisure
+120030,Industrials,Tools & Accessories
+012600,Industrials,Business Equipment & Supplies
+003720,Consumer Cyclical,Packaging & Containers
+008260,Basic Materials,Steel
+017900,Technology,Semiconductors
+000180,Basic Materials,Lumber & Wood Production
+024900,Consumer Cyclical,Auto Parts
+006490,Communication Services,Telecom Services
+010100,Consumer Cyclical,Auto Parts
+012800,Industrials,Metal Fabrication
+017370,Consumer Cyclical,Auto Parts
+014160,Consumer Cyclical,Packaging & Containers
+014710,Consumer Defensive,Packaged Foods
+264900,Consumer Defensive,Confectioners
+023450,Basic Materials,Chemicals
+001380,Consumer Cyclical,Auto Parts
+004100,Consumer Cyclical,Auto Parts
+002700,Consumer Cyclical,"Furnishings, Fixtures & Appliances"
+034590,Utilities,Utilities - Regulated Gas
+267290,Utilities,Utilities - Regulated Gas
+004150,Basic Materials,Paper & Paper Products
+005960,Industrials,Engineering & Construction
+004830,Consumer Cyclical,Textile Manufacturing
+012690,Consumer Defensive,Household & Personal Products
+003610,Consumer Cyclical,Textile Manufacturing
+163560,Consumer Cyclical,Auto Parts
+077500,Technology,Electronics & Computer Distribution
+008700,Technology,Consumer Electronics
+023000,Basic Materials,Steel
+079980,Consumer Cyclical,Textile Manufacturing
+465770,Industrials,Marine Shipping
+003480,Industrials,Engineering & Construction
+016740,Consumer Cyclical,Auto Parts
+002600,Consumer Defensive,Packaged Foods
+011690,Technology,Electronic Components
+035000,Communication Services,Advertising Agencies
+004890,Basic Materials,Steel
+047400,Industrials,Tools & Accessories
+010040,Industrials,Specialty Industrial Machinery
+023800,Consumer Cyclical,Auto Parts
+006090,Consumer Defensive,Packaged Foods
+032560,Basic Materials,Steel
+006660,Consumer Cyclical,Auto Parts
+227840,Consumer Defensive,Food Distribution
+034300,Industrials,Engineering & Construction
+004840,Consumer Cyclical,Auto Parts
+002450,Technology,Electronic Components
+013520,Consumer Cyclical,Auto Parts
+007280,Basic Materials,Steel
+007110,Industrials,Building Products & Equipment
+101140,N/A,N/A
+078000,Communication Services,Telecom Services
+096775,Energy,Oil & Gas Refining & Marketing
+002460,Industrials,Engineering & Construction
+004720,Healthcare,Drug Manufacturers - General
+055490,Basic Materials,Specialty Chemicals
+004910,Basic Materials,Specialty Chemicals
+002200,Consumer Cyclical,Packaging & Containers
+036580,Consumer Defensive,Packaged Foods
+014790,Industrials,Engineering & Construction
+067830,Consumer Cyclical,Department Stores
+145210,Industrials,Specialty Industrial Machinery
+044820,Consumer Defensive,Household & Personal Products
+005740,Consumer Defensive,Confectioners
+009200,Basic Materials,Paper & Paper Products
+058860,Communication Services,Telecom Services
+000230,Healthcare,Drug Manufacturers - Specialty & Generic
+244920,Financial Services,Insurance - Diversified
+007590,Basic Materials,Agricultural Inputs
+010960,Industrials,Engineering & Construction
+017180,Healthcare,Drug Manufacturers - Specialty & Generic
+009190,Basic Materials,Steel
+338100,N/A,N/A
+006880,Industrials,Conglomerates
+004060,Consumer Cyclical,Apparel Manufacturing
+016090,Consumer Cyclical,Apparel Manufacturing
+000105,Healthcare,Drug Manufacturers - Specialty & Generic
+017040,Industrials,Electrical Equipment & Parts
+016880,Industrials,Conglomerates
+004540,Basic Materials,Paper & Paper Products
+000220,Healthcare,Drug Manufacturers - Specialty & Generic
+001560,Industrials,Tools & Accessories
+003780,Consumer Cyclical,Auto Parts
+021820,Consumer Cyclical,Auto Parts
+005800,Consumer Cyclical,Apparel Manufacturing
+004960,Industrials,Engineering & Construction
+357250,Real Estate,REIT - Diversified
+33626K,Industrials,Electrical Equipment & Parts
+078935,Industrials,Conglomerates
+000590,Industrials,Tools & Accessories
+013870,Consumer Cyclical,Auto Parts
+092440,Industrials,Metal Fabrication
+012170,Communication Services,Entertainment
+013360,Industrials,Engineering & Construction
+009180,Industrials,Integrated Freight & Logistics
+000157,Industrials,Conglomerates
+007980,Consumer Cyclical,Apparel Manufacturing
+041650,Consumer Cyclical,Auto Parts
+075180,Consumer Cyclical,Auto Parts
+011300,Consumer Cyclical,Textile Manufacturing
+006370,Consumer Cyclical,Department Stores
+378850,Consumer Cyclical,Auto Parts
+000910,Basic Materials,Building Materials
+092780,Consumer Cyclical,Auto Parts
+006740,Basic Materials,Paper & Paper Products
+023810,Consumer Cyclical,Auto Parts
+102280,N/A,N/A
+002795,Consumer Defensive,Household & Personal Products
+031820,Technology,Communication Equipment
+069460,Basic Materials,Aluminum
+003925,Consumer Defensive,Packaged Foods
+002140,Consumer Defensive,Packaged Foods
+03473K,Industrials,Conglomerates
+085310,Industrials,Specialty Industrial Machinery
+014440,Basic Materials,Chemicals
+058730,Basic Materials,Steel
+001260,Industrials,Engineering & Construction
+111110,Consumer Cyclical,Textile Manufacturing
+018500,Consumer Cyclical,Auto Parts
+003010,Industrials,Industrial Distribution
+071090,Basic Materials,Steel
+001290,Financial Services,Capital Markets
+001620,Consumer Cyclical,Auto Parts
+357430,Real Estate,REIT - Retail
+004450,Consumer Cyclical,Packaging & Containers
+027740,Consumer Defensive,Packaged Foods
+009770,Basic Materials,Paper & Paper Products
+129260,Industrials,Integrated Freight & Logistics
+000890,Consumer Defensive,Beverages - Wineries & Distilleries
+001275,Financial Services,Capital Markets
+155660,Consumer Cyclical,Textile Manufacturing
+004410,Consumer Defensive,Packaged Foods
+002760,Basic Materials,Specialty Chemicals
+000850,Industrials,Specialty Industrial Machinery
+000650,Industrials,Railroads
+013700,Industrials,Engineering & Construction
+001550,Basic Materials,Agricultural Inputs
+009810,Industrials,Industrial Distribution
+002920,Consumer Cyclical,Auto Parts
+010660,Industrials,Specialty Industrial Machinery
+005750,Industrials,Building Products & Equipment
+004870,Basic Materials,Building Materials
+002360,Basic Materials,Chemicals
+003560,N/A,N/A
+008870,Consumer Cyclical,Packaging & Containers
+010640,Basic Materials,Specialty Chemicals
+120115,Basic Materials,Chemicals
+002630,Healthcare,Biotechnology
+025750,Consumer Cyclical,"Furnishings, Fixtures & Appliances"
+118000,Healthcare,Drug Manufacturers - General
+069730,Industrials,Electrical Equipment & Parts
+011390,Basic Materials,Building Materials
+025560,Technology,Semiconductor Equipment & Materials
+011230,Technology,Electronic Components
+119650,Industrials,Pollution & Treatment Controls
+100220,Communication Services,Publishing
+011420,Communication Services,Broadcasting
+019180,Consumer Cyclical,Auto Parts
+090080,Consumer Cyclical,Auto Parts
+004770,Technology,Electronic Components
+008250,Basic Materials,Lumber & Wood Production
+020760,Technology,Electronic Components
+021050,Industrials,Metal Fabrication
+002220,Basic Materials,Steel
+308170,Consumer Cyclical,Auto Parts
+091090,N/A,N/A
+006805,Financial Services,Capital Markets
+004920,Technology,Information Technology Services
+007610,N/A,N/A
+009320,Consumer Cyclical,Auto Parts
+023350,Industrials,Engineering & Construction
+003080,Basic Materials,Agricultural Inputs
+134790,Consumer Cyclical,"Furnishings, Fixtures & Appliances"
+012160,Basic Materials,Steel
+008420,Basic Materials,Steel
+004440,Basic Materials,Building Materials
+004270,Technology,Consumer Electronics
+026940,Basic Materials,Steel
+014990,Consumer Cyclical,Apparel Manufacturing
+009835,Basic Materials,Chemicals
+069640,Consumer Cyclical,Apparel Manufacturing
+005305,Consumer Defensive,Beverages - Non-Alcoholic
+006980,Consumer Defensive,Packaged Foods
+025530,Consumer Cyclical,Auto Parts
+051630,Basic Materials,Chemicals
+002880,Consumer Cyclical,Auto Parts
+28513K,Basic Materials,Specialty Chemicals
+000725,Industrials,Engineering & Construction
+024890,Basic Materials,Specialty Chemicals
+123700,Consumer Cyclical,Auto Parts
+010600,N/A,N/A
+090370,Consumer Cyclical,Apparel Manufacturing
+005360,Consumer Cyclical,Specialty Retail
+145270,Real Estate,REIT - Diversified
+049800,Industrials,Specialty Industrial Machinery
+009460,Basic Materials,Paper & Paper Products
+014130,Industrials,Integrated Freight & Logistics
+023960,Industrials,Engineering & Construction
+37550L,Industrials,Engineering & Construction
+33637K,Technology,Electronic Components
+006570,Consumer Defensive,Household & Personal Products
+019175,Healthcare,Drug Manufacturers - Specialty & Generic
+012200,Industrials,Tools & Accessories
+143210,Consumer Cyclical,Auto Parts
+446070,N/A,N/A
+006125,Industrials,Conglomerates
+000215,Basic Materials,Specialty Chemicals
+012280,Consumer Cyclical,Auto Parts
+010770,Industrials,Electrical Equipment & Parts
+072130,Communication Services,Telecom Services
+033250,Consumer Cyclical,Auto Parts
+002820,Basic Materials,Lumber & Wood Production
+023150,Consumer Defensive,Beverages - Wineries & Distilleries
+005030,N/A,N/A
+003475,Financial Services,Capital Markets
+011090,Consumer Cyclical,"Furnishings, Fixtures & Appliances"
+000760,Basic Materials,Chemicals
+003465,Financial Services,Capital Markets
+006200,Technology,Semiconductors
+003680,Consumer Defensive,Packaged Foods
+005820,Consumer Cyclical,Packaging & Containers
+009310,Technology,Semiconductors
+013000,Basic Materials,Specialty Chemicals
+37550K,Industrials,Engineering & Construction
+093240,Consumer Cyclical,Apparel Manufacturing
+000040,Consumer Cyclical,Recreational Vehicles
+001140,N/A,N/A
+000950,Consumer Cyclical,Textile Manufacturing
+024070,Basic Materials,Chemicals
+015260,Technology,Electronic Components
+009140,Technology,Electronic Components
+002410,Industrials,Engineering & Construction
+002870,Consumer Cyclical,Packaging & Containers
+152550,N/A,N/A
+002690,Basic Materials,Steel
+002420,Communication Services,Entertainment
+005320,Consumer Cyclical,Apparel Manufacturing
+009440,Industrials,Pollution & Treatment Controls
+071950,Consumer Cyclical,"Furnishings, Fixtures & Appliances"
+000300,N/A,N/A
+001070,Consumer Cyclical,Textile Manufacturing
+133820,Basic Materials,Steel
+003535,Financial Services,Capital Markets
+001420,Consumer Cyclical,Auto Parts
+001465,Consumer Cyclical,Apparel Manufacturing
+014910,Technology,Electronic Components
+008600,Consumer Cyclical,Apparel Manufacturing
+015020,Real Estate,Real Estate - Development
+008775,Consumer Cyclical,Specialty Retail
+030720,Consumer Defensive,Food Distribution
+33626L,Industrials,Electrical Equipment & Parts
+00499K,Consumer Defensive,Confectioners
+084870,Consumer Cyclical,Apparel Manufacturing
+010400,Industrials,Specialty Industrial Machinery
+007120,Industrials,Security & Protection Services
+004365,Industrials,Integrated Freight & Logistics
+084670,Industrials,Railroads
+019490,Industrials,Security & Protection Services
+001210,Industrials,Electrical Equipment & Parts
+019685,Consumer Defensive,Education & Training Services
+003495,Industrials,Airlines
+025620,Consumer Defensive,Household & Personal Products
+204210,Real Estate,REIT - Hotel & Motel
+005110,N/A,N/A
+002070,Consumer Cyclical,Apparel Manufacturing
+088790,Consumer Cyclical,Apparel Manufacturing
+108675,Industrials,Building Products & Equipment
+025890,Basic Materials,Steel
+001685,Consumer Defensive,Packaged Foods
+044380,Technology,Computer Hardware
+002355,Consumer Cyclical,Auto Parts
+005257,Healthcare,Biotechnology
+33637L,Technology,Electronic Components
+010420,Basic Materials,Paper & Paper Products
+001770,Consumer Cyclical,Packaging & Containers
+000885,Industrials,Conglomerates
+007815,Technology,Electronic Components
+084695,Consumer Defensive,Packaged Foods
+35320K,Technology,Electronic Components
+000087,Consumer Defensive,Beverages - Wineries & Distilleries
+168490,N/A,N/A
+001795,Consumer Defensive,Confectioners
+000075,Industrials,Conglomerates
+004105,Consumer Cyclical,Auto Parts
+008500,Consumer Cyclical,Textile Manufacturing
+140910,N/A,N/A
+002025,Industrials,Conglomerates
+004835,Consumer Cyclical,Textile Manufacturing
+004255,Consumer Cyclical,Packaging & Containers
+38380K,Industrials,Conglomerates
+18064K,Consumer Cyclical,Lodging
+001067,Healthcare,Drug Manufacturers - Specialty & Generic
+45014K,Consumer Cyclical,Auto & Truck Dealerships
+006345,Industrials,Electrical Equipment & Parts
+003075,Industrials,Engineering & Construction
+000225,Healthcare,Drug Manufacturers - Specialty & Generic
+005725,Consumer Cyclical,Auto Parts
+145995,Industrials,Conglomerates
+001065,Healthcare,Drug Manufacturers - Specialty & Generic
+001755,Financial Services,Capital Markets
+004985,Basic Materials,Building Materials
+00806K,Technology,Electronic Components
+26490K,Consumer Defensive,Confectioners
+000325,Basic Materials,Specialty Chemicals
+45226K,Consumer Cyclical,Department Stores
+001515,Financial Services,Asset Management
+090355,Basic Materials,Specialty Chemicals
+36328K,Communication Services,Broadcasting
+014825,Consumer Cyclical,Packaging & Containers
+005745,Consumer Defensive,Confectioners
+000145,Consumer Defensive,Beverages - Brewers
+008355,Basic Materials,Aluminum
+007575,Healthcare,Drug Manufacturers - Specialty & Generic
+005965,Industrials,Engineering & Construction
+00781K,Technology,Electronic Components
+014285,Basic Materials,Steel
+004545,Basic Materials,Paper & Paper Products
+012205,Industrials,Tools & Accessories
+009415,N/A,N/A
+000545,Financial Services,Insurance - Property & Casualty
+011155,Consumer Defensive,Packaged Foods
+002787,Industrials,Engineering & Construction
+000227,Healthcare,Drug Manufacturers - Specialty & Generic
+002785,Industrials,Engineering & Construction
+001525,Basic Materials,Building Materials
+014915,Technology,Electronic Components
+001527,Basic Materials,Building Materials
+004415,Consumer Defensive,Packaged Foods
+002995,Industrials,Engineering & Construction
