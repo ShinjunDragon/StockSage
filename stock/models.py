@@ -2,6 +2,7 @@
 from django.db import models
 
 class StockComment(models.Model):
+    id = models.AutoField(primary_key=True)  # 기본적으로 AutoField로 자동 증가
     ticker = models.CharField(max_length=10)
     author = models.CharField(max_length=100)
     comment = models.TextField()

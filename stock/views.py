@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import requests
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 import FinanceDataReader as fdr
 import matplotlib
 import matplotlib.pyplot as plt
@@ -552,6 +552,11 @@ def info(request):
     else:
         return render(request, 'stock/info.html')
 
+def delete_comment(request, comment_id):
+    if request.method == 'POST':
+        comment = get_object_or_404(StockComment, id=comment_id)
+        comment.delete()
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 def search_stocks(request):
     query = request.GET.get('query', '').strip()
