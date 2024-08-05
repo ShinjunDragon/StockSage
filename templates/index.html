@@ -168,7 +168,7 @@
                 {% for s in sectors_data %}
                     <tr>
                         <td class="rank-box">{{ forloop.counter }}</td>
-                        <td><a href="{% url 'sector_detail' s.Sector %}">{{ s.Sector }}</a></td>
+                        <td><a href="/stock/sector_detail?sector={{ s.Sector }}">{{ s.Sector }}</a></td>
                         <td class="{% if s.ChagesRatio > 0 %}change-positive{% else %}change-negative{% endif %}">
                             {% if s.ChagesRatio > 0 %}
                                 +{{ s.ChagesRatio|floatformat:2  }}%
