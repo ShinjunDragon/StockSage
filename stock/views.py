@@ -325,20 +325,13 @@ def index(request):
 
     # 시가총액을 억 단위로 변환
     for stock in top_10_tot:
-<<<<<<< HEAD
-        stock['marcap_won'] = int(stock['marcap'] / 100000000)  # 억 단위로 변환.
 
-    
-
-    # 시가총액을 억 단위로 변환
-    for stock in top_10_tot:
-     stock['marcap_won'] = int(stock['marcap'] / 100000000)  # 억 단위로 변환.
 
 
   
   
 
-=======
+
         stock['marcap_won'] = int(stock['marcap'] / 100000000)  # 억 단위로 변환
 
     # 코스피 차트 생성
@@ -349,7 +342,7 @@ def index(request):
     plt.xlabel('Date')
     plt.ylabel('Close Price')
     plt.legend()
->>>>>>> 6e31535860ca04c13f5a39fc168d0ca85b05e30b
+
 
 
 
