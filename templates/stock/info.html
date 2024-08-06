@@ -21,6 +21,15 @@
         <div id="search-results" style="position: absolute; background: white; border: 1px solid #ccc; z-index: 1000; width: 200px;"></div>
     </form>
 
+    <!-- 관심 종목 토글 버튼 -->
+    <button id="toggle-favorite" data-ticker="{{ ticker }}" data-is-favorite="{{ is_favorite|yesno:"true,false" }}">
+        {% if is_favorite %}
+            관심 종목에서 삭제
+        {% else %}
+            관심 종목에 추가
+        {% endif %}
+    </button>
+
     <h2>댓글</h2>
     <form method="post" action="">
         {% csrf_token %}
@@ -46,4 +55,38 @@
     </ul>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#toggle-favorite').click(function() {
+                var button = $(this);
+                var stockCode = button.data('ticker');
+                var isFavorite = button.data('is-favorite');
+
+                $.ajax({
+                    url: '{% url "toggle_interest_stock" %}',
+                    method: 'POST',
+                    data: {
+                        'stock_code': stockCode,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            if (response.action === 'added') {
+                                button.data('is-favorite', 'true');
+                                button.text('관심 종목에서 삭제');
+                            } else if (response.action === 'removed') {
+                                button.data('is-favorite', 'false');
+                                button.text('관심 종목에 추가');
+                            }
+                        } else {
+                            alert('작업에 실패했습니다. 다시 시도해 주세요.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX 요청 실패:', status, error);
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
