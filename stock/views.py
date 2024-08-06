@@ -30,13 +30,13 @@ def index(request):
 
     # KOSPI 주식 목록 가져오기
     kospi_stocks = fdr.StockListing('KOSPI')
-    
+
     '''
     특정 날짜의 종목을 보는 방법
     code = '005930'
     kospi_stocks = fdr.DataReader(code, start=today)
     '''
-    
+
     '''
     # Sector(종목별)와 industry(테마별)를 yfinance 모듈에서 가져와서 df로 만들어 csv로 저장
     # sector와 industry 정보를 추가하기 위한 빈 리스트를 준비합니다
@@ -72,7 +72,7 @@ def index(request):
     # 저장할 파일 경로를 설정합니다
     sector_industry_df.to_csv('kospi_sectors_industries.csv', index=False)
     '''
-    
+
     '''
     # Sector와 Industry 변환 사전
     sector_translation = {
@@ -237,13 +237,13 @@ def index(request):
     # 저장할 파일 경로를 설정합니다
     sector_industry_df.to_csv('kospi_sectors_industries.csv', index=False)
     '''
-    
+
     # 저장된 CSV 파일을 불러옵니다
     sector_industry_df = pd.read_csv('kospi_sectors_industries.csv')
-    
+
     # kospi_stocks와 sector_industry_df를 'Code'를 기준으로 병합합니다
     kospi_stocks = pd.merge(kospi_stocks, sector_industry_df, on='Code', how='left')
-    
+
     # 상위 3개 종목 선택 (등락률 기준)
     top_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=False).head()
 
@@ -336,8 +336,27 @@ def index(request):
     plt.ylabel('Close Price')
     plt.legend()
 
+    ################################최근 본 종목#############
+    # 로그인한 사용자 ID 가져오기
+    id1 = request.session.get('id')
 
+    # 최근 본 주식 목록 가져오기
+    recent_stocks_list = RecentStock.objects.filter(member_id=id1).order_by('-viewed_at')
 
+    recent_stocks = []
+    for entry in recent_stocks_list:
+        stock_code = entry.stock_code
+        stock_info = kospi_stocks[kospi_stocks['Code'] == stock_code]
+        if not stock_info.empty:
+            stock_name = stock_info.iloc[0]['Name']
+        else:
+            stock_name = 'Unknown'
+        recent_stocks.append({
+            'stock_code': stock_code,
+            'stock_name': stock_name,
+            'viewed_at': entry.viewed_at,
+        })
+    ################################최근 본 종목#############
 
     # 컨텍스트에 추가
     context = {
@@ -353,14 +372,14 @@ def index(request):
         'request_time': request_time,
         'sectors_data': sectors_data,
         'industries_data' : industries_data,
-       
-        }
-    
-    
+        'recent_stocks': recent_stocks,
+    }
 
-    
-    
-    
+
+
+
+
+
 
     return render(request, 'test.html', context)
 
@@ -373,7 +392,7 @@ def sector_detail(request, sector) :
     # kospi_stocks와 sector_industry_df를 'Code'를 기준으로 병합합니다
     kospi_stocks = pd.merge(kospi_stocks, sector_industry_df, on='Code', how='left')
 
-    
+
     # 지정된 섹터에 대한 주식 종목 필터링
     sector_stocks = kospi_stocks[kospi_stocks['Sector'] == sector]
 
@@ -382,7 +401,7 @@ def sector_detail(request, sector) :
 
     # DataFrame을 리스트 형태로 변환
     top_stocks_list = top_stocks.to_dict(orient='records')
-    
+
     print(top_stocks)
     # 컨텍스트를 설정하여 템플릿에 전달
     context = {
@@ -447,7 +466,7 @@ def list(request):
     # NaN 값 제거
     merged_data = merged_data.dropna()
     '''
-    
+
     # 상위 10개 종목 선택 (등락률 기준)
     top_10 = all_stocks.sort_values(by='ChagesRatio', ascending=False).head(10)
 
@@ -580,31 +599,23 @@ def info(request):
             else:
                 form = CommentForm()
 
-            ################################관심 종목, 최근 본 종목#############
-            # 로그인 상태 확인
-            user_id = request.session.get('id')
-            user_interest_stocks = []
-            if user_id:
-                # 사용자의 관심 종목 목록 가져오기
-                user_interest_stocks = InterestStock.objects.filter(member_id=user_id).values_list('stock_code', flat=True)
-                user_interest_stocks = set(user_interest_stocks)  # 중복 제거를 위해 set으로 변환
+            ######### 관심 종목 ##################
+            id1 = request.session["id"]
+            interest_stocks = InterestStock.objects.filter(member_id=id1).values_list('stock_code', flat=True)
+            is_favorite = ticker in interest_stocks
+            ######### 관심 종목 ##################
 
-                # 최근 본 주식 목록 업데이트
-                recent_stock, created = RecentStock.objects.get_or_create(member_id=user_id, stock_code=ticker)
-                if not created:
-                    recent_stock.viewed_at = timezone.now()
-                    recent_stock.save()
-                    
             return render(request, 'stock/info.html', {
-                'graphic': graphic,
-                'ticker': ticker,
-                'company_name': company_name,
-                'current_price': current_price,
-                'previous_close': previous_close,
-                'comments': comments,
-                'form': form,
-                'interest_stocks': user_interest_stocks,
-            })
+                    'graphic': graphic,
+                    'ticker': ticker,
+                    'company_name': company_name,
+                    'current_price': current_price,
+                    'previous_close': previous_close,
+                    'comments': comments,
+                    'form': form,
+                    'interest_stocks': interest_stocks, #관심 종목 추가
+                    'is_favorite': is_favorite,  # 관심 종목 여부 전달
+                })
 
         except Exception as e:
             return render(request, 'stock/info.html', {'error': f'오류 발생: {str(e)}'})
@@ -644,12 +655,12 @@ def search_stocks(request):
 def get_flag_image(request, country_code):
     # 국가 코드에 따라 플래그 이미지 URL 생성
     url = f"https://flagcdn.com/w320/{country_code.lower()}.png"
-    
+
     try:
         # 이미지 다운로드
         response = requests.get(url)
         response.raise_for_status()
-        
+
         # 이미지 파일을 HttpResponse로 반환
         return HttpResponse(response.content, content_type="image/png")
     except requests.RequestException as e:
