@@ -218,7 +218,6 @@ def admin(request):
 def toggle_member_status(request, member_id):
     try:
         member = Member.objects.get(id=member_id)
-        member.is_active = not member.is_active
         member.save()
         return JsonResponse({'status': 'success'})
     except Member.DoesNotExist:
