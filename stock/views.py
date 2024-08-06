@@ -11,17 +11,12 @@ import io
 import urllib, base64
 import yfinance as yf
 from io import BytesIO
-<<<<<<< HEAD
-import matplotlib.dates as mdates 
-import plotly.graph_objs as go
-from plotly.offline import plot
-import plotly.io as pio
-from bs4 import BeautifulSoup
-=======
+
+
 
 from stock.form import CommentForm
 from stock.models import StockComment
->>>>>>> 6e31535860ca04c13f5a39fc168d0ca85b05e30b
+
 
 # 한글 폰트 설정
 matplotlib.rcParams['font.family'] = 'Malgun Gothic'
@@ -327,9 +322,6 @@ def index(request):
     for stock in top_10_tot:
 
 
-
-  
-  
 
 
         stock['marcap_won'] = int(stock['marcap'] / 100000000)  # 억 단위로 변환
