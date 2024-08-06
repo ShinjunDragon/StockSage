@@ -302,7 +302,7 @@ def index(request):
         }
         row_10_stocks.append(stock_data)
 
-    # 상위 10개 종목 주식 데이터 리스트로 준비
+    # 시총 상위 10개 종목 주식 데이터 리스트로 준비
     top_10_tot = []
     for i in range(len(top_10_Marcap)):
         stock_data = {
@@ -314,6 +314,10 @@ def index(request):
             'marcap':top_10_Marcap.iloc[i].Marcap,
         }
         top_10_tot.append(stock_data)
+
+    # 시가총액을 억 단위로 변환
+    for stock in top_10_tot:
+        stock['marcap_won'] = int(stock['marcap'] / 100000000)  # 억 단위로 변환
 
     # 코스피 차트 생성
     kospi_data = yf.download('^KS11', start='2023-01-01', end=today)  # KOSPI 지수 데이터
@@ -370,13 +374,46 @@ def sector_detail(request, sector) :
     # 등락률 기준으로 내림차순 정렬 후 상위 15개 항목 선택
     top_stocks = sector_stocks.sort_values(by='ChagesRatio', ascending=False).head(15)
 
+    # DataFrame을 리스트 형태로 변환
+    top_stocks_list = top_stocks.to_dict(orient='records')
+    
+    print(top_stocks)
     # 컨텍스트를 설정하여 템플릿에 전달
     context = {
         'sector_name': sector,
-        'top_stocks': top_stocks.to_dict(orient='records'),
+        'top_stocks_list': top_stocks_list,
     }
 
     return render(request, "stock/sector_detail.html", context)
+
+# 테마(industry)별 리스트
+def industry_detail(request, industry) :
+    # 데이터를 불러오는 로직을 여기에 작성합니다.
+    kospi_stocks = fdr.StockListing('KOSPI')
+    # 저장된 CSV 파일을 불러옵니다
+    sector_industry_df = pd.read_csv('kospi_sectors_industries.csv')
+    # kospi_stocks와 sector_industry_df를 'Code'를 기준으로 병합합니다
+    kospi_stocks = pd.merge(kospi_stocks, sector_industry_df, on='Code', how='left')
+
+
+    # 지정된 섹터에 대한 주식 종목 필터링
+    industry_stocks = kospi_stocks[kospi_stocks['Industry'] == industry]
+
+    # 등락률 기준으로 내림차순 정렬 후 상위 15개 항목 선택
+    top_stocks = industry_stocks.sort_values(by='ChagesRatio', ascending=False).head(15)
+
+    # DataFrame을 리스트 형태로 변환
+    top_stocks_list = top_stocks.to_dict(orient='records')
+
+    print(top_stocks)
+    # 컨텍스트를 설정하여 템플릿에 전달
+    context = {
+        'industry_name': industry,
+        'top_stocks_list': top_stocks_list,
+    }
+
+    return render(request, "stock/industry_detail.html", context)
+
 
 def list(request):
     # 날짜 설정
