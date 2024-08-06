@@ -1,3 +1,20 @@
+
 from django.db import models
 
-# Create your models here.
+class StockComment(models.Model):
+    id = models.AutoField(primary_key=True)  # 기본적으로 AutoField로 자동 증가
+    ticker = models.CharField(max_length=10)
+    author = models.CharField(max_length=100)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.author} - {self.ticker}"
+
+'''
+    만들고 난 뒤
+    python manage.py migrate
+    python manage.py makemigrations
+    python manage.py migrate
+    순서대로 해서 StockComment 테이블 생성해야 함
+'''

@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import requests
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 import FinanceDataReader as fdr
 import matplotlib
 import matplotlib.pyplot as plt
@@ -11,19 +11,22 @@ import io
 import urllib, base64
 import yfinance as yf
 from io import BytesIO
+<<<<<<< HEAD
 import matplotlib.dates as mdates 
 import plotly.graph_objs as go
 from plotly.offline import plot
 import plotly.io as pio
 from bs4 import BeautifulSoup
+=======
+
+from stock.form import CommentForm
+from stock.models import StockComment
+>>>>>>> 6e31535860ca04c13f5a39fc168d0ca85b05e30b
 
 # 한글 폰트 설정
 matplotlib.rcParams['font.family'] = 'Malgun Gothic'
 matplotlib.rcParams['axes.unicode_minus'] = False
 
-def test(request) :
-
-    return render(request, "test.html")
 
 def index(request):
     # 상위 10개
@@ -307,7 +310,7 @@ def index(request):
         }
         row_10_stocks.append(stock_data)
 
-    # 상위 10개 종목 주식 데이터 리스트로 준비
+    # 시총 상위 10개 종목 주식 데이터 리스트로 준비
     top_10_tot = []
     for i in range(len(top_10_Marcap)):
         stock_data = {
@@ -322,6 +325,7 @@ def index(request):
 
     # 시가총액을 억 단위로 변환
     for stock in top_10_tot:
+<<<<<<< HEAD
         stock['marcap_won'] = int(stock['marcap'] / 100000000)  # 억 단위로 변환.
 
     
@@ -334,6 +338,18 @@ def index(request):
   
   
 
+=======
+        stock['marcap_won'] = int(stock['marcap'] / 100000000)  # 억 단위로 변환
+
+    # 코스피 차트 생성
+    kospi_data = yf.download('^KS11', start='2023-01-01', end=today)  # KOSPI 지수 데이터
+    plt.figure(figsize=(10, 6))
+    plt.plot(kospi_data.index, kospi_data['Close'], label='KOSPI Close Price')
+    plt.title('KOSPI Index')
+    plt.xlabel('Date')
+    plt.ylabel('Close Price')
+    plt.legend()
+>>>>>>> 6e31535860ca04c13f5a39fc168d0ca85b05e30b
 
 
 
@@ -362,23 +378,62 @@ def index(request):
 
     return render(request, 'test.html', context)
 
+# 종목(sector)별 리스트
 def sector_detail(request, sector) :
     # 데이터를 불러오는 로직을 여기에 작성합니다.
-    kospi_stocks = pd.read_csv('kospi_sectors_industries.csv')
+    kospi_stocks = fdr.StockListing('KOSPI')
+    # 저장된 CSV 파일을 불러옵니다
+    sector_industry_df = pd.read_csv('kospi_sectors_industries.csv')
+    # kospi_stocks와 sector_industry_df를 'Code'를 기준으로 병합합니다
+    kospi_stocks = pd.merge(kospi_stocks, sector_industry_df, on='Code', how='left')
 
+    
     # 지정된 섹터에 대한 주식 종목 필터링
     sector_stocks = kospi_stocks[kospi_stocks['Sector'] == sector]
 
     # 등락률 기준으로 내림차순 정렬 후 상위 15개 항목 선택
     top_stocks = sector_stocks.sort_values(by='ChagesRatio', ascending=False).head(15)
 
+    # DataFrame을 리스트 형태로 변환
+    top_stocks_list = top_stocks.to_dict(orient='records')
+    
+    print(top_stocks)
     # 컨텍스트를 설정하여 템플릿에 전달
     context = {
         'sector_name': sector,
-        'top_stocks': top_stocks.to_dict(orient='records'),
+        'top_stocks_list': top_stocks_list,
     }
 
     return render(request, "stock/sector_detail.html", context)
+
+# 테마(industry)별 리스트
+def industry_detail(request, industry) :
+    # 데이터를 불러오는 로직을 여기에 작성합니다.
+    kospi_stocks = fdr.StockListing('KOSPI')
+    # 저장된 CSV 파일을 불러옵니다
+    sector_industry_df = pd.read_csv('kospi_sectors_industries.csv')
+    # kospi_stocks와 sector_industry_df를 'Code'를 기준으로 병합합니다
+    kospi_stocks = pd.merge(kospi_stocks, sector_industry_df, on='Code', how='left')
+
+
+    # 지정된 섹터에 대한 주식 종목 필터링
+    industry_stocks = kospi_stocks[kospi_stocks['Industry'] == industry]
+
+    # 등락률 기준으로 내림차순 정렬 후 상위 15개 항목 선택
+    top_stocks = industry_stocks.sort_values(by='ChagesRatio', ascending=False).head(15)
+
+    # DataFrame을 리스트 형태로 변환
+    top_stocks_list = top_stocks.to_dict(orient='records')
+
+    print(top_stocks)
+    # 컨텍스트를 설정하여 템플릿에 전달
+    context = {
+        'industry_name': industry,
+        'top_stocks_list': top_stocks_list,
+    }
+
+    return render(request, "stock/industry_detail.html", context)
+
 
 def list(request):
     # 날짜 설정
@@ -527,12 +582,26 @@ def info(request):
             current_price = info.get('currentPrice', 'N/A')
             previous_close = info.get('previousClose', 'N/A')
 
+            # 댓글 관련
+            # 댓글 처리
+            comments = StockComment.objects.filter(ticker=ticker).order_by('-created_at')
+
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.ticker = ticker
+                comment.save()
+            else:
+                form = CommentForm()
+
             return render(request, 'stock/info.html', {
                 'graphic': graphic,
                 'ticker': ticker,
                 'company_name': company_name,
                 'current_price': current_price,
-                'previous_close': previous_close
+                'previous_close': previous_close,
+                'comments': comments,
+                'form': form,
             })
 
         except Exception as e:
@@ -540,6 +609,11 @@ def info(request):
     else:
         return render(request, 'stock/info.html')
 
+def delete_comment(request, comment_id):
+    if request.method == 'POST':
+        comment = get_object_or_404(StockComment, id=comment_id)
+        comment.delete()
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 def search_stocks(request):
     query = request.GET.get('query', '').strip()
