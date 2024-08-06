@@ -60,7 +60,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for stock in recent_stocks %}
+                    {% for stock in recent_stock %}
                         <tr>
                             <td><a href="/stock/info/?ticker={{ stock.stock_code }}">{{ stock.stock_code }}</a></td>
                             <td>{{ stock.viewed_at }}</td>

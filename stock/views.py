@@ -13,7 +13,9 @@ import yfinance as yf
 from io import BytesIO
 
 from django.utils import timezone
+from django.views.decorators.http import require_POST
 
+from decorator.decorator import loginchk
 from stock.form import CommentForm
 from stock.models import StockComment, InterestStock, RecentStock
 
@@ -601,6 +603,7 @@ def info(request):
                 'previous_close': previous_close,
                 'comments': comments,
                 'form': form,
+                'interest_stocks': user_interest_stocks,
             })
 
         except Exception as e:
@@ -652,5 +655,23 @@ def get_flag_image(request, country_code):
     except requests.RequestException as e:
         # 이미지 요청에 실패하면 에러 메시지를 반환
         return HttpResponse(f"Error fetching image: {e}", status=500)
-    
-    
+
+@loginchk
+@require_POST
+def toggle_interest_stock(request):
+    stock_code = request.POST.get('stock_code')
+    member_id = request.session.get('id')
+
+    if not stock_code or not member_id:
+        return JsonResponse({'status': 'error', 'message': '잘못된 요청입니다.'})
+
+    # 관심 종목이 이미 존재하는지 확인
+    try:
+        interest_stock = InterestStock.objects.get(member_id=member_id, stock_code=stock_code)
+        # 이미 존재하면 삭제
+        interest_stock.delete()
+        return JsonResponse({'status': 'success', 'action': 'removed'})
+    except InterestStock.DoesNotExist:
+        # 존재하지 않으면 추가
+        InterestStock.objects.create(member_id=member_id, stock_code=stock_code)
+        return JsonResponse({'status': 'success', 'action': 'added'})
