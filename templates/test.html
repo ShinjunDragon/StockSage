@@ -48,7 +48,13 @@
             <div class="recent-actions">
                 <div class="recent-list">
                     <div class="recent-title">최근 검색 종목</div>
-                    <div class="recent-search-box">삼성전자, LG전자, 현대차</div>
+                    <div class="recent-search-box">
+                        {% for stock in recent_stocks %}
+                            <div class="recent-stock-item">{{ stock.stock_code }} - {{ stock.viewed_at|date:"Y-m-d H:i" }}</div>
+                        {% empty %}
+                            <div class="no-recent-stocks">최근 검색된 종목이 없습니다.</div>
+                        {% endfor %}
+                    </div>
                     <div class="bookmark-form">
                         <button class="bookmark-button">북마크</button>
                     </div>
