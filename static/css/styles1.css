@@ -5,6 +5,8 @@ body, html {
     height: 100%;
     display: flex;
     flex-direction: column;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
 }
 
 .container {
@@ -22,17 +24,18 @@ body, html {
 }
 
 .main-content {
-    width: 70%;
+    flex: 2;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    border: 1px solid #ccc;
+    margin-right: 10px;
 }
 
+/* 탭 헤더 스타일 */
 .tab-header {
     display: flex;
     justify-content: space-between;
-    background-color: #f9f9f9;
+    background-color: #f0f0f0;
     border-bottom: 1px solid #ccc;
 }
 
@@ -42,18 +45,19 @@ body, html {
     padding: 10px;
     cursor: pointer;
     color: #000;
-    background-color: #f9f9f9;
+    background-color: #f0f0f0;
     border-right: 1px solid #ccc;
 }
 
 .tab:hover {
-    background-color: #f9f9f9;
+    background-color: #e0e0e0;
 }
 
 .tab:last-child {
     border-right: none;
 }
 
+/* 하이라이트 바 스타일 */
 .highlight-bar {
     width: 100%;
     height: 4px;
@@ -61,6 +65,7 @@ body, html {
     border-bottom: 1px solid #ccc;
 }
 
+/* 차트 컨테이너 스타일 */
 .chart-container {
     width: 100%;
     padding: 20px 0;
@@ -76,11 +81,12 @@ body, html {
     background-color: #ccc;
 }
 
+/* 탭 푸터 컨테이너 스타일 */
 .tab-footer-container {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    background-color: #f8f8f8;
+    background-color: #f0f0f0;
     padding: 10px 0;
     border-top: 1px solid #ccc;
 }
@@ -97,24 +103,22 @@ body, html {
     text-align: center;
 }
 
-/* tab-footer의 왼쪽 버튼에 추가 스타일 */
 #tab-left {
     margin-right: 5px;
 }
 
-/* tab-footer의 오른쪽 버튼에 추가 스타일 */
 #tab-right {
     margin-left: 5px;
 }
 
-/* tab-footer에 마우스 호버 효과 추가 */
 .tab-footer:hover {
     background-color: #d0d0d0;
 }
 
+/* 사이드바 스타일 */
 .sidebar {
     width: 30%;
-    background-color: #f8f8f8;
+    background-color: #f0f0f0;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -144,6 +148,7 @@ body, html {
     float: right;
 }
 
+/* 추가 컨텐츠 스타일 */
 .additional-content {
     width: 960px;
     display: flex;
@@ -152,6 +157,7 @@ body, html {
     margin: 0 auto;
 }
 
+/* 최근 검색 영역 스타일 */
 .recent-actions {
     display: flex;
     align-items: center;
@@ -161,7 +167,7 @@ body, html {
 .recent-list {
     display: flex;
     align-items: center;
-    background: #f9f9f9;
+    background: #f0f0f0;
     padding: 10px;
     margin: 10px auto;
     height: 44px;
@@ -195,6 +201,7 @@ body, html {
     cursor: pointer;
 }
 
+/* 주식 탭 스타일 */
 .stock-tabs, .market-trend {
     display: flex;
     justify-content: space-between;
@@ -204,7 +211,7 @@ body, html {
 .stock-tab, .market-section {
     flex: 1;
     padding: 10px;
-    background-color: #f8f8f8;
+    background-color: #f0f0f0;
     border: 1px solid #ccc;
     margin-right: 10px;
 }
@@ -213,31 +220,162 @@ body, html {
     margin-right: 0;
 }
 
+/* 주식 탭 제목 스타일 */
 .stock-tab-title, .market-section-title {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.stock-details, .market-details, .exchange-details {
-    font-size: 14px;
-    color: #333;
-}
-
-.row {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #ccc;
-    padding: 5px 0;
+    font-weight: bold;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
 }
 
+/* 주식 세부정보 스타일 */
+.stock-details {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.stock-details span {
+    flex: 1;
+}
+
+.bar-container {
+      width: 100%; /* 바 컨테이너의 너비를 설정 */
+    background-color: #e0e0e0; /* 바 컨테이너 배경 색상 */
+    border: 1px solid #ccc; /* 바 컨테이너 테두리 색상 */
+    border-radius: 4px; /* 바 컨테이너 둥근 모서리 */
+    overflow: hidden; /* 바가 컨테이너를 넘지 않도록 */
+    height: 24px; /* 바 컨테이너의 높이 설정 */
+}
+
+.bar {
+      height: 20px; /* 바의 높이 설정 */
+    background-color: #4caf50; /* 바의 색상, 필요에 따라 조정 */
+    border-radius: 4px; /* 바의 둥근 모서리 */
+    transition: width 0.3s ease; /* 바의 너비 변경 시 애니메이션 */
+}
+
+/* 환율 정보 스타일 */
 .exchange-rate {
     margin-top: 10px;
     padding: 10px;
-    background-color: #f8f8f8;
+    background-color: #f0f0f0;
     border: 1px solid #ccc;
 }
 
 .exchange-title {
     font-weight: bold;
     margin-bottom: 5px;
+}
+
+.exchange-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.exchange-table th, .exchange-table td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+}
+
+.exchange-table th {
+    background-color: #e0e0e0;
+}
+
+/* 더보기 버튼 스타일 */
+.more-button {
+    color: #000;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+
+/* 테이블 스타일 */
+.stock-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.stock-table-header {
+    display: flex;
+    font-weight: bold;
+    background-color: #e0e0e0;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.stock-table-header span {
+    flex: 1;
+    text-align: center;
+}
+
+.header-name {
+    text-align: left;
+}
+
+.header-ratio {
+    text-align: center;
+}
+
+.header-chart {
+    text-align: right;
+}
+
+.stock-details {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.stock-details span {
+    margin: auto 12px;
+    flex: 1;
+}
+
+.bar-container {
+    flex: 1;
+    width: 100%;
+    margin: 0 10px;
+    height: 3px;
+    background-color: #f0f0f0;
+    border-radius: 1px;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    background-color: #6BC310;
+    transition: width 0.5s ease;
+}
+
+.header-marcap {
+    text-align: right;
+}
+
+
+/* CSS 파일에 추가 */
+.change-positive {
+    color: red; /* 상승률은 빨간색 */
+}
+
+.change-negative {
+    color: blue; /* 하락률은 파란색 */
+}
+
+
+
+
+.chart-image {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    margin-top: 20px;
 }

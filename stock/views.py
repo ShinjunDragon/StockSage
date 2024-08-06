@@ -11,8 +11,11 @@ import io
 import urllib, base64
 import yfinance as yf
 from io import BytesIO
-
-
+import matplotlib.dates as mdates 
+import plotly.graph_objs as go
+from plotly.offline import plot
+import plotly.io as pio
+from bs4 import BeautifulSoup
 
 # 한글 폰트 설정
 matplotlib.rcParams['font.family'] = 'Malgun Gothic'
@@ -242,20 +245,20 @@ def index(request):
     # kospi_stocks와 sector_industry_df를 'Code'를 기준으로 병합합니다
     kospi_stocks = pd.merge(kospi_stocks, sector_industry_df, on='Code', how='left')
     
-    # 상위 15개 종목 선택 (등락률 기준)
-    top_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=False).head(15)
+    # 상위 3개 종목 선택 (등락률 기준)
+    top_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=False).head()
 
-    # 하위 15개 종목 선택 (등락률 기준)
-    row_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=True).head(15)
+    # 하위 3개 종목 선택 (등락률 기준)
+    row_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=True).head(3)
 
-    # 상위 15개 종목 선택 (시가총액 기준)
-    top_10_Marcap = kospi_stocks.sort_values(by='Marcap', ascending=False).head(15)
+    # 상위 3개 종목 선택 (시가총액 기준)
+    top_10_Marcap = kospi_stocks.sort_values(by='Marcap', ascending=False).head(3)
 
     # 섹터별 평균 등락률 계산
     sector_avg_change = kospi_stocks.groupby('Sector')['ChagesRatio'].mean().reset_index()
     # 평균 등락률 기준으로 정렬
     sector_avg_change = sector_avg_change.sort_values(by='ChagesRatio', ascending=False)
-    sector_avg_change = sector_avg_change.head(15)
+    sector_avg_change = sector_avg_change.head(3)
     # DataFrame을 딕셔너리로 변환
     sectors_data = sector_avg_change.to_dict(orient='records')
 
@@ -317,25 +320,22 @@ def index(request):
         }
         top_10_tot.append(stock_data)
 
-    # 코스피 차트 생성
-    kospi_data = yf.download('^KS11', start='2023-01-01', end=today)  # KOSPI 지수 데이터
-    plt.figure(figsize=(10, 6))
-    plt.plot(kospi_data.index, kospi_data['Close'], label='KOSPI Close Price')
-    plt.title('KOSPI Index')
-    plt.xlabel('Date')
-    plt.ylabel('Close Price')
-    plt.legend()
+    # 시가총액을 억 단위로 변환
+    for stock in top_10_tot:
+        stock['marcap_won'] = int(stock['marcap'] / 100000000)  # 억 단위로 변환.
 
-    # 차트를 메모리에 저장
-    buffer = BytesIO()
-    plt.savefig(buffer, format='png')
-    plt.close()
-    buffer.seek(0)
-    image_data = buffer.getvalue()
-    buffer.close()
+    
 
-    # 차트 이미지를 base64로 인코딩
-    image_base64 = base64.b64encode(image_data).decode('utf-8')
+    # 시가총액을 억 단위로 변환
+    for stock in top_10_tot:
+     stock['marcap_won'] = int(stock['marcap'] / 100000000)  # 억 단위로 변환.
+
+
+  
+  
+
+
+
 
     # 컨텍스트에 추가
     context = {
@@ -349,12 +349,18 @@ def index(request):
         'gbp': gbp,
         'dkk': dkk,
         'request_time': request_time,
-        'kospi_chart': image_base64,
         'sectors_data': sectors_data,
-        'industries_data' : industries_data
-    }
+        'industries_data' : industries_data,
+       
+        }
+    
+    
 
-    return render(request, 'index.html', context)
+    
+    
+    
+
+    return render(request, 'test.html', context)
 
 def sector_detail(request, sector) :
     # 데이터를 불러오는 로직을 여기에 작성합니다.

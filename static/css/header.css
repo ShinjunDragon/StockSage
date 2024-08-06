@@ -1,0 +1,178 @@
+/* 기본 스타일 */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+}
+
+/* 컨테이너 중앙 정렬 및 최대 너비 설정 */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 헤더 스타일 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #247fe0;
+    padding: 10px 20px;
+    color: #fff;
+}
+
+/* 로고 스타일 */
+.logo a {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* 검색창 스타일 */
+.input-container {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+    margin: 0 20px;
+}
+
+.header-form {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 8px 40px 8px 10px; /* 오른쪽 패딩 추가 */
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: none;
+    color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-bottom-color 0.3s ease;
+}
+
+.search-bar:focus {
+    outline: none;
+    border-bottom-color: #fff;
+}
+
+.search-bar::placeholder {
+    color: #fff;
+}
+
+.header-label {
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+    color: #fff;
+    font-size: 14px;
+    pointer-events: none;
+    transition: all 0.2s;
+}
+
+.search-bar:focus + .header-label,
+.search-bar:not(:placeholder-shown) + .header-label {
+    font-size: 12px;
+    bottom: 30px;
+    color: #fff;
+}
+
+.stock-search-bar {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.stock-search-bar img {
+    width: 20px;
+    height: 20px;
+}
+
+/* 검색 결과 스타일 */
+#search-results1 {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    z-index: 10;
+    display: none;
+}
+
+/* 네비게이션 스타일 */
+.nav ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    margin-left: 10px;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-link:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+/* 메인 콘텐츠 스타일 */
+.main-content {
+    display: flex;
+    padding: 20px;
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 각 섹션 스타일 */
+.stock-ranking, .exchange-rate {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 랭킹 리스트 스타일 */
+.ranking-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.ranking-number {
+    display: inline-block;
+    width: 
