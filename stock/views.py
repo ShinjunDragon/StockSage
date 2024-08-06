@@ -12,11 +12,10 @@ import urllib, base64
 import yfinance as yf
 from io import BytesIO
 
-
+from django.utils import timezone
 
 from stock.form import CommentForm
-from stock.models import StockComment
-
+from stock.models import StockComment, InterestStock, RecentStock
 
 # 한글 폰트 설정
 matplotlib.rcParams['font.family'] = 'Malgun Gothic'
@@ -579,6 +578,21 @@ def info(request):
             else:
                 form = CommentForm()
 
+            ################################관심 종목, 최근 본 종목#############
+            # 로그인 상태 확인
+            user_id = request.session.get('id')
+            user_interest_stocks = []
+            if user_id:
+                # 사용자의 관심 종목 목록 가져오기
+                user_interest_stocks = InterestStock.objects.filter(member_id=user_id).values_list('stock_code', flat=True)
+                user_interest_stocks = set(user_interest_stocks)  # 중복 제거를 위해 set으로 변환
+
+                # 최근 본 주식 목록 업데이트
+                recent_stock, created = RecentStock.objects.get_or_create(member_id=user_id, stock_code=ticker)
+                if not created:
+                    recent_stock.viewed_at = timezone.now()
+                    recent_stock.save()
+                    
             return render(request, 'stock/info.html', {
                 'graphic': graphic,
                 'ticker': ticker,

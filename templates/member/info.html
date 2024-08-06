@@ -6,7 +6,6 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .info-container {
-            max-width: 600px;
             margin: 50px auto;
             padding: 20px;
             border: 1px solid #ddd;
@@ -15,25 +14,65 @@
             background-color: #fff;
         }
     </style>
-    <div class="info-container">
-        <h2 class="text-center">유저 정보</h2>
-        <ul class="list-group">
-            <li class="list-group-item"><strong>아이디:</strong> {{ member.id }}</li>
-            <li class="list-group-item"><strong>이름:</strong> {{ member.name }}</li>
-            <li class="list-group-item"><strong>성별:</strong>
-                {% if member.gender == 0 %}
-                    남성
-                {% elif member.gender == 1 %}
-                    여성
-                {% endif %}
-            </li>
-            <li class="list-group-item"><strong>전화번호:</strong> {{ member.tel }}</li>
-            <li class="list-group-item"><strong>이메일:</strong> {{ member.email }}</li>
-        </ul>
-        <div class="text-center mt-4">
-            <a href="/member/update" class="btn btn-warning">정보 수정</a>
-            <a href="/member/chgpass" class="btn btn-warning">비밀번호 변경</a>
-            <a href="/member/delete" class="btn btn-danger">회원 탈퇴</a>
+    <div class="container info-container">
+        <div class="row">
+            <!-- 왼쪽 열: 유저 정보 및 관심 종목 목록 -->
+            <div class="col-md-6">
+                <h2 class="text-center">유저 정보</h2>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item"><strong>아이디:</strong> {{ member.id }}</li>
+                    <li class="list-group-item"><strong>이름:</strong> {{ member.name }}</li>
+                    <li class="list-group-item"><strong>성별:</strong>
+                        {% if member.gender == 0 %}
+                            남성
+                        {% elif member.gender == 1 %}
+                            여성
+                        {% endif %}
+                    </li>
+                    <li class="list-group-item"><strong>전화번호:</strong> {{ member.tel }}</li>
+                    <li class="list-group-item"><strong>이메일:</strong> {{ member.email }}</li>
+                </ul>
+
+                <div class="text-center mb-4">
+                    <a href="/member/update" class="btn btn-warning">정보 수정</a>
+                    <a href="/member/chgpass" class="btn btn-warning">비밀번호 변경</a>
+                    <a href="/member/delete" class="btn btn-danger">회원 탈퇴</a>
+                </div>
+
+                <h2 class="text-center">관심 종목 목록</h2>
+                <ul class="list-group">
+                    {% for stock in interest_stocks %}
+                        <li class="list-group-item"><a href="/stock/info/?ticker={{ stock.stock_code }}">{{ stock.stock_code }}</a></li>
+                    {% empty %}
+                        <li class="list-group-item">관심 종목이 없습니다.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- 오른쪽 열: 최근 본 주식 목록 -->
+            <div class="col-md-6">
+                <h2 class="text-center">최근 본 주식</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>주식 코드</th>
+                        <th>본 날짜</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for stock in recent_stocks %}
+                        <tr>
+                            <td><a href="/stock/info/?ticker={{ stock.stock_code }}">{{ stock.stock_code }}</a></td>
+                            <td>{{ stock.viewed_at }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="2">최근 본 주식이 없습니다.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}

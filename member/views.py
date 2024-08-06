@@ -211,8 +211,6 @@ def admin(request):
     }
     return render(request, "member/admin.html", context)
 
-
-
 @require_GET
 @loginadmin
 def toggle_member_status(request, member_id):
@@ -222,3 +220,4 @@ def toggle_member_status(request, member_id):
         return JsonResponse({'status': 'success'})
     except Member.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': '회원이 존재하지 않습니다.'})
+

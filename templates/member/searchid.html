@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}로그인{% endblock %}
+{% block title %}아이디 찾기{% endblock %}
 
 {% block content %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -22,18 +22,19 @@
             text-align: center;
             padding: 10px 0;
         }
+        .alert {
+            margin-top: 15px;
+        }
     </style>
     <div class="form-container">
         <h2 class="text-center">아이디 찾기</h2>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
-                <label for="name">이름</label>
-                <input type="text" name="name" class="form-control" required>
+                <input type="text" name="name" class="form-control" placeholder="이름" required>
             </div>
             <div class="form-group">
-                <label for="email">이메일</label>
-                <input type="email" name="email" class="form-control" required>
+                <input type="email" name="email" class="form-control" placeholder="이메일" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">아이디 찾기</button>
         </form>
