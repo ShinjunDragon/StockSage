@@ -23,6 +23,7 @@ from stock.models import StockComment
 import pytz
 
 
+
 # 한글 폰트 설정
 matplotlib.rcParams['font.family'] = 'Malgun Gothic'
 matplotlib.rcParams['axes.unicode_minus'] = False
