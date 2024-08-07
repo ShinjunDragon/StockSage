@@ -1,0 +1,69 @@
+/* 주가명 타이틀 섹션 스타일 */
+.mt-3 {
+    font-size: 12px;
+    
+
+
+}
+
+
+
+/* 주가 정보 섹션 스타일 */
+.stock-info {
+    
+    margin-bottom: 20px;
+    border-top : 2px solid black;
+    background : #B7B9BD;
+    height: 100px;
+}
+.stock-info p {
+    margin: 5px 0;
+}
+.stock-info img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 검색 폼 스타일 */
+.search-form {
+    position: relative;
+}
+#stock-search {
+    width: 200px;
+}
+#search-results {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    width: 100%;
+}
+
+/* 댓글 섹션 스타일 */
+.comments {
+    margin-top: 30px;
+}
+.comments ul {
+    list-style-type: none;
+    padding: 0;
+}
+.comments li {
+    margin-bottom: 10px;
+}
+.comments form {
+    display: inline;
+}

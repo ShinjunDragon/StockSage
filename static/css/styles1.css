@@ -1,13 +1,24 @@
 /* 전체 레이아웃과 기본 설정 */
-body, html {
+body, html, a {
     margin: 0;
     padding: 0;
     height: 100%;
     display: flex;
     flex-direction: column;
     font-family: Arial, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
+    list-style:none;
+    text-decoration : none;
 }
+
+a {
+    color : #000;
+}
+
+a:hover {
+    text-decoration: underline; /* 호버 시 밑줄 추가 */
+}
+
 
 .container {
     width: 960px;
@@ -59,10 +70,10 @@ body, html {
 
 /* 하이라이트 바 스타일 */
 .highlight-bar {
-    width: 100%;
+   /* width: 100%;
     height: 4px;
     background-color: #007bff;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;*/
 }
 
 /* 차트 컨테이너 스타일 */
@@ -71,14 +82,14 @@ body, html {
     padding: 20px 0;
     display: flex;
     justify-content: center;
-    background-color: #f0f0f0;
+    background-color: #fff;
     flex: 1;
 }
 
 .chart {
-    width: 80%;
+    width: 100%;
     height: 100%;
-    background-color: #ccc;
+    background-color: #fff
 }
 
 /* 탭 푸터 컨테이너 스타일 */
@@ -235,14 +246,20 @@ body, html {
     align-items: center;
     padding: 5px;
     border-bottom: 1px solid #ccc;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 텍스트에 "..." 추가 */
 }
 
 .stock-details span {
     flex: 1;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 텍스트에 "..." 추가 */
 }
 
 .bar-container {
-      width: 100%; /* 바 컨테이너의 너비를 설정 */
+    width: 100%; /* 바 컨테이너의 너비를 설정 */
     background-color: #e0e0e0; /* 바 컨테이너 배경 색상 */
     border: 1px solid #ccc; /* 바 컨테이너 테두리 색상 */
     border-radius: 4px; /* 바 컨테이너 둥근 모서리 */
@@ -251,18 +268,18 @@ body, html {
 }
 
 .bar {
-      height: 20px; /* 바의 높이 설정 */
-    background-color: #4caf50; /* 바의 색상, 필요에 따라 조정 */
+    height: 100%; /* 바의 높이 설정 */
+    background-color: #6BC310; /* 기본 색상 */
     border-radius: 4px; /* 바의 둥근 모서리 */
     transition: width 0.3s ease; /* 바의 너비 변경 시 애니메이션 */
 }
 
 /* 환율 정보 스타일 */
 .exchange-rate {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
+   margin-top: 10px;
+   padding: 10px;
+   /*background-color: #f0f0f0;*/
+   border: 1px solid #ccc;
 }
 
 .exchange-title {
@@ -312,6 +329,9 @@ body, html {
 .stock-table-header span {
     flex: 1;
     text-align: center;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 텍스트에 "..." 추가 */
 }
 
 .header-name {
@@ -331,11 +351,17 @@ body, html {
     align-items: center;
     padding: 5px;
     border-bottom: 1px solid #ccc;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 텍스트에 "..." 추가 */
 }
 
 .stock-details span {
     margin: auto 12px;
     flex: 1;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 텍스트에 "..." 추가 */
 }
 
 .bar-container {
@@ -358,7 +384,6 @@ body, html {
     text-align: right;
 }
 
-
 /* CSS 파일에 추가 */
 .change-positive {
     color: red; /* 상승률은 빨간색 */
@@ -368,14 +393,3 @@ body, html {
     color: blue; /* 하락률은 파란색 */
 }
 
-
-
-
-.chart-image {
-    width: 100%;
-    height: auto;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    margin-top: 20px;
-}

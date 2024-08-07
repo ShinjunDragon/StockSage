@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Stock Sage - 홈{% endblock %}
+{% load humanize %}
 {% block content %}
     <style> {% comment %} 최근 검색 종목 임시로 추가한 스타일{% endcomment %}
         .recent-search-box {
@@ -38,12 +39,22 @@
             <div class="main-content">
                 <div class="tab-header">
                     <div class="tab" id="tab1" onclick="switchTab('content1')">코스피</div>
-                    <div class="tab" id="tab3" onclick="switchTab('content3')">코스피200</div>
+                   
                 </div>
                 <div class="highlight-bar"></div>
                 <div class="chart-container">
                     <div class="chart">
-                        <img src="data:image/png;base64,{{ kospi_chart }}" alt="KOSPI Chart"/>
+                        <img class="chart_image" src="data:image/png;base64,{{ img_base64 }}" alt="KOSPI Chart" style="width:100%">
+                    </div>
+                </div>
+                <div class="chart-info">
+                    <div class="legend">
+                        <div class="legend-box legend-kospi"></div>
+                       
+                    </div>
+                    <div class="legend">
+                        <div class="legend-box legend-event"></div>
+                      
                     </div>
                 </div>
                 <div class="tab-footer-container">
@@ -99,7 +110,7 @@
             </div>
             <div class="stock-tabs">
                 <div class="stock-tab">
-                    <div class="stock-tab-title">상승률 상위</div>
+                    <div class="stock-tab-title">주가 상승률 상위</div>
                     <div class="stock-table">
                         <div class="stock-table-header">
                             <span class="header-name">종목명</span>
@@ -108,23 +119,25 @@
                         </div>
                         {% for s in top_10_stocks %}
                         <div class="stock-details">
-                            <span>{{ s.name }}</span>
+                            <span><a href="{% url 'info' %}?ticker={{ s.code }}">{{ s.name }}</a></span>
                             <span class="{% if s.change > 0 %}change-positive{% else %}change-negative{% endif %}">
-            {% if s.change > 0 %}
-                +{{ s.chagesRatio }}
-            {% else %}
-                {{ s.chagesRatio }}
-            {% endif %}
-        </span>
+                                {% if s.change > 0 %}
+                                +{{ s.chagesRatio }}
+                                {% else %}
+                                {{ s.chagesRatio }}
+                                {% endif %}
+                            </span>
                             <div class="bar-container">
-                                <div class="bar" style="width: 50%;"></div>
+                            <div class="bar" style="width:{{s.chagesRatio}}"></div>
+                          
+
                             </div>
                         </div>
                         {% endfor %}
                     </div>
                 </div>
                 <div class="stock-tab">
-                    <div class="stock-tab-title">하락률 상위</div>
+                    <div class="stock-tab-title">주가 하락률 상위</div>
                     <div class="stock-table">
                         <div class="stock-table-header">
                             <span class="header-name">종목명</span>
@@ -133,18 +146,17 @@
                         </div>
                         {% for s in row_10_stocks %}
                         <div class="stock-details">
-                            <span>{{ s.name }}</span>
+                            <span><a href="{% url 'info' %}?ticker={{ s.code }}">{{ s.name }}</a></span>
                             <span class="{% if s.chagesRatio > 0 %}change-positive{% else %}change-negative{% endif %}">
-                            {% if s.chagesRatio > 0 %}
-                            +{{ s.chagesRatio }}%
-                            {% else %}
-                            {{ s.chagesRatio }}%
-                            {% endif %}
+                                {% if s.chagesRatio > 0 %}
+                                +{{ s.chagesRatio }}%
+                                {% else %}
+                                {{ s.chagesRatio }}%
+                                {% endif %}
                             </span>
-
                             <div class="bar-container">
-                                    
-                                    <div class="bar" style="width: {% if s.chagesRatio > 0 %}{{ s.chagesRatio }}{% else %}0{% endif %}%;"></div>
+                            <div class="bar" style="width:{{s.chagesRatio}}"></div>
+                      
 
                             </div>
                         </div>
@@ -161,74 +173,72 @@
                         </div>
                         {% for s in top_10_tot %}
                         <div class="stock-details">
-                            <span>{{ s.name }}</span>
+                            <span><a href="{% url 'info' %}?ticker={{ s.code }}">{{ s.name }}</a></span>
                             <span class="{% if s.chagesRatio > 0 %}change-positive{% else %}change-negative{% endif %}">
                                 {% if s.chagesRatio > 0 %}
-                                    +{{ s.chagesRatio }}%
+                                +{{ s.chagesRatio }}%
                                 {% elif s.chagesRatio < 0 %}
-                                    {{ s.chagesRatio }}%
+                                {{ s.chagesRatio }}%
                                 {% else %}
-                                    {{ s.chagesRatio }}%
+                                {{ s.chagesRatio }}%
                                 {% endif %}
                             </span>
-                          
+                             <td>{{ s.marcap_won|intcomma }}₩</td>
                         </div>
                         {% endfor %}
-                        </div>
                     </div>
                 </div>
             </div>
-          
             <div class="market-trend">
                 <div class="market-section">
                     <div class="market-section-title">업종별 시세</div>
                     <div class="stock-table">
                         <div class="stock-table-header">
-                            <span class="header-name">업종명</span>
-                            <span class="header-ratio">변동률</span>
-                            <span class="header-chart">차트</span>
+                            <span class="header-sectore">섹터명</span>
+                            <span class="header-change">변화율</span>
+                             <span class="header-order">주도주</span>
                         </div>
-                        <div class="stock-details">
-                            <span>반도체</span>
-                            <span>+2.50%</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 25%;"></div>
-                            </div>
-                        </div>
-                        <div class="stock-details">
-                            <span>자동차</span>
-                            <span>+1.20%</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 12%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="market-section">
-                    <div class="market-section-title">테마별 시세</div>
-                    <div class="stock-table">
-                        <div class="stock-table-header">
-                            <span class="header-name">테마명</span>
-                            <span class="header-ratio">변동률</span>
-                            <span class="header-chart">차트</span>
-                        </div>
-                        <div class="stock-details">
-                            <span>친환경</span>
-                            <span>+3.00%</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 30%;"></div>
-                            </div>
-                        </div>
-                        <div class="stock-details">
-                            <span>바이오</span>
-                            <span>+2.00%</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 20%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        {% for s in sectors_data %}
+        <div class="stock-details">
+           
+            <span><a href="{% url 'sector_detail' s.Sector %}">{{ s.Sector }}</a></span>
+            <span class="{% if s.ChagesRatio > 0 %}change-positive{% else %}change-negative{% endif %}">
+                {% if s.ChagesRatio > 0 %}
+                    +{{ s.ChagesRatio|floatformat:2 }}%
+                {% else %}
+                    {{ s.ChagesRatio|floatformat:2 }}%
+                {% endif %}
+            </span>
+            <span>{{ s.Name }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+              <!-- 테마별 시세 -->
+<div class="market-section">
+    <div class="market-section-title">테마별 시세</div>
+    <div class="stock-table">
+        <div class="stock-table-header">
+            <span class="header-name">테마명</span>
+            <span class="header-ratio">변화율</span>
+            <span class="header-order">주도주</span>
+        </div>
+        {% for s in industries_data %}
+        <div class="stock-details">
+            <span><a href="{% url 'industry_detail' s.Industry %}">{{ s.Industry }}</a></span>
+            <span class="{% if s.ChagesRatio > 0 %}change-positive{% else %}change-negative{% endif %}">
+                {% if s.ChagesRatio > 0 %}
+                    +{{ s.ChagesRatio|floatformat:2 }}%
+                {% else %}
+                    {{ s.ChagesRatio|floatformat:2 }}%
+                {% endif %}
+            </span>
+            <span>{{ s.Name }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
             <div class="exchange-rate">
                 <div class="exchange-title">환율 정보</div>
                 <table class="exchange-table">
@@ -266,17 +276,5 @@
         </div>
     </div>
 </body>
-<script>
-    function switchTab(tabId) {
-        console.log("Switching to tab: " + tabId);
-    }
 
-    function moveLeft() {
-        console.log("Moving left");
-    }
-
-    function moveRight() {
-        console.log("Moving right");
-    }
-</script>
 {% endblock %}
