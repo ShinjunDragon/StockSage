@@ -3,14 +3,10 @@ from member.models import Member
 
 
 class StockComment(models.Model):
-    id = models.AutoField(primary_key=True)  # 기본적으로 AutoField로 자동 증가
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
     ticker = models.CharField(max_length=10)
-    author = models.CharField(max_length=100)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.author} - {self.ticker}"
 
 '''
     만들고 난 뒤

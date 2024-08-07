@@ -30,24 +30,31 @@
         {% endif %}
     </button>
 
-    <h2>댓글</h2>
-    <form method="post" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">댓글 남기기</button>
-    </form>
+    {% if request.session.id %}
+        <h2>댓글</h2>
+        <form method="post" action="">
+            {% csrf_token %}
+            <textarea name="comment" rows="4" placeholder="댓글을 입력하세요..."></textarea>
+            <button type="submit">댓글 남기기</button>
+        </form>
+    {% else %}
+        <p>댓글을 남기려면 <a href="{% url 'login' %}">로그인</a> 해주세요.</p>
+    {% endif %}
 
     <h3>댓글 목록</h3>
     <ul>
         {% for comment in comments %}
             <li>
-                <strong>{{ comment.author }}:</strong>
+                <strong>{{ comment.member.id }}:</strong>
                 <p>{{ comment.comment }}</p>
                 <small>{{ comment.created_at|date:"Y-m-d H:i" }}</small>
-                <form method="post" action="{% url 'delete_comment' comment.id %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" onclick="return confirm('이 댓글을 삭제하시겠습니까?');">삭제</button>
-                </form>
+                {% if comment.member.id == request.session.id or request.session.id == 'admin'%}
+                    <!-- 댓글 작성자가 현재 로그인한 사용자일 경우 삭제 버튼 표시 -->
+                    <form method="post" action="{% url 'delete_comment' comment.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('이 댓글을 삭제하시겠습니까?');">삭제</button>
+                    </form>
+                {% endif %}
             </li>
         {% empty %}
             <li>댓글이 없습니다.</li>

@@ -81,7 +81,7 @@
                     <div class="recent-title">최근 검색 종목</div>
                     <div class="recent-search-box">
                         {% for stock in recent_stocks %}
-                            <div class="recent-stock-item"><a href="stock/info/?ticker={{stock.stock_code}}">
+                            <div class="recent-stock-item"><a href="/stock/info/?ticker={{ stock.stock_code }}">
                                 {{ stock.stock_name }}</a></div>
                         {% empty %}
                             {% if request.session.id %}

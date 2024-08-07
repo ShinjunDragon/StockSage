@@ -1,3 +1,5 @@
+from audioop import reverse
+
 import pandas as pd
 import numpy as np
 import requests
@@ -16,7 +18,8 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 
 from decorator.decorator import loginchk
-from stock.form import CommentForm
+
+from member.models import Member
 from stock.models import StockComment, InterestStock, RecentStock
 
 # 한글 폰트 설정
@@ -340,8 +343,8 @@ def index(request):
     # 로그인한 사용자 ID 가져오기
     id1 = request.session.get('id')
 
-    # 최근 본 주식 목록 가져오기
-    recent_stocks_list = RecentStock.objects.filter(member_id=id1).order_by('-viewed_at')
+    # 최근 본 주식 목록 가져오기 (5개만)
+    recent_stocks_list = RecentStock.objects.filter(member_id=id1).order_by('-viewed_at')[:5]
 
     recent_stocks = []
     for entry in recent_stocks_list:
@@ -589,21 +592,36 @@ def info(request):
 
             # 댓글 관련
             # 댓글 처리
+            ticker = request.GET.get('ticker')
+
+            if not ticker:
+                return redirect('index')
+
+            if request.method == 'POST':
+                comment_text = request.POST.get('comment', '').strip()
+                if comment_text:
+                    StockComment.objects.create(
+                        member_id=request.session.get('id'),
+                        ticker=ticker,
+                        comment=comment_text
+                    )
+                    return redirect(f'/stock/info/?ticker={ticker}')
+
             comments = StockComment.objects.filter(ticker=ticker).order_by('-created_at')
 
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                comment = form.save(commit=False)
-                comment.ticker = ticker
-                comment.save()
-            else:
-                form = CommentForm()
-
+            id1 = request.session.get('id')
             ######### 관심 종목 ##################
-            id1 = request.session["id"]
             interest_stocks = InterestStock.objects.filter(member_id=id1).values_list('stock_code', flat=True)
             is_favorite = ticker in interest_stocks
             ######### 관심 종목 ##################
+
+            # 최근 본 주식 목록 업데이트
+            if request.session.get('id'):
+                recent_stock, created = RecentStock.objects.get_or_create(member_id=id1, stock_code=ticker)
+                if not created:
+                    recent_stock.viewed_at = timezone.now()
+                    recent_stock.save()
+            # 최근 본 주식 목록 업데이트
 
             return render(request, 'stock/info.html', {
                     'graphic': graphic,
@@ -612,7 +630,6 @@ def info(request):
                     'current_price': current_price,
                     'previous_close': previous_close,
                     'comments': comments,
-                    'form': form,
                     'interest_stocks': interest_stocks, #관심 종목 추가
                     'is_favorite': is_favorite,  # 관심 종목 여부 전달
                 })
