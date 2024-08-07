@@ -854,16 +854,24 @@ def combined_view(request, window_size=10):
             current_price = info.get('currentPrice', 'N/A')
             previous_close = info.get('previousClose', 'N/A')
 
-            comments = StockComment.objects.filter(ticker=ticker).order_by('-created_at')
+            # 댓글 관련
+            # 댓글 처리
+            ticker = request.GET.get('ticker')
+
+            if not ticker:
+                return redirect('index')
 
             if request.method == 'POST':
-                form = CommentForm(request.POST)
-                if form.is_valid():
-                    comment = form.save(commit=False)
-                    comment.ticker = ticker
-                    comment.save()
-            else:
-                form = CommentForm()
+                comment_text = request.POST.get('comment', '').strip()
+                if comment_text:
+                    StockComment.objects.create(
+                        member_id=request.session.get('id'),
+                        ticker=ticker,
+                        comment=comment_text
+                    )
+                    return redirect(f'/stock/info/?ticker={ticker}')
+
+            comments = StockComment.objects.filter(ticker=ticker).order_by('-created_at')
 
             return render(request, 'stock/combined_view.html', {
                 'predict': predictPrice,
@@ -873,7 +881,6 @@ def combined_view(request, window_size=10):
                 'current_price': current_price,
                 'previous_close': previous_close,
                 'comments': comments,
-                'form': form,
             })
 
         except Exception as e:
