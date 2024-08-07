@@ -2,11 +2,12 @@ from django.contrib import auth
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.http import JsonResponse
-from django.views.decorators.http import require_GET
-
+from django.views.decorators.http import require_GET, require_POST
 
 from decorator.decorator import loginchk, loginadmin
 from member.models import Member, PageAccessLog
+from stock.models import RecentStock, InterestStock
+
 
 def signup(request):
     if request.method != "POST":
@@ -27,6 +28,14 @@ def signup(request):
             context = {"msg": "회원가입을 환영합니다.", "url": "/member/login/"}
             return render(request, "alert.html", context)
 
+# 아이디 중복 확인
+@require_POST
+def check_id(request):
+    id1 = request.POST.get("id")
+    if Member.objects.filter(id=id1).exists():
+        return JsonResponse({'exists': True})
+    else:
+        return JsonResponse({'exists': False})
 
 def login(request):
     if request.method != "POST":
@@ -121,7 +130,14 @@ def logout(request):
 def info(request):
     id1 = request.session["id"]
     member = Member.objects.get(id=id1)
-    return render(request, "member/info.html", {"member": member})
+    interest_stocks = InterestStock.objects.filter(member_id=id1).order_by('-added_at')
+    recent_stocks = RecentStock.objects.filter(member_id=id1).order_by('-viewed_at')
+
+    return render(request, "member/info.html", {
+        "member": member,
+        "recent_stock": recent_stocks,
+        "interest_stocks": interest_stocks,
+    })
 
 
 @loginchk
@@ -211,15 +227,13 @@ def admin(request):
     }
     return render(request, "member/admin.html", context)
 
-
-
 @require_GET
 @loginadmin
 def toggle_member_status(request, member_id):
     try:
         member = Member.objects.get(id=member_id)
-        member.is_active = not member.is_active
         member.save()
         return JsonResponse({'status': 'success'})
     except Member.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': '회원이 존재하지 않습니다.'})
+

@@ -35,52 +35,64 @@
             display: block;
             color: red; /* 유효하지 않은 입력 메시지 색상 */
         }
+        .validation-message {
+            color: red;
+            font-size: 0.9em;
+        }
+        .form-control::placeholder {
+            color: #6c757d; /* placeholder 텍스트 색상 */
+        }
+        .form-group + .form-group {
+            margin-top: 15px; /* 필드 사이의 간격 조정 */
+        }
+        .btn-check-id {
+            display: block;
+            margin-top: 10px; /* 버튼과 필드 사이의 간격 조정 */
+        }
     </style>
     <div class="form-container">
         <h2 class="text-center">회원가입</h2>
         <form method="post" id="signup-form">
             {% csrf_token %}
             <div class="form-group">
-                <label for="id">아이디</label>
-                <input type="text" name="id" id="id" class="form-control" required>
-                <div class="valid-feedback">사용 가능한 아이디입니다.</div>
-                <div class="invalid-feedback">아이디는 4~12자의 영문과 숫자만 사용해야 합니다.</div>
+                <input type="text" name="id" id="id" class="form-control" placeholder="아이디 (4~12자의 영문과 숫자만 사용)" required>
+                <div class="validation-message" id="id-validation-message">아이디는 4~12자의 영문과 숫자만 사용해야 합니다.</div>
+                <div id="id-check-result"></div>
+                <button type="button" id="check-id" class="btn btn-info btn-check-id">아이디 중복 확인</button>
             </div>
             <div class="form-group">
-                <label for="pass1">비밀번호</label>
-                <input type="password" name="pass1" id="pass1" class="form-control" required>
+                <input type="password" name="pass1" id="pass1" class="form-control" placeholder="비밀번호 (영문과 숫자 포함 8자 이상)" required>
                 <div class="valid-feedback">사용 가능한 비밀번호입니다.</div>
                 <div class="invalid-feedback">비밀번호는 영문과 숫자를 포함하여 8자 이상이어야 합니다.</div>
             </div>
             <div class="form-group">
-                <label for="name">이름</label>
-                <input type="text" name="name" class="form-control" required>
+                <input type="text" name="name" class="form-control" placeholder="이름" required>
             </div>
             <div class="form-group">
-                <label for="gender">성별</label>
                 <select name="gender" class="form-control">
                     <option value="0">남성</option>
                     <option value="1">여성</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="tel">전화번호</label>
-                <input type="tel" name="tel" id="tel" class="form-control" required>
+                <input type="tel" name="tel" id="tel" class="form-control" placeholder="전화번호 (숫자 11자리)" pattern="\d{11}" maxlength="11" required>
                 <div class="valid-feedback">유효한 전화번호입니다.</div>
                 <div class="invalid-feedback">전화번호는 '-' 없이 숫자 11자리여야 합니다.</div>
             </div>
             <div class="form-group">
-                <label for="email">이메일</label>
-                <input type="email" name="email" id="email" class="form-control" required>
+                <input type="email" name="email" id="email" class="form-control" placeholder="이메일" required>
                 <div class="valid-feedback">유효한 이메일입니다.</div>
                 <div class="invalid-feedback">올바른 이메일 형식을 입력하세요.</div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">가입하기</button>
         </form>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('signup-form');
+            const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+            let isIdChecked = false;
 
             const validateField = (field, pattern, validMessage, invalidMessage) => {
                 if (pattern.test(field.value)) {
@@ -94,10 +106,23 @@
                 }
             };
 
+            const idField = form.querySelector('input[name="id"]');
+            const pass1Field = form.querySelector('input[name="pass1"]');
+            const telField = form.querySelector('input[name="tel"]');
+            const emailField = form.querySelector('input[name="email"]');
+
+            // 초기 유효성 검사 수행
+            validateField(idField, /^[a-zA-Z0-9]{4,12}$/, '', '아이디는 4~12자의 영문과 숫자만 사용해야 합니다.');
+            validateField(pass1Field, /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, '사용 가능한 비밀번호입니다.', '비밀번호는 영문과 숫자를 포함하여 8자 이상이어야 합니다.');
+            validateField(telField, /^\d{11}$/, '유효한 전화번호입니다.', "전화번호는 '-' 없이 숫자 11자리여야 합니다.");
+            validateField(emailField, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, '유효한 이메일입니다.', '올바른 이메일 형식을 입력하세요.');
+
             form.addEventListener('input', function (event) {
                 const target = event.target;
                 if (target.name === 'id') {
-                    validateField(target, /^[a-zA-Z0-9]{4,12}$/, '사용 가능한 아이디입니다.', '아이디는 4~12자의 영문과 숫자만 사용해야 합니다.');
+                    validateField(target, /^[a-zA-Z0-9]{4,12}$/, '', '아이디는 4~12자의 영문과 숫자만 사용해야 합니다.');
+                    $('#id-check-result').text(''); // 아이디가 변경될 때 중복 체크 결과 초기화
+                    isIdChecked = false; // 아이디가 변경되면 다시 중복 체크가 필요함
                 } else if (target.name === 'pass1') {
                     validateField(target, /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, '사용 가능한 비밀번호입니다.', '비밀번호는 영문과 숫자를 포함하여 8자 이상이어야 합니다.');
                 } else if (target.name === 'tel') {
@@ -107,12 +132,14 @@
                 }
             });
 
-            form.addEventListener('submit', function (event) {
-                const idField = form.querySelector('input[name="id"]');
-                const pass1Field = form.querySelector('input[name="pass1"]');
-                const telField = form.querySelector('input[name="tel"]');
-                const emailField = form.querySelector('input[name="email"]');
+            form.addEventListener('focusout', function (event) {
+                const target = event.target;
+                if (target.name === 'id') {
+                    validateField(target, /^[a-zA-Z0-9]{4,12}$/, '', '아이디는 4~12자의 영문과 숫자만 사용해야 합니다.');
+                }
+            });
 
+            form.addEventListener('submit', function (event) {
                 const fields = [idField, pass1Field, telField, emailField];
 
                 let allValid = true;
@@ -123,9 +150,45 @@
                     }
                 });
 
-                if (!allValid) {
+                if (!allValid || !isIdChecked) {
                     event.preventDefault();
+                    alert("모든 필드를 올바르게 입력하고 아이디 중복 체크를 완료해야 합니다.");
                 }
+            });
+
+            $('#check-id').on('click', function() {
+                const id = $('#id').val();
+                const idPattern = /^[a-zA-Z0-9]{4,12}$/;
+
+                if (idPattern.test(id)) {
+                    $.ajax({
+                        url: '{% url "check_id" %}', // URL 패턴 이름으로 AJAX 요청
+                        type: 'POST',
+                        data: {
+                            'id': id,
+                            'csrfmiddlewaretoken': csrfToken // CSRF 토큰 포함
+                        },
+                        success: function(response) {
+                            if (response.exists) {
+                                $('#id-check-result').text('이미 사용 중인 아이디입니다.').css('color', 'red');
+                                $('#id').removeClass('is-valid').addClass('is-invalid');
+                                isIdChecked = false; // 아이디 중복 확인 실패
+                            } else {
+                                $('#id-check-result').text('사용 가능한 아이디입니다.').css('color', 'green');
+                                $('#id').removeClass('is-invalid').addClass('is-valid');
+                                isIdChecked = true; // 아이디 중복 확인 성공
+                            }
+                        }
+                    });
+                } else {
+                    $('#id').addClass('is-invalid');
+                    $('#id-check-result').text('아이디는 4~12자의 영문과 숫자만 사용해야 합니다.').css('color', 'red');
+                }
+            });
+
+            // 전화번호 입력 필드에서 숫자만 허용
+            $('#tel').on('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11); // 숫자만 허용하고 최대 11자리
             });
         });
     </script>

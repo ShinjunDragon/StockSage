@@ -2,6 +2,37 @@
 {% block title %}Stock Sage - 홈{% endblock %}
 {% load humanize %}
 {% block content %}
+    <style> {% comment %} 최근 검색 종목 임시로 추가한 스타일{% endcomment %}
+        .recent-search-box {
+            display: flex; /* 아이템을 가로로 나열 */
+            overflow-x: auto; /* 가로 스크롤 가능하도록 설정 */
+            border: 1px solid #ddd;
+            white-space: nowrap; /* 줄 바꿈 방지 */
+        }
+
+        .recent-stock-item {
+            flex: 0 0 auto; /* 아이템이 가로로 나열되도록 설정 */
+            margin-right: 10px;
+            padding: 5px 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .recent-stock-item a {
+            text-decoration: none; /* 링크 밑줄 제거 */
+            color: #333;
+        }
+
+        .recent-stock-item a:hover {
+            text-decoration: underline; /* 링크에 호버 시 밑줄 추가 */
+        }
+
+        .no-recent-stocks {
+            padding: 10px;
+            color: #777;
+        }
+    </style>
 <body>
     <div class="container">
         <div class="content-wrap">
@@ -59,7 +90,19 @@
             <div class="recent-actions">
                 <div class="recent-list">
                     <div class="recent-title">최근 검색 종목</div>
-                    <div class="recent-search-box">삼성전자, LG전자, 현대차</div>
+                    <div class="recent-search-box">
+                        {% for stock in recent_stocks %}
+                            <div class="recent-stock-item"><a href="/stock/info/?ticker={{ stock.stock_code }}">
+                                {{ stock.stock_name }}</a></div>
+                        {% empty %}
+                            {% if request.session.id %}
+                                <div class="no-recent-stocks">최근 검색된 종목이 없습니다.</div>
+                            {% else %}
+                                <div class="no-recent-stocks">로그인 시 이용 가능합니다</div>
+                            {% endif %}
+
+                        {% endfor %}
+                    </div>
                     <div class="bookmark-form">
                         <button class="bookmark-button">북마크</button>
                     </div>

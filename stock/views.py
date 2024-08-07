@@ -13,12 +13,18 @@ import yfinance as yf
 from io import BytesIO
 import io
 
+from django.utils import timezone
+from django.views.decorators.http import require_POST
+
+from decorator.decorator import loginchk
+
+from member.models import Member
+from stock.models import StockComment, InterestStock, RecentStock
 import os
 from django.conf import settings
 from tensorflow.keras.models import load_model
-from matplotlib.colors import LinearSegmentedColormap 
+from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.patches import Rectangle
-from stock.form import CommentForm
 from stock.models import StockComment
 import pytz
 
@@ -250,42 +256,29 @@ def index(request):
     kospi_stocks = pd.merge(kospi_stocks, sector_industry_df, on='Code', how='left')
     
     # 상위 3개 종목 선택 (등락률 기준)
-    top_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=False).head(5)
+    top_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=False).head()
 
     # 하위 3개 종목 선택 (등락률 기준)
-    row_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=True).head(5)
+    row_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=True).head(3)
 
     # 상위 3개 종목 선택 (시가총액 기준)
-    top_10_Marcap = kospi_stocks.sort_values(by='Marcap', ascending=False).head(5)
+    top_10_Marcap = kospi_stocks.sort_values(by='Marcap', ascending=False).head(3)
 
     # 섹터별 평균 등락률 계산
     sector_avg_change = kospi_stocks.groupby('Sector')['ChagesRatio'].mean().reset_index()
     # 평균 등락률 기준으로 정렬
     sector_avg_change = sector_avg_change.sort_values(by='ChagesRatio', ascending=False)
-    sector_avg_change = sector_avg_change.head(5)
-    # 섹터별 주가 상승률이 가장 높은 종목을 찾기
-    leading_stocks_by_sector = kospi_stocks.loc[kospi_stocks.groupby('Sector')['ChagesRatio'].idxmax()]
-    # 섹터별로 주도주 종목명만 가져오기
-    leading_stocks_by_sector_names = leading_stocks_by_sector[['Sector', 'Name']]
-    # 두 DataFrame merge 하기
-    sectors_data = pd.merge(sector_avg_change, leading_stocks_by_sector_names, on="Sector")
+    sector_avg_change = sector_avg_change.head(3)
     # DataFrame을 딕셔너리로 변환
-    sectors_data = sectors_data.to_dict(orient='records')
+    sectors_data = sector_avg_change.to_dict(orient='records')
 
     # industry별 평균 등락률 계산
     industry_avg_change = kospi_stocks.groupby('Industry')['ChagesRatio'].mean().reset_index()
     # 평균 등락률 기준으로 정렬
     industry_avg_change = industry_avg_change.sort_values(by='ChagesRatio', ascending=False)
-    industry_avg_change = industry_avg_change.head(5)
-    # industry별 주가 상승률이 가장 높은 종목을 찾기
-    leading_stocks_by_industry = kospi_stocks.loc[kospi_stocks.groupby('Industry')['ChagesRatio'].idxmax()]
-    # industry별로 주도주 종목명만 가져오기
-    leading_stocks_by_industry_names = leading_stocks_by_industry[['Industry', 'Name']]
-    # 두 DataFrame merge 하기
-    industries_data = pd.merge(industry_avg_change, leading_stocks_by_industry_names, on="Industry")
+    industry_avg_change = industry_avg_change.head(15)
     # DataFrame을 딕셔너리로 변환
-    industries_data = industries_data.to_dict(orient='records')
-
+    industries_data = industry_avg_change.to_dict(orient='records')
 
     # 환율정보 가져오기 (open API)
     url = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=DPModF9KEpqknLkTe9GxHGp8k1me31CC&searchdate=20240701&data=AP01'
@@ -337,76 +330,85 @@ def index(request):
         }
         top_10_tot.append(stock_data)
 
-
-    
-
-
-
-
-
-
-
-
     # 시가총액을 억 단위로 변환
     for stock in top_10_tot:
      stock['marcap_won'] = int(stock['marcap'] / 100000000)  # 억 단위로 변환
-     
+
                # 오늘 날짜 가져오기
     today = pd.to_datetime('today').strftime('%Y-%m-%d')
-    
+
     # KOSPI 지수 데이터 다운로드
     kospi_data = yf.download('^KS11', start='2023-01-01', end=today)
-    
+
     # 사용자 정의 그라데이션 컬러맵 정의 (위: 초록, 아래: 흰색)
     cmap = LinearSegmentedColormap.from_list("custom_gradient", ["green", "white"])
-    
+
     # 차트 설정
     plt.figure(figsize=(12, 8), dpi=400)
-    
+
     # 그라데이션 배경을 그리기 위해 영역을 설정
     plt.imshow(np.linspace(0, 1, 100).reshape(1, -1), aspect='auto', cmap=cmap,
-               extent=[kospi_data.index.min(), kospi_data.index.max(), 
+               extent=[kospi_data.index.min(), kospi_data.index.max(),
                        kospi_data['Close'].min(), kospi_data['Close'].max()],
                alpha=0.3, interpolation='bicubic')
-    
+
     # KOSPI 종가 그래프
     plt.plot(kospi_data.index, kospi_data['Close'], label='KOSPI 종가', color='green', linewidth=2)
-    
+
     # 레전드, 제목, 축 라벨 추가
     plt.legend(loc='upper left', fontsize=12, frameon=False)
     plt.title('KOSPI 지수', fontsize=16, fontweight='bold', color='black')
     plt.xlabel('날짜', fontsize=14, fontweight='bold', color='gray')
     plt.ylabel('종가', fontsize=14, fontweight='bold', color='gray')
-    
+
     # x축 날짜 포맷 설정
     plt.gca().xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d'))
     plt.gca().xaxis.set_major_locator(plt.matplotlib.dates.MonthLocator(interval=1))
     plt.gca().xaxis.set_tick_params(rotation=45)
-    
+
     # 격자 추가 (엑셀 스타일, 덜 눈에 띄게)
     plt.grid(True, which='both', linestyle='--', linewidth=0.5, color='lightgray')
-    
+
     # 그래프 외곽선 제거 및 내부 라인 제거
     plt.gca().spines['top'].set_visible(False)
     plt.gca().spines['right'].set_visible(False)
     plt.gca().spines['left'].set_visible(False)
     plt.gca().spines['bottom'].set_visible(False)
-    
+
     # 차트를 메모리 버퍼에 저장
     buf = io.BytesIO()
     plt.savefig(buf, format='png', bbox_inches='tight')
     buf.seek(0)
     plt.close()
-    
+
     # Base64로 인코딩
     img_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
-    
+
     # Base64 문자열을 HTML 템플릿에 삽입할 수 있도록 출력
     print(f"data:image/png;base64,{img_base64}")
 
 
+    ################################최근 본 종목#############
+    # 로그인한 사용자 ID 가져오기
+    id1 = request.session.get('id')
 
+    # 최근 본 주식 목록 가져오기 (5개만)
+    recent_stocks_list = RecentStock.objects.filter(member_id=id1).order_by('-viewed_at')[:5]
 
+    recent_stocks = []
+    for entry in recent_stocks_list:
+        stock_code = entry.stock_code
+        stock_info = kospi_stocks[kospi_stocks['Code'] == stock_code]
+        if not stock_info.empty:
+            stock_name = stock_info.iloc[0]['Name']
+        else:
+            stock_name = 'Unknown'
+        recent_stocks.append({
+            'stock_code': stock_code,
+            'stock_name': stock_name,
+            'viewed_at': entry.viewed_at,
+        })
+    ################################최근 본 종목#############
 
     # 컨텍스트에 추가
     context = {
@@ -422,12 +424,10 @@ def index(request):
         'request_time': request_time,
         'sectors_data': sectors_data,
         'industries_data' : industries_data,
+        'recent_stocks': recent_stocks,
         'img_base64': img_base64,
-     
-       
-        }
-    
-    
+    }
+
 
     
     
@@ -605,6 +605,7 @@ def info(request):
     ticker = request.GET.get('ticker')
     if ticker:
         try:
+            # KOSPI 주식을 위해 ".KS" 추가
             kospi_ticker = f"{ticker}.KS"
             stock = yf.Ticker(kospi_ticker)
 
@@ -642,7 +643,6 @@ def info(request):
             ax.set_xticks(hour_ticks)
             ax.set_xticklabels([t.strftime('%H:%M') for t in hour_ticks])
             plt.xticks(rotation=45)
-
             plt.tight_layout()
 
             # 그래프를 이미지로 변환
@@ -663,31 +663,53 @@ def info(request):
             previous_close = info.get('previousClose', 'N/A')
 
             # 댓글 관련
+            # 댓글 처리
+            ticker = request.GET.get('ticker')
+
+            if not ticker:
+                return redirect('index')
+
+            if request.method == 'POST':
+                comment_text = request.POST.get('comment', '').strip()
+                if comment_text:
+                    StockComment.objects.create(
+                        member_id=request.session.get('id'),
+                        ticker=ticker,
+                        comment=comment_text
+                    )
+                    return redirect(f'/stock/info/?ticker={ticker}')
+
             comments = StockComment.objects.filter(ticker=ticker).order_by('-created_at')
 
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                comment = form.save(commit=False)
-                comment.ticker = ticker
-                comment.save()
-            else:
-                form = CommentForm()
+            id1 = request.session.get('id')
+            ######### 관심 종목 ##################
+            interest_stocks = InterestStock.objects.filter(member_id=id1).values_list('stock_code', flat=True)
+            is_favorite = ticker in interest_stocks
+            ######### 관심 종목 ##################
 
+            # 최근 본 주식 목록 업데이트
+            if request.session.get('id'):
+                recent_stock, created = RecentStock.objects.get_or_create(member_id=id1, stock_code=ticker)
+                if not created:
+                    recent_stock.viewed_at = timezone.now()
+                    recent_stock.save()
+
+            # 최근 본 주식 목록 업데이트
             return render(request, 'stock/info.html', {
-                'graphic': graphic,
-                'ticker': ticker,
-                'company_name': company_name,
-                'current_price': current_price,
-                'previous_close': previous_close,
-                'comments': comments,
-                'form': form,
-            })
+                    'graphic': graphic,
+                    'ticker': ticker,
+                    'company_name': company_name,
+                    'current_price': current_price,
+                    'previous_close': previous_close,
+                    'comments': comments,
+                    'interest_stocks': interest_stocks, #관심 종목 추가
+                    'is_favorite': is_favorite,  # 관심 종목 여부 전달
+                })
 
         except Exception as e:
             return render(request, 'stock/info.html', {'error': f'오류 발생: {str(e)}'})
     else:
         return render(request, 'stock/info.html')
-
 
 def delete_comment(request, comment_id):
     if request.method == 'POST':
@@ -733,9 +755,28 @@ def get_flag_image(request, country_code):
     except requests.RequestException as e:
         # 이미지 요청에 실패하면 에러 메시지를 반환
         return HttpResponse(f"Error fetching image: {e}", status=500)
-    
-    
-def combined_view(request, window_size=10): 
+
+@loginchk
+@require_POST
+def toggle_interest_stock(request):
+    stock_code = request.POST.get('stock_code')
+    member_id = request.session.get('id')
+
+    if not stock_code or not member_id:
+        return JsonResponse({'status': 'error', 'message': '잘못된 요청입니다.'})
+
+    # 관심 종목이 이미 존재하는지 확인
+    try:
+        interest_stock = InterestStock.objects.get(member_id=member_id, stock_code=stock_code)
+        # 이미 존재하면 삭제
+        interest_stock.delete()
+        return JsonResponse({'status': 'success', 'action': 'removed'})
+    except InterestStock.DoesNotExist:
+        # 존재하지 않으면 추가
+        InterestStock.objects.create(member_id=member_id, stock_code=stock_code)
+        return JsonResponse({'status': 'success', 'action': 'added'})
+
+def combined_view(request, window_size=10):
     ticker = request.GET.get('ticker')
     if ticker:
         try:
@@ -813,16 +854,24 @@ def combined_view(request, window_size=10):
             current_price = info.get('currentPrice', 'N/A')
             previous_close = info.get('previousClose', 'N/A')
 
-            comments = StockComment.objects.filter(ticker=ticker).order_by('-created_at')
+            # 댓글 관련
+            # 댓글 처리
+            ticker = request.GET.get('ticker')
+
+            if not ticker:
+                return redirect('index')
 
             if request.method == 'POST':
-                form = CommentForm(request.POST)
-                if form.is_valid():
-                    comment = form.save(commit=False)
-                    comment.ticker = ticker
-                    comment.save()
-            else:
-                form = CommentForm()
+                comment_text = request.POST.get('comment', '').strip()
+                if comment_text:
+                    StockComment.objects.create(
+                        member_id=request.session.get('id'),
+                        ticker=ticker,
+                        comment=comment_text
+                    )
+                    return redirect(f'/stock/info/?ticker={ticker}')
+
+            comments = StockComment.objects.filter(ticker=ticker).order_by('-created_at')
 
             return render(request, 'stock/combined_view.html', {
                 'predict': predictPrice,
@@ -832,12 +881,9 @@ def combined_view(request, window_size=10):
                 'current_price': current_price,
                 'previous_close': previous_close,
                 'comments': comments,
-                'form': form,
             })
 
         except Exception as e:
             return render(request, 'stock/combined_view.html', {'error': f'오류 발생: {str(e)}'})
     else:
         return render(request, 'stock/combined_view.html')
-
-    
