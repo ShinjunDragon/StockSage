@@ -6,7 +6,11 @@
 
 }
 
-
+.info-header {
+    display : flex;
+    height: 100%;
+        
+}
 
 /* 주가 정보 섹션 스타일 */
 .stock-info {

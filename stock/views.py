@@ -256,7 +256,7 @@ def index(request):
     kospi_stocks = pd.merge(kospi_stocks, sector_industry_df, on='Code', how='left')
     
     # 상위 3개 종목 선택 (등락률 기준)
-    top_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=False).head()
+    top_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=False).head(3)
 
     # 하위 3개 종목 선택 (등락률 기준)
     row_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=True).head(3)
@@ -276,7 +276,7 @@ def index(request):
     industry_avg_change = kospi_stocks.groupby('Industry')['ChagesRatio'].mean().reset_index()
     # 평균 등락률 기준으로 정렬
     industry_avg_change = industry_avg_change.sort_values(by='ChagesRatio', ascending=False)
-    industry_avg_change = industry_avg_change.head(15)
+    industry_avg_change = industry_avg_change.head(3)
     # DataFrame을 딕셔너리로 변환
     industries_data = industry_avg_change.to_dict(orient='records')
 
