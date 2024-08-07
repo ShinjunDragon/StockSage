@@ -11,11 +11,16 @@ import io
 import urllib, base64
 import yfinance as yf
 from io import BytesIO
+import io
 
-
-
+import os
+from django.conf import settings
+from tensorflow.keras.models import load_model
+from matplotlib.colors import LinearSegmentedColormap 
+from matplotlib.patches import Rectangle
 from stock.form import CommentForm
 from stock.models import StockComment
+import pytz
 
 
 # 한글 폰트 설정
@@ -244,29 +249,42 @@ def index(request):
     kospi_stocks = pd.merge(kospi_stocks, sector_industry_df, on='Code', how='left')
     
     # 상위 3개 종목 선택 (등락률 기준)
-    top_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=False).head()
+    top_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=False).head(5)
 
     # 하위 3개 종목 선택 (등락률 기준)
-    row_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=True).head(3)
+    row_10_ChagesRatio = kospi_stocks.sort_values(by='ChagesRatio', ascending=True).head(5)
 
     # 상위 3개 종목 선택 (시가총액 기준)
-    top_10_Marcap = kospi_stocks.sort_values(by='Marcap', ascending=False).head(3)
+    top_10_Marcap = kospi_stocks.sort_values(by='Marcap', ascending=False).head(5)
 
     # 섹터별 평균 등락률 계산
     sector_avg_change = kospi_stocks.groupby('Sector')['ChagesRatio'].mean().reset_index()
     # 평균 등락률 기준으로 정렬
     sector_avg_change = sector_avg_change.sort_values(by='ChagesRatio', ascending=False)
-    sector_avg_change = sector_avg_change.head(3)
+    sector_avg_change = sector_avg_change.head(5)
+    # 섹터별 주가 상승률이 가장 높은 종목을 찾기
+    leading_stocks_by_sector = kospi_stocks.loc[kospi_stocks.groupby('Sector')['ChagesRatio'].idxmax()]
+    # 섹터별로 주도주 종목명만 가져오기
+    leading_stocks_by_sector_names = leading_stocks_by_sector[['Sector', 'Name']]
+    # 두 DataFrame merge 하기
+    sectors_data = pd.merge(sector_avg_change, leading_stocks_by_sector_names, on="Sector")
     # DataFrame을 딕셔너리로 변환
-    sectors_data = sector_avg_change.to_dict(orient='records')
+    sectors_data = sectors_data.to_dict(orient='records')
 
     # industry별 평균 등락률 계산
     industry_avg_change = kospi_stocks.groupby('Industry')['ChagesRatio'].mean().reset_index()
     # 평균 등락률 기준으로 정렬
     industry_avg_change = industry_avg_change.sort_values(by='ChagesRatio', ascending=False)
-    industry_avg_change = industry_avg_change.head(15)
+    industry_avg_change = industry_avg_change.head(5)
+    # industry별 주가 상승률이 가장 높은 종목을 찾기
+    leading_stocks_by_industry = kospi_stocks.loc[kospi_stocks.groupby('Industry')['ChagesRatio'].idxmax()]
+    # industry별로 주도주 종목명만 가져오기
+    leading_stocks_by_industry_names = leading_stocks_by_industry[['Industry', 'Name']]
+    # 두 DataFrame merge 하기
+    industries_data = pd.merge(industry_avg_change, leading_stocks_by_industry_names, on="Industry")
     # DataFrame을 딕셔너리로 변환
-    industries_data = industry_avg_change.to_dict(orient='records')
+    industries_data = industries_data.to_dict(orient='records')
+
 
     # 환율정보 가져오기 (open API)
     url = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=DPModF9KEpqknLkTe9GxHGp8k1me31CC&searchdate=20240701&data=AP01'
@@ -318,22 +336,73 @@ def index(request):
         }
         top_10_tot.append(stock_data)
 
+
+    
+
+
+
+
+
+
+
+
     # 시가총액을 억 단위로 변환
     for stock in top_10_tot:
+     stock['marcap_won'] = int(stock['marcap'] / 100000000)  # 억 단위로 변환
+     
+               # 오늘 날짜 가져오기
+    today = pd.to_datetime('today').strftime('%Y-%m-%d')
+    
+    # KOSPI 지수 데이터 다운로드
+    kospi_data = yf.download('^KS11', start='2023-01-01', end=today)
+    
+    # 사용자 정의 그라데이션 컬러맵 정의 (위: 초록, 아래: 흰색)
+    cmap = LinearSegmentedColormap.from_list("custom_gradient", ["green", "white"])
+    
+    # 차트 설정
+    plt.figure(figsize=(12, 8), dpi=400)
+    
+    # 그라데이션 배경을 그리기 위해 영역을 설정
+    plt.imshow(np.linspace(0, 1, 100).reshape(1, -1), aspect='auto', cmap=cmap,
+               extent=[kospi_data.index.min(), kospi_data.index.max(), 
+                       kospi_data['Close'].min(), kospi_data['Close'].max()],
+               alpha=0.3, interpolation='bicubic')
+    
+    # KOSPI 종가 그래프
+    plt.plot(kospi_data.index, kospi_data['Close'], label='KOSPI 종가', color='green', linewidth=2)
+    
+    # 레전드, 제목, 축 라벨 추가
+    plt.legend(loc='upper left', fontsize=12, frameon=False)
+    plt.title('KOSPI 지수', fontsize=16, fontweight='bold', color='black')
+    plt.xlabel('날짜', fontsize=14, fontweight='bold', color='gray')
+    plt.ylabel('종가', fontsize=14, fontweight='bold', color='gray')
+    
+    # x축 날짜 포맷 설정
+    plt.gca().xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d'))
+    plt.gca().xaxis.set_major_locator(plt.matplotlib.dates.MonthLocator(interval=1))
+    plt.gca().xaxis.set_tick_params(rotation=45)
+    
+    # 격자 추가 (엑셀 스타일, 덜 눈에 띄게)
+    plt.grid(True, which='both', linestyle='--', linewidth=0.5, color='lightgray')
+    
+    # 그래프 외곽선 제거 및 내부 라인 제거
+    plt.gca().spines['top'].set_visible(False)
+    plt.gca().spines['right'].set_visible(False)
+    plt.gca().spines['left'].set_visible(False)
+    plt.gca().spines['bottom'].set_visible(False)
+    
+    # 차트를 메모리 버퍼에 저장
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png', bbox_inches='tight')
+    buf.seek(0)
+    plt.close()
+    
+    # Base64로 인코딩
+    img_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
+    
+    # Base64 문자열을 HTML 템플릿에 삽입할 수 있도록 출력
+    print(f"data:image/png;base64,{img_base64}")
 
-
-
-
-        stock['marcap_won'] = int(stock['marcap'] / 100000000)  # 억 단위로 변환
-
-    # 코스피 차트 생성
-    kospi_data = yf.download('^KS11', start='2023-01-01', end=today)  # KOSPI 지수 데이터
-    plt.figure(figsize=(10, 6))
-    plt.plot(kospi_data.index, kospi_data['Close'], label='KOSPI Close Price')
-    plt.title('KOSPI Index')
-    plt.xlabel('Date')
-    plt.ylabel('Close Price')
-    plt.legend()
 
 
 
@@ -352,6 +421,8 @@ def index(request):
         'request_time': request_time,
         'sectors_data': sectors_data,
         'industries_data' : industries_data,
+        'img_base64': img_base64,
+     
        
         }
     
@@ -533,33 +604,56 @@ def info(request):
     ticker = request.GET.get('ticker')
     if ticker:
         try:
-            # KOSPI 주식을 위해 ".KS" 추가
             kospi_ticker = f"{ticker}.KS"
             stock = yf.Ticker(kospi_ticker)
-            hist = stock.history(period="1mo")  # 1달 데이터
+
+            korea_tz = pytz.timezone('Asia/Seoul')
+            today = datetime.now(korea_tz)
+
+            # 마지막 거래일 찾기
+            last_trading_day = today - timedelta(days=1)
+            while last_trading_day.weekday() > 4:  # 주말이면 금요일로 설정
+                last_trading_day -= timedelta(days=1)
+
+            # 데이터 가져오기 (마지막 거래일 00:00부터 다음날 00:00까지, 1분 간격)
+            start_date = last_trading_day.replace(hour=0, minute=0, second=0, microsecond=0)
+            end_date = start_date + timedelta(days=1)
+            hist = stock.history(start=start_date, end=end_date, interval="1m")
 
             if hist.empty:
                 return render(request, 'stock/info.html', {'error': '데이터를 가져올 수 없습니다.'})
 
+            # 9:00부터 15:30까지의 데이터만 필터링
+            hist = hist.between_time('09:00', '15:30')
+
             # 그래프 생성
-            plt.figure(figsize=(10,5))
-            plt.plot(hist.index, hist['Close'])
-            plt.title(f"{ticker} 주가")
-            plt.xlabel('날짜')
-            plt.ylabel('종가')
+            fig, ax = plt.subplots(figsize=(12,6))
+            ax.plot(hist.index, hist['Close'])
+            ax.set_title(f"{ticker} 주가 (마지막 거래일 9:00-15:30)")
+            ax.set_xlabel('시간')
+            ax.set_ylabel('가격')
+            ax.grid(True)
+
+            # x축 설정 (1시간 단위)
+            hour_ticks = pd.date_range(start=hist.index[0].replace(minute=0),
+                                       end=hist.index[-1].replace(minute=0),
+                                       freq='H')
+            ax.set_xticks(hour_ticks)
+            ax.set_xticklabels([t.strftime('%H:%M') for t in hour_ticks])
             plt.xticks(rotation=45)
+
             plt.tight_layout()
 
             # 그래프를 이미지로 변환
             buffer = io.BytesIO()
-            plt.savefig(buffer, format='png')
+            plt.savefig(buffer, format='png', dpi=300)
             buffer.seek(0)
             image_png = buffer.getvalue()
             buffer.close()
             graphic = base64.b64encode(image_png)
             graphic = graphic.decode('utf-8')
 
-            plt.close()  # 메모리 누수 방지를 위해 plt 객체 닫기
+            plt.close(fig)  # 메모리 누수 방지를 위해 plt 객체 닫기
 
             # 주식 정보 가져오기
             info = stock.info
@@ -568,7 +662,6 @@ def info(request):
             previous_close = info.get('previousClose', 'N/A')
 
             # 댓글 관련
-            # 댓글 처리
             comments = StockComment.objects.filter(ticker=ticker).order_by('-created_at')
 
             form = CommentForm(request.POST)
@@ -593,6 +686,7 @@ def info(request):
             return render(request, 'stock/info.html', {'error': f'오류 발생: {str(e)}'})
     else:
         return render(request, 'stock/info.html')
+
 
 def delete_comment(request, comment_id):
     if request.method == 'POST':
@@ -639,4 +733,110 @@ def get_flag_image(request, country_code):
         # 이미지 요청에 실패하면 에러 메시지를 반환
         return HttpResponse(f"Error fetching image: {e}", status=500)
     
+    
+def combined_view(request, window_size=10): 
+    ticker = request.GET.get('ticker')
+    if ticker:
+        try:
+            # 예측 부분
+            today = pd.to_datetime('today').strftime('%Y-%m-%d')
+            df = fdr.DataReader(ticker, '2015-01-01', today)
+            dfx = df[['Open', 'High', 'Low', 'Volume', 'Close']]
+            dfx = MinMaxScaler(dfx)
+            dfy = dfx[['Close']]
+            dfx = dfx[['Open', 'High', 'Low', 'Volume']]
+            X = dfx.values
+            y = dfy.values
+
+            data_X = []
+            data_y = []
+            for i in range(len(y) - window_size):
+                _X = X[i:i + window_size]
+                _y = y[i + window_size]
+                data_X.append(_X)
+                data_y.append(_y)
+
+            data_X = np.array(data_X)
+            data_y = np.array(data_y)
+
+            train_size = int(len(data_y) * 0.7)
+            test_X = data_X[train_size:]
+            test_y = data_y[train_size:]
+
+            model_path1 = os.path.join(settings.BASE_DIR, 'static', 'models', 'keras', f'{ticker}_basic_model.keras')
+            basic_model = load_model(model_path1)
+
+            initial_pred_y = basic_model.predict(test_X)
+            initial_pred_y = initial_pred_y.flatten()
+            test_y = test_y.flatten()
+
+            model_path2 = os.path.join(settings.BASE_DIR, 'static', 'models', 'keras', f'{ticker}_error_correction_model.keras')
+            error_model = load_model(model_path2)
+
+            error_pred_y = error_model.predict(test_X)
+            error_pred_y = error_pred_y.flatten()
+
+            final_pred_y = initial_pred_y + error_pred_y
+
+            predictPrice = df.Close[-1] * final_pred_y[-1] / dfy.Close[-1]
+            predictPrice = round(predictPrice, 2)
+
+            # 정보 부분
+            kospi_ticker = f"{ticker}.KS"
+            stock = yf.Ticker(kospi_ticker)
+            hist = stock.history(period="1mo")
+
+            if hist.empty:
+                return render(request, 'stock/combined_view.html', {'error': '데이터를 가져올 수 없습니다.'})
+
+            plt.figure(figsize=(10,5))
+            plt.plot(hist.index, hist['Close'])
+            plt.title(f"{ticker} 주가")
+            plt.xlabel('날짜')
+            plt.ylabel('종가')
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+
+            buffer = io.BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+            image_png = buffer.getvalue()
+            buffer.close()
+            graphic = base64.b64encode(image_png)
+            graphic = graphic.decode('utf-8')
+
+            plt.close()
+
+            info = stock.info
+            company_name = info.get('longName', 'N/A')
+            current_price = info.get('currentPrice', 'N/A')
+            previous_close = info.get('previousClose', 'N/A')
+
+            comments = StockComment.objects.filter(ticker=ticker).order_by('-created_at')
+
+            if request.method == 'POST':
+                form = CommentForm(request.POST)
+                if form.is_valid():
+                    comment = form.save(commit=False)
+                    comment.ticker = ticker
+                    comment.save()
+            else:
+                form = CommentForm()
+
+            return render(request, 'stock/combined_view.html', {
+                'predict': predictPrice,
+                'graphic': graphic,
+                'ticker': ticker,
+                'company_name': company_name,
+                'current_price': current_price,
+                'previous_close': previous_close,
+                'comments': comments,
+                'form': form,
+            })
+
+        except Exception as e:
+            return render(request, 'stock/combined_view.html', {'error': f'오류 발생: {str(e)}'})
+    else:
+        return render(request, 'stock/combined_view.html')
+
     

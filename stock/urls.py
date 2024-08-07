@@ -13,4 +13,5 @@ urlpatterns = [
     path('flag/<str:country_code>/', views.get_flag_image, name='flag_image'),
     path("sector_detail/<str:sector>/", views.sector_detail, name='sector_detail'),
     path("industry_detail/<str:industry>/", views.industry_detail, name='industry_detail'),
+    path("combined_view/", views.combined_view, name='combined_view')
 ]
